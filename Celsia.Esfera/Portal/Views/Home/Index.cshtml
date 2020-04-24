@@ -2,18 +2,172 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model Portal.ViewModels.CustomerViewModel;
+<h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Consultar clientes</h3>
+<p class="ml-3 mr-3 mb-4">Esta opción permite adicionar una persona no vinculada a un cliente.</p>
+<hr>
+<h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Filtrar por</h6>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row ml-1 mr-1 mt-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Tipo de Cliente</label>
+            <select class="form-control">
+                <option>- Seleccione - </option>
+                <option>SAC</option>
+                <option>SGC</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Código Cuenta / NIC</label>
+            <input class="form-control" type="text" placeholder="0000000">
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <a class="btn btn-primary btn-block" href="login.html">Consultar</a>
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+</div>
 
-    @Model.SelectedCustomer.Name
+<hr>
+<h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información de la persona</h6>
 
+<div class="row ml-1 mr-1 mt-4 pt-2">
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Código de Cuenta</label>
+            <p class="form-control border-0 ml-2">906456389</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Tipo de Identificación</label>
+            <p class="form-control border-0 ml-2">CC</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Nro. de Identificación</label>
+            <p class="form-control border-0 ml-2">98518549</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Nombre Completo</label>
+            <p class="form-control border-0 ml-2">Luis Romero Díaz</p>
+        </div>
+    </div>
+</div>
 
-    @foreach (var person in Model.CustomerAsociatedPerson)
-    {
-        <td>@person.Name</td>
-    }
+<div class="row ml-1 mr-1 mt-1">
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Dirección</label>
+            <p class="form-control border-0 ml-2">Carrera 54 B Sur</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Teléfono</label>
+            <p class="form-control border-0 ml-2">300 0000</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Móvil</label>
+            <p class="form-control border-0 ml-2">300 000 0000</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Correo Electrónico</label>
+            <p class="form-control border-0 ml-2">cliente@celsia.com</p>
+        </div>
+    </div>
+</div>
 
+<div class="row ml-1 mr-1 mt-1 mb-0 ">
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Política de Datos</label>
+            <p class="form-control border-0 ml-2">Sí</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="form-group">
+            <label class="small mb-1">Sistema Generador</label>
+            <p class="form-control border-0 ml-2">SAC</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+</div>
+
+<hr>
+<h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Personas vinculadas</h6>
+
+<p class="ml-3 mr-3 mb-4 mt-4">No hay personas vinculadas al cliente.</p>
+
+<div class="row ml-1 mr-1 pt-3 pb-3">
+    <div class="col-xl-12 col-md-12">
+        <div class="table-responsive">
+            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tipo de Identificación</th>
+                        <th>Nro. de Identificación</th>
+                        <th>Nombre Completo</th>
+                        <th>Relación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CC</td>
+                        <td>1128450919</td>
+                        <td>Diana Marín Cordoba</td>
+                        <td>Inquilino</td>
+                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                    </tr>
+                    <tr>
+                        <td>CE</td>
+                        <td>98518549</td>
+                        <td>Javier López García</td>
+                        <td>Propietario</td>
+                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                    </tr>
+                    <tr>
+                        <td>PT</td>
+                        <td>76439834</td>
+                        <td>Raúl Acuña</td>
+                        <td>Familiar</td>
+                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                    </tr>
+                    <tr>
+                        <td>CC</td>
+                        <td>46523499</td>
+                        <td>Viviana Castillo</td>
+                        <td>Empleado</td>
+                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row ml-1 mr-1 mt-4 pt-2 mb-5">
+    <div class="col-xl-3 col-md-6">
+        <a class="btn btn-secondary btn-block" href="login.html">Adicionar persona</a>
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
 </div>
