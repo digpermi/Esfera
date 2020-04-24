@@ -7,8 +7,10 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@ViewData["Title"] - CELSIA</title>
+
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/dataTables/dist/css/dataTables.css" rel="stylesheet" />
+
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body class="sb-nav-fixed">
@@ -63,7 +65,10 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid">                    
+
+                <message user-message="@Model.UserMesage"></message>
+
+                <div class="container-fluid">
                     @RenderBody()
                 </div>
             </main>
@@ -74,12 +79,14 @@
             </footer>
         </div>
     </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/fontAwesome/dist/all.min.js"></script>
     <script src="~/lib/dataTables/dist/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/dataTables/dist/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
