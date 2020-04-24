@@ -1,0 +1,39 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - CELSIA</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <div class="container-fluid pl-0 pr-0">
+
+        <div class="row ml-0 mr-0 mt-0">
+            <div class="col-xl-9 col-md-9 login-bg">
+            </div>
+            <div class="col-xl-3 col-md-3 vh-100 bg-white">
+
+                <div class="col-xl-10 col-md-10 offset-1">
+                    <img src="~/img/logo-orange.svg" class="pt-5 mt-5 mb-5" />
+
+                    <input class="form-control pt-2" type="text" placeholder="Usuario">
+                    <input class="form-control pt-2 mt-2" type="password" placeholder="Contraseña">
+                    <a class="btn btn-secondary btn-block mt-2" asp-area="" asp-controller="Home" asp-action="Index">Iniciar Sesión</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

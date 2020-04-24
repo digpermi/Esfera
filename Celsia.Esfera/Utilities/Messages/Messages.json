@@ -1,0 +1,12 @@
+﻿[
+  {
+    "Code": 1,
+    "Text": "Message for test the application.",
+    "Type": 1
+  },
+  {
+    "Code": 2,
+    "Text": "Customer query ok.",
+    "Type": 1
+  }
+]
