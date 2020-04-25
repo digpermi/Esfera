@@ -28,20 +28,20 @@ namespace Portal.Controllers
         {
             ApplicationMessage customerMessage;
 
-            try
-            {
-                //ir a base de datos
-                this.TestCustomer.SelectedCustomer = new Entities.Customer { Name = "Diego" };
+            //try
+            //{
+            //    //ir a base de datos
+            //    this.TestCustomer.SelectedCustomer = new Entities.Customer { Name = "Diego" };
 
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerqueryOk);
-            }
-            catch (Exception ex)
-            {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.Test);
-                this.logger.LogError(ex, customerMessage.Text);
-            }
+            //    customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerqueryOk);
+            //}
+            //catch (Exception ex)
+            //{
+            //    customerMessage = new ApplicationMessage(this.cache, MessageCode.Test);
+            //    this.logger.LogError(ex, customerMessage.Text);
+            //}
 
-            this.TestCustomer.UserMesage = customerMessage;
+            //this.TestCustomer.UserMesage = customerMessage;
 
             return this.View(this.TestCustomer);
         }

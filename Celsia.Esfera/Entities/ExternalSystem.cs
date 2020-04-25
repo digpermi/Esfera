@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Models
 {
-    public class External
+    public class ExternalSystem
     {
         public int Id { get; set; }
         public string Name { get; set; }
