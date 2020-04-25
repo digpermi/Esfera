@@ -1,8 +1,6 @@
-using System;
-
-namespace Portal.Models
+namespace Portal.ViewModels
 {
-    public class Error
+    public class ErrorViewModel
     {
         public string RequestId { get; set; }
 
