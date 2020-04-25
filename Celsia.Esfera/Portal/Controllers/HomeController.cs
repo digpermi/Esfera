@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using Bussines;
+using Bussines.Bussines;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portal.Models;
 using Portal.ViewModels;
 using Utilities.Cache;
 using Utilities.Messages;
@@ -11,17 +13,19 @@ namespace Portal.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ICustomerBussines customerBussines;
+        private readonly ICacheUtility cache;
         private readonly ILogger<HomeController> logger;
-        private ICacheUtility cache;
+
 
         public CustomerViewModel TestCustomer { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, ICacheUtility cache)
+        public HomeController(EsferaContext context, ILogger<HomeController> logger, ICacheUtility cache)
         {
             this.logger = logger;
             this.cache = cache;
 
-            this.TestCustomer = new CustomerViewModel();
+            this.customerBussines = new CustomerBussines(context);
         }
 
         public IActionResult Index()
@@ -31,7 +35,10 @@ namespace Portal.Controllers
             try
             {
                 //ir a base de datos
-                this.TestCustomer.SelectedCustomer = new Entities.Customer { Name = "Diego" };
+                System.Collections.Generic.List<Customer> customers = this.customerBussines.GetAllCustomersByFilter("D");
+
+                this.logger.LogError("Prueba Nlog");
+
 
                 customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerqueryOk);
             }

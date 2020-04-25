@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{CCF73FB6-7E6E-4222-BAAB-14458EA5E2E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{CCF73FB6-7E6E-4222-BAAB-14458EA5E2E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bussines", "Bussines\Bussines.csproj", "{698C87C7-9141-4A27-92B5-6805FD247FBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bussines", "Bussines\Bussines.csproj", "{698C87C7-9141-4A27-92B5-6805FD247FBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{16C403F4-80C0-470C-B629-804CBD0475C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{16C403F4-80C0-470C-B629-804CBD0475C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{92569B66-9F8E-4C90-BA65-FC1E0B93A3CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{2CA846EB-7172-472C-965C-5443A1982CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portal", "Portal\Portal.csproj", "{92569B66-9F8E-4C90-BA65-FC1E0B93A3CE}"
 EndProject
 Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "CustomersIntegration", "CustomersIntegration\CustomersIntegration.dtproj", "{99F88110-ECFF-43E4-8C2D-ECA42303BFEA}"
 EndProject
@@ -48,12 +46,6 @@ Global
 		{92569B66-9F8E-4C90-BA65-FC1E0B93A3CE}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{92569B66-9F8E-4C90-BA65-FC1E0B93A3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92569B66-9F8E-4C90-BA65-FC1E0B93A3CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CA846EB-7172-472C-965C-5443A1982CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CA846EB-7172-472C-965C-5443A1982CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CA846EB-7172-472C-965C-5443A1982CCE}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CA846EB-7172-472C-965C-5443A1982CCE}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{2CA846EB-7172-472C-965C-5443A1982CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CA846EB-7172-472C-965C-5443A1982CCE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99F88110-ECFF-43E4-8C2D-ECA42303BFEA}.Debug|Any CPU.ActiveCfg = Development
 		{99F88110-ECFF-43E4-8C2D-ECA42303BFEA}.Debug|Any CPU.Build.0 = Development
 		{99F88110-ECFF-43E4-8C2D-ECA42303BFEA}.Development|Any CPU.ActiveCfg = Development

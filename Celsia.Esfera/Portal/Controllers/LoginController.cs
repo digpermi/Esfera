@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Portal.Models;
+using Portal.ViewModels;
 using Utilities.Cache;
-using Utilities.Messages;
 
 namespace Portal.Controllers
 {

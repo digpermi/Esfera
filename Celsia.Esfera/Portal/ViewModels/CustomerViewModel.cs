@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using Entities;
+﻿using Entities.Models;
 
 namespace Portal.ViewModels
 {
     public class CustomerViewModel : BaseViewModel
     {
         public Customer SelectedCustomer { get; set; }
-
-        public IEnumerable<CustomerPerson> CustomerAsociatedPerson { get; set; }
     }
 }
