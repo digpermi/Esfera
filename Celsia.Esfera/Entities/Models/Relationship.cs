@@ -2,9 +2,9 @@
 
 namespace Entities.Models
 {
-    public partial class Relationsship
+    public partial class Relationship
     {
-        public Relationsship()
+        public Relationship()
         {
             this.Persons = new HashSet<Person>();
         }

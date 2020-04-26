@@ -19,7 +19,7 @@ namespace Bussines
         public virtual DbSet<IdentificationType> IdentificationTypes { get; set; }
         public virtual DbSet<Interest> Interests { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<Relationsship> Relationsships { get; set; }
+        public virtual DbSet<Relationship> Relationsships { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,8 +57,8 @@ namespace Bussines
                     .HasColumnName("lastName")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
+                entity.Property(e => e.FistName)
+                    .HasColumnName("firstname")
                     .HasMaxLength(200);
 
                 entity.Property(e => e.PhoneNumber)
@@ -125,7 +125,7 @@ namespace Bussines
                 entity.ToTable("Persons");
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Birthday)
+                entity.Property(e => e.Birthdate)
                     .HasColumnName("birthday")
                     .HasColumnType("date");
 
@@ -154,7 +154,7 @@ namespace Bussines
                     .HasColumnName("lastName")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.FistName)
                     .HasColumnName("name")
                     .HasMaxLength(200);
 
@@ -195,7 +195,7 @@ namespace Bussines
                     .HasConstraintName("FK_Persons_ExternalSystems");
             });
 
-            modelBuilder.Entity<Relationsship>(entity =>
+            modelBuilder.Entity<Relationship>(entity =>
             {
                 entity.ToTable("Relationsships");
                 entity.HasComment("contiene la informacion de las relaciones de las personas con un cliente");

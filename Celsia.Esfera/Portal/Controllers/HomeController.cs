@@ -35,7 +35,7 @@ namespace Portal.Controllers
             try
             {
                 //ir a base de datos
-                System.Collections.Generic.List<Customer> customers = this.customerBussines.GetAllCustomersByFilter("D");
+               // System.Collections.Generic.List<Customer> customers = this.customerBussines.GetAllCustomersByFilter("D");
 
                 this.logger.LogError("Prueba Nlog");
 
@@ -48,7 +48,7 @@ namespace Portal.Controllers
                 this.logger.LogError(ex, customerMessage.Text);
             }
 
-            this.TestCustomer.UserMesage = customerMessage;
+            //this.TestCustomer.UserMesage = customerMessage;
 
             return this.View(this.TestCustomer);
         }

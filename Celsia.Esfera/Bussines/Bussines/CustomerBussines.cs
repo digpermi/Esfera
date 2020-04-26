@@ -15,17 +15,22 @@ namespace Bussines.Bussines
             this.repository = new CustomerRepository(context);
         }
 
-        public List<Customer> GetAllCustomersByFilter(string name)
+        /// <summary>
+        /// Busca el cliente con el Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Customer GetAllCustomersById(int Id)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.Name.StartsWith(name));
+            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Id.Equals(Id));
             task.Wait();
 
-            return task.Result;
+            return task.Result.FirstOrDefault();
         }
 
         public Customer GetCustomerByName(string name)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.Name.StartsWith(name));
+            Task<List<Customer>> task = this.repository.GetAsync(x => x.FistName.StartsWith(name));
             task.Wait();
 
             return task.Result.FirstOrDefault();

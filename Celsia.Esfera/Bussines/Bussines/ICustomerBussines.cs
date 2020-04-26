@@ -5,8 +5,8 @@ namespace Bussines.Bussines
 {
     public interface ICustomerBussines
     {
-        Customer GetCustomerByName(string name);
+        Customer GetAllCustomersById(int Id);
 
-        List<Customer> GetAllCustomersByFilter(string name);
+        //List<Customer> GetAllCustomersByFilter(string name);
     }
 }

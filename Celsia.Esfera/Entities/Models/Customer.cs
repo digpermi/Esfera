@@ -12,7 +12,7 @@ namespace Entities.Models
 
         public int Id { get; set; }
         public int Code { get; set; }
-        public string Name { get; set; }
+        public string FistName { get; set; }
         public string LastName { get; set; }
         public string Identification { get; set; }
         public byte IdentificationType { get; set; }
