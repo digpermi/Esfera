@@ -23,8 +23,6 @@ namespace Bussines.Bussines
         public ICollection<Person> GetAllPersons()
         {
             Task<List<Person>> task = this.repository.GetAsync(includeProperties : "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
-            task.Wait();
-
             return task.Result;
         }
 

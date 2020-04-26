@@ -17,6 +17,10 @@ namespace Portal.Controllers
     public class PersonController:Controller
     {
         private readonly IPersonBussines personBussines;
+        private readonly IExternalSystemBussines externalSystemBussines;
+        private readonly IIdentificationTypeBussines identificationTypeBussines;
+        private readonly IInterestBussines interestBussines;
+        private readonly IRelationshipBussines relationshipBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<PersonController> logger;
 
@@ -27,6 +31,10 @@ namespace Portal.Controllers
             this.logger = logger;
             this.cache = cache;
             this.personBussines = new PersonBussines(context);
+            this.externalSystemBussines = new ExternalSystemBussines(context);
+            this.identificationTypeBussines = new IdentificationTypeBussines(context);
+            this.interestBussines = new InterestBussines(context);
+            this.relationshipBussines = new RelationshipBussines(context);
         }
 
         // GET: Person
@@ -41,7 +49,6 @@ namespace Portal.Controllers
                 var personItem = new PersonViewModel()
                 {
                     Id = person.Id,
-                    Code = person.Code,
                     FirstName = person.FirstName,
                     LastName = person.LastName,
                     Identification = person.Identification,
@@ -54,6 +61,47 @@ namespace Portal.Controllers
             }
 
             return this.View(personsList);
+        }
+
+        // GET: Customer/Create
+        public ActionResult Create()
+        {
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
+            
+
+            PersonViewModel person = new PersonViewModel()
+            {
+                ExternalSystems = externalSystems,
+                SystemId = 0,
+                IdentificationTypes = identificationTypes,
+                IdentificationTypeId = 0,
+                Interests = interests,
+                InterestId = 0,
+                Relationships = relationships,
+                RelationshipId = 0
+            };
+
+            return this.View(person);
+        }
+
+        // POST: Customer/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
     }
