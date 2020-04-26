@@ -16,14 +16,12 @@ namespace Bussines.Bussines
         }
 
         /// <summary>
-        /// Busca todas los external system
+        /// Busca todos los sistemas externos
         /// </summary>
         /// <returns></returns>
         public ICollection<ExternalSystem> GetAllExternalSystems()
         {
             Task<List<ExternalSystem>> task = this.repository.GetAsync();
-            task.Wait();
-
             return task.Result;
         }
 
