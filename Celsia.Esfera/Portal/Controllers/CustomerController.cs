@@ -18,6 +18,7 @@ namespace Portal.Controllers
     public class CustomerController:Controller
     {
         private readonly ICustomerBussines customerBussines;
+        private readonly IPersonBussines personBussines;
         private readonly IExternalSystemBussines externalSystemBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
@@ -32,46 +33,62 @@ namespace Portal.Controllers
             this.externalSystemBussines = new ExternalSystemBussines(context);
         }
 
-        // GET: Customer
-        public IActionResult Index()
+        // GET: Customer/Create
+        public ActionResult Index()
         {
-           return this.View();
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+
+            var resul = new CustomerViewModel()
+            {
+                ExternalSystems = externalSystems,
+                SystemId = 0
+            };
+            return View(resul);
         }
 
+        // POST: Customer/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]  // GET: Customer
+        public IActionResult Index(CustomerViewModel customerView)
+        {
+            var resul = new CustomerViewModel();
 
-        // GET: Customer/Details/5
-        [HttpGet("{id}")]
-        public ActionResult Details(int id)
-        { 
-            Customer customer = this.customerBussines.GetAllCustomersById(1);
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+
+            Customer customer = this.customerBussines.GetCustomer(customerView.Code, customerView.SystemId.Value);
 
             if (customer == null)
             {
                 this.NotFound();
             }
-
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-
-            var resul = new CustomerViewModel()
+            else
             {
-                Code = customer.Code,
-                FistName = customer.FirstName,
-                LastName = customer.LastName,
-                Identification = customer.Identification,
-                IdentificationType = customer.IdentificationType.Name,
-                Address = customer.Address,
-                MobileNumber = customer.MobileNumber,
-                PhoneNumber = customer.PhoneNumber,
-                Email = customer.Email,
-                PolicyData = customer.PolicyData,
-                System = customer.ExternalSystem.Name,
-                ExternalSystems = externalSystems,
-                SystemId = 0
-            };
+                resul.Code = customer.Code;
+                resul.FistName = customer.FirstName;
+                resul.LastName = customer.LastName;
+                resul.Identification = customer.Identification;
+                resul.IdentificationType = customer.IdentificationType.Name;
+                resul.Address = customer.Address;
+                resul.MobileNumber = customer.MobileNumber;
+                resul.PhoneNumber = customer.PhoneNumber;
+                resul.Email = customer.Email;
+                resul.PolicyData = customer.PolicyData;
+                resul.System = customer.ExternalSystem.Name;
+                resul.ExternalSystems = externalSystems;
+            }
+
+          //  Person personVin = this.personBussines.GetHashCode(customerView.Code, customerView.SystemId.Value);
+
+            return this.View(resul);
+        }
 
 
 
-            return View(resul);
+        // GET: Customer/Details/5
+        [HttpGet("{id}")]
+        public ActionResult Details()
+        { 
+            return View();
         }
 
         // GET: Customer/Create

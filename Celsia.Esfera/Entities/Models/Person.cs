@@ -5,7 +5,7 @@ namespace Entities.Models
     public partial class Person
     {
         public int Id { get; set; }
-        public int Code { get; set; }
+        public int? Code { get; set; }
         public string Identification { get; set; }
         public byte IdentificationTypeId { get; set; }
         public string FirstName { get; set; }

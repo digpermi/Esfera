@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Bussines.Data;
 using Entities.Models;
@@ -20,9 +21,9 @@ namespace Bussines.Bussines
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public Customer GetAllCustomersById(int Id)
+        public Customer GetCustomer(int cod, byte system)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Id.Equals(Id), null, "IdentificationType,ExternalSystem");
+            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Code == cod && x.ExternalSystemId == system, null, "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();

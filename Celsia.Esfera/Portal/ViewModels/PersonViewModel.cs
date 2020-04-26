@@ -7,7 +7,7 @@ namespace Portal.ViewModels
     public class PersonViewModel : BaseViewModel
     {
         public int Id { get; set; }
-        public int Code { get; set; }
+        public int? Code { get; set; }
         public string Identification { get; set; }
         public string IdentificationType { get; set; }
         public byte IdentificationTypeId { get; set; }
@@ -16,7 +16,6 @@ namespace Portal.ViewModels
         public string PhoneNumber { get; set; }
         public string MobileNumber { get; set; }
         public string Email { get; set; }
-
         public DateTime Birthdate { get; set; }
         public string Relationship { get; set; }
         public byte? RelationshipId { get; set; }
