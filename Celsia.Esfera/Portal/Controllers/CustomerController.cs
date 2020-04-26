@@ -1,6 +1,5 @@
 ﻿using Bussines;
 using Bussines.Bussines;
-using Entities.Data;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -67,12 +66,12 @@ namespace Portal.Controllers
                 PolicyData = customer.PolicyData,
                 System = customer.ExternalSystem.Name,
                 ExternalSystems = externalSystems,
-                SystemId = customer.ExternalSystemId
+                SystemId = 0
             };
 
 
 
-            return View(this.TestCustomer);
+            return View(resul);
         }
 
         // GET: Customer/Create

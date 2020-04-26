@@ -18,7 +18,7 @@ namespace Portal.ViewModels
         public string Email { get; set; }
         public bool PolicyData { get; set; }
         public string System { get; set; }
-        public int? SystemId { get; set; }
+        public byte? SystemId { get; set; }
         public ICollection<ExternalSystem> ExternalSystems { get; set; }
     }
 }

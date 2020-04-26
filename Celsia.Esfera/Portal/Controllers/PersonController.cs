@@ -1,6 +1,5 @@
 ﻿using Bussines;
 using Bussines.Bussines;
-using Entities.Data;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

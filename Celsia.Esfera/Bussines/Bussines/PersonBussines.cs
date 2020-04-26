@@ -22,7 +22,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public ICollection<Person> GetAllPersons()
         {
-            Task<List<Person>> task = this.repository.GetAsync(null, null, "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
+            Task<List<Person>> task = this.repository.GetAsync(includeProperties : "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result;

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Entities.Data;
 
 namespace Entities.Models
 {
-    public partial class Customer : IEntity
+    public partial class Customer
     {
         public Customer()
         {
@@ -15,13 +14,13 @@ namespace Entities.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Identification { get; set; }
-        public int IdentificationTypeId { get; set; }
+        public byte IdentificationTypeId { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string MobileNumber { get; set; }
         public string Email { get; set; }
         public bool PolicyData { get; set; }
-        public int? ExternalSystemId { get; set; }
+        public byte? ExternalSystemId { get; set; }
 
         public virtual IdentificationType IdentificationType { get; set; }
         public virtual ExternalSystem ExternalSystem { get; set; }
