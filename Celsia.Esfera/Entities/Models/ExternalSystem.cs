@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Entities.Data;
+using System.Collections.Generic;
 
 namespace Entities.Models
 {
-    public partial class ExternalSystem
+    public partial class ExternalSystem : IEntity
     {
         public ExternalSystem()
         {
@@ -10,7 +11,7 @@ namespace Entities.Models
             this.Persons = new HashSet<Person>();
         }
 
-        public byte Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }

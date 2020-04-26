@@ -22,7 +22,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Customer GetAllCustomersById(int Id)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Id.Equals(Id));
+            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Id.Equals(Id), null, "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();
@@ -30,7 +30,7 @@ namespace Bussines.Bussines
 
         public Customer GetCustomerByName(string name)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.FistName.StartsWith(name));
+            Task<List<Customer>> task = this.repository.GetAsync(x => x.FirstName.StartsWith(name));
             task.Wait();
 
             return task.Result.FirstOrDefault();

@@ -19,7 +19,7 @@ namespace Bussines
         public virtual DbSet<IdentificationType> IdentificationTypes { get; set; }
         public virtual DbSet<Interest> Interests { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<Relationship> Relationsships { get; set; }
+        public virtual DbSet<Relationship> Relationships { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,8 +34,8 @@ namespace Bussines
                     .HasColumnName("address")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.CellPhone)
-                    .HasColumnName("cellPhone")
+                entity.Property(e => e.MobileNumber)
+                    .HasColumnName("mobileNumber")
                     .HasMaxLength(50)
                     .IsFixedLength();
 
@@ -51,13 +51,13 @@ namespace Bussines
                     .HasColumnName("identification")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.IdentificationType).HasColumnName("identificationType");
+                entity.Property(e => e.IdentificationTypeId).HasColumnName("identificationTypeId");
 
                 entity.Property(e => e.LastName)
                     .HasColumnName("lastName")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.FistName)
+                entity.Property(e => e.FirstName)
                     .HasColumnName("firstname")
                     .HasMaxLength(200);
 
@@ -67,23 +67,23 @@ namespace Bussines
 
                 entity.Property(e => e.PolicyData).HasColumnName("policyData");
 
-                entity.Property(e => e.System).HasColumnName("system");
+                entity.Property(e => e.ExternalSystemId).HasColumnName("externalsystemid");
 
-                entity.HasOne(d => d.IdentificationTypeNavigation)
+                entity.HasOne(d => d.IdentificationType)
                     .WithMany(p => p.Customers)
-                    .HasForeignKey(d => d.IdentificationType)
+                    .HasForeignKey(d => d.IdentificationTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Customers_IdentificationTypes");
 
-                entity.HasOne(d => d.SystemNavigation)
+                entity.HasOne(d => d.ExternalSystem)
                     .WithMany(p => p.Customers)
-                    .HasForeignKey(d => d.System)
+                    .HasForeignKey(d => d.ExternalSystemId)
                     .HasConstraintName("FK_Customers_ExternalSystems");
             });
 
             modelBuilder.Entity<ExternalSystem>(entity =>
             {
-                entity.ToTable("ExternalSystem");
+                entity.ToTable("ExternalSystems");
                 entity.HasComment("sistemas externos donde se cuentra la informacion de los clientes");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -126,11 +126,11 @@ namespace Bussines
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Birthdate)
-                    .HasColumnName("birthday")
+                    .HasColumnName("birthdate")
                     .HasColumnType("date");
 
-                entity.Property(e => e.CellNumber)
-                    .HasColumnName("cellNumber")
+                entity.Property(e => e.MobileNumber)
+                    .HasColumnName("mobileNumber")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Code).HasColumnName("code");
@@ -146,16 +146,16 @@ namespace Bussines
                     .HasColumnName("identification")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.IdentificationType).HasColumnName("identificationType");
+                entity.Property(e => e.IdentificationTypeId).HasColumnName("identificationTypeId");
 
-                entity.Property(e => e.Interested).HasColumnName("interested");
+                entity.Property(e => e.InterestId).HasColumnName("interestId");
 
                 entity.Property(e => e.LastName)
                     .HasColumnName("lastName")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.FistName)
-                    .HasColumnName("name")
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("firstname")
                     .HasMaxLength(200);
 
                 entity.Property(e => e.PhoneNumber)
@@ -164,40 +164,40 @@ namespace Bussines
 
                 entity.Property(e => e.PolicyData).HasColumnName("policyData");
 
-                entity.Property(e => e.Relation).HasColumnName("relation");
+                entity.Property(e => e.RelationshipId).HasColumnName("relationshipid");
 
-                entity.Property(e => e.System).HasColumnName("system");
+                entity.Property(e => e.ExternalSystemId).HasColumnName("externalsystemid");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Persons)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Persons_Customers");
 
-                entity.HasOne(d => d.IdentificationTypeNavigation)
+                entity.HasOne(d => d.IdentificationType)
                     .WithMany(p => p.Persons)
-                    .HasForeignKey(d => d.IdentificationType)
+                    .HasForeignKey(d => d.IdentificationTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Persons_IdentificationTypes");
 
-                entity.HasOne(d => d.InterestedNavigation)
+                entity.HasOne(d => d.Interest)
                     .WithMany(p => p.Persons)
-                    .HasForeignKey(d => d.Interested)
+                    .HasForeignKey(d => d.InterestId)
                     .HasConstraintName("FK_Persons_Interests");
 
-                entity.HasOne(d => d.RelationNavigation)
+                entity.HasOne(d => d.Relationship)
                     .WithMany(p => p.Persons)
-                    .HasForeignKey(d => d.Relation)
+                    .HasForeignKey(d => d.RelationshipId)
                     .HasConstraintName("FK_Persons_Relationsships");
 
-                entity.HasOne(d => d.SystemNavigation)
+                entity.HasOne(d => d.ExternalSystem)
                     .WithMany(p => p.Persons)
-                    .HasForeignKey(d => d.System)
+                    .HasForeignKey(d => d.ExternalSystemId)
                     .HasConstraintName("FK_Persons_ExternalSystems");
             });
 
             modelBuilder.Entity<Relationship>(entity =>
             {
-                entity.ToTable("Relationsships");
+                entity.ToTable("Relationships");
                 entity.HasComment("contiene la informacion de las relaciones de las personas con un cliente");
 
                 entity.Property(e => e.Id).HasColumnName("id");

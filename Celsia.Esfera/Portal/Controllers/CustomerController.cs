@@ -4,10 +4,12 @@ using Entities.Data;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Utilities.Cache;
 using Utilities.Messages;
@@ -17,6 +19,7 @@ namespace Portal.Controllers
     public class CustomerController:Controller
     {
         private readonly ICustomerBussines customerBussines;
+        private readonly IExternalSystemBussines externalSystemBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
 
@@ -27,6 +30,7 @@ namespace Portal.Controllers
             this.logger = logger;
             this.cache = cache;
             this.customerBussines = new CustomerBussines(context);
+            this.externalSystemBussines = new ExternalSystemBussines(context);
         }
 
         // GET: Customer
@@ -40,29 +44,32 @@ namespace Portal.Controllers
         [HttpGet("{id}")]
         public ActionResult Details(int id)
         { 
-            Customer customer = this.customerBussines.GetAllCustomersById(3);
+            Customer customer = this.customerBussines.GetAllCustomersById(1);
 
             if (customer == null)
             {
                 this.NotFound();
             }
 
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+
             var resul = new CustomerViewModel()
             {
                 Code = customer.Code,
-                FistName = customer.FistName,
+                FistName = customer.FirstName,
                 LastName = customer.LastName,
                 Identification = customer.Identification,
-                IdentificationType = customer.IdentificationTypeNavigation.Name,
+                IdentificationType = customer.IdentificationType.Name,
                 Address = customer.Address,
-                CellPhone = customer.CellPhone,
+                MobileNumber = customer.MobileNumber,
                 PhoneNumber = customer.PhoneNumber,
                 Email = customer.Email,
                 PolicyData = customer.PolicyData,
-                System = customer.SystemNavigation.Name
+                System = customer.ExternalSystem.Name,
+                ExternalSystems = externalSystems,
+                SystemId = customer.ExternalSystemId
             };
 
-            
 
 
             return View(this.TestCustomer);

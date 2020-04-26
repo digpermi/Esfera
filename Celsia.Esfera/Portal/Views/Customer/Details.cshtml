@@ -16,6 +16,7 @@
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Tipo de Cliente</label>
+            @Html.DropDownListFor(model => model.SystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -")
             <select class="form-control">
                 <option>- Seleccione - </option>
                 <option>SAC</option>
@@ -81,7 +82,7 @@
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Móvil</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.CellPhone)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.MobileNumber)</p>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">

@@ -1715,6 +1715,10 @@ pre code {
     margin-right: 5px;
 }
 
+.table tbody tr .sb-nav-link-icon:hover {
+    background: #828282;
+}
+
 .table-sm th,
 .table-sm td {
   padding: 0.3rem;

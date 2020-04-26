@@ -30,27 +30,30 @@ namespace Portal.Controllers
 
         public IActionResult Index()
         {
-            ApplicationMessage customerMessage;
+            //ApplicationMessage customerMessage;
 
-            try
-            {
-                //ir a base de datos
-               // System.Collections.Generic.List<Customer> customers = this.customerBussines.GetAllCustomersByFilter("D");
+            //try
+            //{
+            //    //ir a base de datos
+            //   // System.Collections.Generic.List<Customer> customers = this.customerBussines.GetAllCustomersByFilter("D");
 
-                this.logger.LogError("Prueba Nlog");
+            //    this.logger.LogError("Prueba Nlog");
 
 
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerqueryOk);
-            }
-            catch (Exception ex)
-            {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.Test);
-                this.logger.LogError(ex, customerMessage.Text);
-            }
+            //    customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerqueryOk);
+            //}
+            //catch (Exception ex)
+            //{
+            //    customerMessage = new ApplicationMessage(this.cache, MessageCode.Test);
+            //    this.logger.LogError(ex, customerMessage.Text);
+            //}
 
-            //this.TestCustomer.UserMesage = customerMessage;
+            ////this.TestCustomer.UserMesage = customerMessage;
+            ///
 
-            return this.View(this.TestCustomer);
+
+
+            return this.View();
         }
 
         public IActionResult Privacy()
