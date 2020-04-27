@@ -3,22 +3,16 @@ using Bussines.Bussines;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Utilities.Cache;
-using Utilities.Messages;
 
 namespace Portal.Controllers
 {
     public class CustomerController:Controller
     {
         private readonly ICustomerBussines customerBussines;
-        private readonly IPersonBussines personBussines;
         private readonly IExternalSystemBussines externalSystemBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
@@ -76,8 +70,6 @@ namespace Portal.Controllers
                 resul.System = customer.ExternalSystem.Name;
                 resul.ExternalSystems = externalSystems;
             }
-
-          //  Person personVin = this.personBussines.GetHashCode(customerView.Code, customerView.SystemId.Value);
 
             return this.View(resul);
         }

@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Carga Masiva</h3>
+<p class="ml-3 mr-3 mb-4">Esta opción permite hacer la carga maxiva de personas vinculadas a un cliente.</p>
+<hr>
+<h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Archivo</h6>
+
+@using (Html.BeginForm("UploadFile", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row ml-1 mr-1 mt-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Formato CSV</label>
+                <input class="form-control" type="file" name="file" placeholder="Examinar">
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <button class="btn btn-primary btn-block" type="submit">Cargar</button>
+        </div>
+        <div class="col-xl-3 col-md-6">
+        </div>
+    </div>
+}
+
+    

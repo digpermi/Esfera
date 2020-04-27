@@ -29,12 +29,5 @@ namespace Bussines.Bussines
             return task.Result.FirstOrDefault();
         }
 
-        public Customer GetCustomerByName(string name)
-        {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.FirstName.StartsWith(name));
-            task.Wait();
-
-            return task.Result.FirstOrDefault();
-        }
     }
 }
