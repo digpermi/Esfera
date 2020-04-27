@@ -16,6 +16,7 @@ namespace Portal.ViewModels
         public string PhoneNumber { get; set; }
         public string MobileNumber { get; set; }
         public string Email { get; set; }
+
         public DateTime Birthdate { get; set; }
         public string Relationship { get; set; }
         public byte? RelationshipId { get; set; }
