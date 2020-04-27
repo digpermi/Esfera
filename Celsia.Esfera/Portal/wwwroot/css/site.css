@@ -2026,6 +2026,23 @@ pre code {
   border-radius: 0.6rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.form-checkbox {
+  background: #fff;
+  border: 1.5px solid #d6d6d6;
+  width: 20px;
+  height: 20px;
+  margin-top: 15px;
+  margin-right: 10px;
+  margin-left: 15px;
+  float: left;
+}
+
+.policy span {
+  float: left;
+  margin-top: 15px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

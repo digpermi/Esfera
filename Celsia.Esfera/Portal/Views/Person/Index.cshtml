@@ -43,7 +43,7 @@
                         <td>@person.FirstName @person.LastName</td>
                         <td>@person.Email</td>
                         <td>@person.Interest</td>
-                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                        <td><a href="~/Person/Edit/@person.Id"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Person/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
                     </tr>
 
                     }

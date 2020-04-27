@@ -63,14 +63,12 @@ namespace Portal.Controllers
             return this.View(personsList);
         }
 
-        // GET: Customer/Create
+        // GET: Person/Create
         public ActionResult Create()
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
-            
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();      
 
             PersonViewModel person = new PersonViewModel()
             {
@@ -79,22 +77,118 @@ namespace Portal.Controllers
                 IdentificationTypes = identificationTypes,
                 IdentificationTypeId = 0,
                 Interests = interests,
-                InterestId = 0,
-                Relationships = relationships,
-                RelationshipId = 0
+                InterestId = 0
             };
 
             return this.View(person);
         }
 
-        // POST: Customer/Create
+        // POST: Person/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PersonViewModel person)
         {
             try
             {
                 // TODO: Add insert logic here
+
+                Person personAdd = new Person() {
+                    Identification = person.Identification,
+                    IdentificationTypeId = person.IdentificationTypeId,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    PhoneNumber = person.PhoneNumber,
+                    MobileNumber = person.MobileNumber,
+                    Email = person.Email,
+                    Birthdate = person.Birthdate,
+                    InterestId = person.InterestId,
+                    PolicyData = person.PolicyData,
+                    ExternalSystemId = person.SystemId
+                };
+
+                var result = this.personBussines.AddAsync(personAdd);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Person/Edit/5
+        public ActionResult Edit(int id)
+        {
+            Person person = this.personBussines.GetPersonById(id);
+
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+            PersonViewModel personEdit = new PersonViewModel()
+            {
+                Identification = person.Identification,
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                PhoneNumber = person.PhoneNumber,
+                MobileNumber = person.MobileNumber,
+                Email = person.Email,
+                Birthdate = person.Birthdate,
+                InterestId = person.InterestId,
+                PolicyData = person.PolicyData,
+                ExternalSystems = externalSystems,
+                SystemId = person.ExternalSystemId,
+                IdentificationTypes = identificationTypes,
+                IdentificationTypeId = person.IdentificationTypeId,
+                Interests = interests
+            };
+
+            return View(personEdit);
+        }
+
+        // POST: Person/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, PersonViewModel person)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                Person personEdit = new Person()
+                {
+                    Id = id,
+                    Identification = person.Identification,
+                    IdentificationTypeId = person.IdentificationTypeId,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    PhoneNumber = person.PhoneNumber,
+                    MobileNumber = person.MobileNumber,
+                    Email = person.Email,
+                    Birthdate = person.Birthdate,
+                    InterestId = person.InterestId,
+                    PolicyData = person.PolicyData,
+                    ExternalSystemId = person.SystemId
+                };
+
+                var result = this.personBussines.EditAsync(personEdit);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // POST: Person/Delete/5
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                var result = this.personBussines.DeleteAsync(id);
 
                 return RedirectToAction(nameof(Index));
             }
