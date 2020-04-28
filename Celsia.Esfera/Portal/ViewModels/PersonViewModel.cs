@@ -17,11 +17,11 @@ namespace Portal.ViewModels
         public string MobileNumber { get; set; }
         public string Email { get; set; }
 
-        public DateTime Birthdate { get; set; }
+        public DateTime? Birthdate { get; set; }
         public string Relationship { get; set; }
         public byte? RelationshipId { get; set; }
         public string Interest { get; set; }
-        public byte InterestId { get; set; }
+        public byte? InterestId { get; set; }
         public bool PolicyData { get; set; }
         public string System { get; set; }
         public byte? SystemId { get; set; }
