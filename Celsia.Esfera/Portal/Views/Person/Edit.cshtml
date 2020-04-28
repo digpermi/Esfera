@@ -1,0 +1,90 @@
+﻿@model Portal.ViewModels.PersonViewModel
+@{
+    ViewData["Title"] = "Editar persona";
+}
+
+<h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Editar persona</h3>
+<p class="ml-3 mr-3 mb-4">Esta opción permite editar una persona no vinculada a un cliente.</p>
+<hr>
+
+@using (Html.BeginForm("Edit", "Person", FormMethod.Post))
+{
+    <div class="row ml-1 mr-1 mt-5 pt-2">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Tipo de Identificación</label>
+                @Html.DropDownListFor(model => model.Person.IdentificationTypeId, new SelectList(Model.IdentificationTypes, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Nro. de Identificación</label>
+                @Html.TextBoxFor(model => model.Person.Identification, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Nombres</label>
+                @Html.TextBoxFor(model => model.Person.FirstName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Apellidos</label>
+                @Html.TextBoxFor(model => model.Person.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row ml-1 mr-1 mt-1">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Teléfono</label>
+                @Html.TextBoxFor(model => model.Person.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Móvil</label>
+                @Html.TextBoxFor(model => model.Person.MobileNumber, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Correo Electrónico</label>
+                @Html.TextBoxFor(model => model.Person.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Fecha de Nacimimento</label>
+                @Html.TextBoxFor(model => model.Person.Birthdate, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row ml-1 mr-1 mt-1 mb-0 ">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Interesado en</label>
+                @Html.DropDownListFor(model => model.Person.InterestId, new SelectList(Model.Interests, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Sistema Asociado</label>
+                @Html.DropDownListFor(model => model.Person.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group policy">
+                @Html.CheckBoxFor(model => model.Person.PolicyData, new { @class = "form-checkbox" }) <span>Acepto política de datos</span>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <input type="submit" class="btn btn-secondary btn-block" value="Actualizar">
+        </div>
+    </div>
+}
+
+

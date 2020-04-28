@@ -1715,6 +1715,10 @@ pre code {
     margin-right: 5px;
 }
 
+.table tbody tr .sb-nav-link-icon:hover {
+    background: #828282;
+}
+
 .table-sm th,
 .table-sm td {
   padding: 0.3rem;
@@ -2022,6 +2026,23 @@ pre code {
   border-radius: 0.6rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.form-checkbox {
+  background: #fff;
+  border: 1.5px solid #d6d6d6;
+  width: 20px;
+  height: 20px;
+  margin-top: 15px;
+  margin-right: 10px;
+  margin-left: 15px;
+  float: left;
+}
+
+.policy span {
+  float: left;
+  margin-top: 15px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
@@ -2498,8 +2519,8 @@ fieldset:disabled a.btn {
 }
 .btn-primary:focus, .btn-primary.focus {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #fba56b;
+  border-color: #fba56b;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 .btn-primary.disabled, .btn-primary:disabled {
@@ -2509,8 +2530,8 @@ fieldset:disabled a.btn {
 }
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #0062cc;
-  border-color: #005cbf;
+  background-color: #fba56b;
+  border-color: #fba56b;
 }
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);

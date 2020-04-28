@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Portal.ViewModels.PersonViewModel>
+@{
+    ViewData["Title"] = "Gestionar personas";
+}
+
+<h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Gestionar personas</h3>
+<p class="ml-3 mr-3 mb-4">Esta opción permite gestionar las personas no vinculadas los clientes.</p>
+<hr>
+
+<div class="row ml-1 mr-1 mt-3 pt-2 mb-1">
+    <div class="col-xl-3 col-md-6">
+        <a class="btn btn-primary btn-block" href="~/Person/Create">Adicionar persona</a>
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+    <div class="col-xl-3 col-md-6">
+    </div>
+</div>
+
+<div class="row ml-1 mr-1 pt-3 pb-3">
+    <div class="col-xl-12 col-md-12">
+        <div class="table-responsive">
+            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tipo de Identificación</th>
+                        <th>Nro. de Identificación</th>
+                        <th>Nombre Completo</th>
+                        <th>Email</th>
+                        <th>Interesado en</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var person in Model)
+                    {
+                    <tr>
+                        <td>@person.Person.IdentificationType.Name</td>
+                        <td>@person.Person.Identification</td>
+                        <td>@person.Person.FirstName @person.Person.LastName</td>
+                        <td>@person.Person.Email</td>
+                        <td>@person.Person.Interest.Name</td>
+                        <td><a href="~/Person/Edit/@person.Person.Id"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Person/Delete/@person.Person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                    </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

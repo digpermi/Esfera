@@ -3,8 +3,9 @@ using Entities.Models;
 
 namespace Bussines.Bussines
 {
-    public interface ICustomerBussines
+    public interface IRelationshipBussines
     {
-        Customer GetAllCustomersById(int Id);
+        ICollection<Relationship> GetAllRelationships();
+
     }
 }
