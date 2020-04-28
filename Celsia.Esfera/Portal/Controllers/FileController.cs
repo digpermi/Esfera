@@ -158,12 +158,16 @@ namespace Portal.Controllers
                 {
                     datos.Add(x);
                 }
-                records.Add(new CustomerViewModel
+                Customer customerRow = new Customer
                 {
-                    FistName = datos[0].ToString(),
+                    FirstName = datos[0].ToString(),
                     LastName = datos[1].ToString(),
                     PhoneNumber = datos[2].ToString(),
                     Address = datos[3].ToString()
+                };
+                records.Add(new CustomerViewModel
+                {
+                    Customer = customerRow
                 });
             }
         }

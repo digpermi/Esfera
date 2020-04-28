@@ -32,10 +32,13 @@ namespace Portal.Controllers
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
+            Customer customerInitial = new Customer();
+            customerInitial.ExternalSystemId = 0;
+
             var resul = new CustomerViewModel()
             {
                 ExternalSystems = externalSystems,
-                SystemId = 0
+                Customer = customerInitial
             };
             return View(resul);
         }
@@ -49,7 +52,7 @@ namespace Portal.Controllers
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
-            Customer customer = this.customerBussines.GetCustomer(customerView.Code, customerView.SystemId.Value);
+            Customer customer = this.customerBussines.GetCustomer(customerView.Customer.Code, customerView.Customer.ExternalSystemId.Value);
 
             if (customer == null)
             {
@@ -57,17 +60,7 @@ namespace Portal.Controllers
             }
             else
             {
-                resul.Code = customer.Code;
-                resul.FistName = customer.FirstName;
-                resul.LastName = customer.LastName;
-                resul.Identification = customer.Identification;
-                resul.IdentificationType = customer.IdentificationType.Name;
-                resul.Address = customer.Address;
-                resul.MobileNumber = customer.MobileNumber;
-                resul.PhoneNumber = customer.PhoneNumber;
-                resul.Email = customer.Email;
-                resul.PolicyData = customer.PolicyData;
-                resul.System = customer.ExternalSystem.Name;
+                resul.Customer = customer;
                 resul.ExternalSystems = externalSystems;
             }
 

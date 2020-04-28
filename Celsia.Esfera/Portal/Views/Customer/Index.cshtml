@@ -19,13 +19,13 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Cliente</label>
-                @Html.DropDownListFor(model => model.SystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Customer.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Código Cuenta / NIC</label>
-                @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Customer.Code, new { @class = "form-control" })
 
             </div>
         </div>
@@ -37,7 +37,7 @@
     </div>
 }
 
-@if (Model.Identification != null)
+@if (Model.Customer.Identification != null)
 {
 <hr>
 <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información Cliente</h6>
@@ -45,7 +45,7 @@
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Código de Cuenta</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Code)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Code)</p>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
@@ -57,13 +57,13 @@
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Nro. de Identificación</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Identification)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Identification)</p>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Nombre Completo</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.FistName)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.FirstName)</p>
         </div>
     </div>
 </div>
@@ -72,25 +72,25 @@
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Dirección</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Address)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Address)</p>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Teléfono</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.PhoneNumber)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.PhoneNumber)</p>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Móvil</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.MobileNumber)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.MobileNumber)</p>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Correo Electrónico</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Email)</p>
+            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Email)</p>
         </div>
     </div>
 </div>
