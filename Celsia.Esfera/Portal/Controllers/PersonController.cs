@@ -40,7 +40,7 @@ namespace Portal.Controllers
         // GET: Person
         public IActionResult Index()
         {
-            ICollection<Person> persons = this.personBussines.GetAllPersons();
+            ICollection<Person> persons = this.personBussines.GetAllPersonsNoVinculed();
 
             var personsList = new List<PersonViewModel>();
 
@@ -48,14 +48,7 @@ namespace Portal.Controllers
             {
                 var personItem = new PersonViewModel()
                 {
-                    Id = person.Id,
-                    FirstName = person.FirstName,
-                    LastName = person.LastName,
-                    Identification = person.Identification,
-                    IdentificationType = person.IdentificationType.Name,
-                    Interest = person.Interest.Name,
-                    PhoneNumber = person.PhoneNumber,
-                    Email = person.Email
+                    Person = person
                 };
                 personsList.Add(personItem);
             }
@@ -68,16 +61,21 @@ namespace Portal.Controllers
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();      
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+            Person personInitial = new Person();
+            personInitial.ExternalSystemId = 0;
+            personInitial.IdentificationTypeId = 0;
+            personInitial.InterestId = 0;
+
 
             PersonViewModel person = new PersonViewModel()
             {
+
                 ExternalSystems = externalSystems,
-                SystemId = 0,
                 IdentificationTypes = identificationTypes,
-                IdentificationTypeId = 0,
                 Interests = interests,
-                InterestId = 0
+                Person = personInitial
             };
 
             return this.View(person);
@@ -86,27 +84,13 @@ namespace Portal.Controllers
         // POST: Person/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PersonViewModel person)
+        public ActionResult Create(PersonViewModel personCreate)
         {
             try
             {
                 // TODO: Add insert logic here
 
-                Person personAdd = new Person() {
-                    Identification = person.Identification,
-                    IdentificationTypeId = person.IdentificationTypeId,
-                    FirstName = person.FirstName,
-                    LastName = person.LastName,
-                    PhoneNumber = person.PhoneNumber,
-                    MobileNumber = person.MobileNumber,
-                    Email = person.Email,
-                    Birthdate = person.Birthdate,
-                    InterestId = person.InterestId,
-                    PolicyData = person.PolicyData,
-                    ExternalSystemId = person.SystemId
-                };
-
-                var result = this.personBussines.AddAsync(personAdd);
+                var result = this.personBussines.AddAsync(personCreate.Person);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -127,19 +111,9 @@ namespace Portal.Controllers
 
             PersonViewModel personEdit = new PersonViewModel()
             {
-                Identification = person.Identification,
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                PhoneNumber = person.PhoneNumber,
-                MobileNumber = person.MobileNumber,
-                Email = person.Email,
-                Birthdate = person.Birthdate,
-                InterestId = person.InterestId,
-                PolicyData = person.PolicyData,
+                Person = person,
                 ExternalSystems = externalSystems,
-                SystemId = person.ExternalSystemId,
                 IdentificationTypes = identificationTypes,
-                IdentificationTypeId = person.IdentificationTypeId,
                 Interests = interests
             };
 
@@ -149,29 +123,13 @@ namespace Portal.Controllers
         // POST: Person/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PersonViewModel person)
+        public ActionResult Edit(int id, PersonViewModel personUpdate)
         {
             try
             {
                 // TODO: Add update logic here
 
-                Person personEdit = new Person()
-                {
-                    Id = id,
-                    Identification = person.Identification,
-                    IdentificationTypeId = person.IdentificationTypeId,
-                    FirstName = person.FirstName,
-                    LastName = person.LastName,
-                    PhoneNumber = person.PhoneNumber,
-                    MobileNumber = person.MobileNumber,
-                    Email = person.Email,
-                    Birthdate = person.Birthdate,
-                    InterestId = person.InterestId,
-                    PolicyData = person.PolicyData,
-                    ExternalSystemId = person.SystemId
-                };
-
-                var result = this.personBussines.EditAsync(personEdit);
+                var result = this.personBussines.EditAsync(personUpdate.Person);
 
                 return RedirectToAction(nameof(Index));
             }

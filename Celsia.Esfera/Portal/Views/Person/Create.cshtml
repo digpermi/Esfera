@@ -13,25 +13,25 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Identificación</label>
-                @Html.DropDownListFor(model => model.IdentificationTypeId, new SelectList(Model.IdentificationTypes, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Person.IdentificationTypeId, new SelectList(Model.IdentificationTypes, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Nro. de Identificación</label>
-                @Html.TextBoxFor(model => model.Identification, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.Identification, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Nombres</label>
-                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.FirstName, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Apellidos</label>
-                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.LastName, new { @class = "form-control" })
             </div>
         </div>
     </div>
@@ -40,25 +40,25 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Teléfono</label>
-                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.PhoneNumber, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Móvil</label>
-                @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.MobileNumber, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Correo Electrónico</label>
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.Email, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Fecha de Nacimimento</label>
-                @Html.TextBoxFor(model => model.Birthdate, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.Birthdate, new { @class = "form-control" })
             </div>
         </div>
     </div>
@@ -67,18 +67,18 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Interesado en</label>
-                @Html.DropDownListFor(model => model.InterestId, new SelectList(Model.Interests, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Person.InterestId, new SelectList(Model.Interests, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Sistema Asociado</label>
-                @Html.DropDownListFor(model => model.SystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Person.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group policy">
-                @Html.CheckBoxFor(model => model.PolicyData, new { @class = "form-checkbox" }) <span>Acepto política de datos</span>
+                @Html.CheckBoxFor(model => model.Person.PolicyData, new { @class = "form-checkbox" }) <span>Acepto política de datos</span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
