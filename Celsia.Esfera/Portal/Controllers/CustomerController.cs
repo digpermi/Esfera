@@ -43,7 +43,7 @@ namespace Portal.Controllers
         [HttpGet("{id}")]
         public ActionResult Details(int id)
         { 
-            Customer customer = this.customerBussines.GetAllCustomersById(1);
+            Customer customer = this.customerBussines.GetAllCustomersById(id);
 
             if (customer == null)
             {
@@ -54,22 +54,8 @@ namespace Portal.Controllers
 
             var resul = new CustomerViewModel()
             {
-                Code = customer.Code,
-                FistName = customer.FirstName,
-                LastName = customer.LastName,
-                Identification = customer.Identification,
-                IdentificationType = customer.IdentificationType.Name,
-                Address = customer.Address,
-                MobileNumber = customer.MobileNumber,
-                PhoneNumber = customer.PhoneNumber,
-                Email = customer.Email,
-                PolicyData = customer.PolicyData,
-                System = customer.ExternalSystem.Name,
-                ExternalSystems = externalSystems,
-                SystemId = 0
+                Customer = customer
             };
-
-
 
             return View(resul);
         }

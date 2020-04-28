@@ -16,12 +16,22 @@ namespace Bussines.Bussines
         }
 
         /// <summary>
-        /// Busca todas las personas
+        /// Busca todas las personas no vinculadas
         /// </summary>
         /// <returns></returns>
-        public ICollection<Person> GetAllPersons()
+        public ICollection<Person> GetAllPersonsNoVinculed()
         {
-            Task<List<Person>> task = this.repository.GetAsync(includeProperties : "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
+            Task<List<Person>> task = this.repository.GetAsync(x => x.CustomerId == null, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Busca todas las personas no vinculadas
+        /// </summary>
+        /// <returns></returns>
+        public ICollection<Person> GetAllPersonsVinculed(int customerId)
+        {
+            Task<List<Person>> task = this.repository.GetAsync(x => x.CustomerId == customerId, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
             return task.Result;
         }
 

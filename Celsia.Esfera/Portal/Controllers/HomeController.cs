@@ -30,29 +30,6 @@ namespace Portal.Controllers
 
         public IActionResult Index()
         {
-            //ApplicationMessage customerMessage;
-
-            //try
-            //{
-            //    //ir a base de datos
-            //   // System.Collections.Generic.List<Customer> customers = this.customerBussines.GetAllCustomersByFilter("D");
-
-            //    this.logger.LogError("Prueba Nlog");
-
-
-            //    customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerqueryOk);
-            //}
-            //catch (Exception ex)
-            //{
-            //    customerMessage = new ApplicationMessage(this.cache, MessageCode.Test);
-            //    this.logger.LogError(ex, customerMessage.Text);
-            //}
-
-            ////this.TestCustomer.UserMesage = customerMessage;
-            ///
-
-
-
             return this.View();
         }
 
