@@ -8,7 +8,9 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using ExcelDataReader;
 using Portal.ViewModels;
-
+using System.Data;
+using Entities.Models;
+using Utilities.File;
 
 namespace Portal.Controllers
 {
@@ -42,7 +44,6 @@ namespace Portal.Controllers
                     UploadRecordsToDataBase(fileName);
                     return RedirectToAction("Index");
                 }
-
             }
             else
             {
@@ -135,30 +136,11 @@ namespace Portal.Controllers
             string contentRootPath = _hostingEnvironment.ContentRootPath;
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
-            string resul = @"C:\Users\User\Documents\doc";
+            string resul = @"C:\Users\User\Documents\doc\Andromeda.csv";
 
-            using (var stream = System.IO.File.Open(Path.Combine(resul, fileName), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    while (reader.Read())
-                    {
-                        records.Add(new CustomerViewModel
-                        {
-                            FistName = reader.GetString(0),
-                            LastName = reader.GetString(1),
-                            PhoneNumber = reader.GetString(2),
-                            Address = reader.GetString(3)
+            CsvFile<Customer> csvFile = new CsvFile<Customer>(new CsvCustomerMapper());
+            List<Customer> Customers  = csvFile.ParseCSVFile().ToList();
 
-                        });
-                    }
-                }
-            }
-            if (records.Any())
-            {
-                //db.Users.AddRange(records);
-                //db.SaveChanges();
-            }
         }
 
         public void UploadTxt(string fileName)
