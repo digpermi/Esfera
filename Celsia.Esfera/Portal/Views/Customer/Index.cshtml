@@ -11,10 +11,6 @@
     <hr>
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Filtrar por</h6>
 
-    <input type="hidden" name="cod" value="@ViewBag.Code" />
-    <input type="hidden" name="system" value="@ViewBag.Syetem" />
-
-
     <div class="row ml-1 mr-1 mt-4">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
@@ -25,7 +21,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Código Cuenta / NIC</label>
-                @Html.TextBoxFor(x => x.Customer.Code, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Customer.Code, "{0:#.#}", new { @class = "form-control" })
 
             </div>
         </div>
@@ -39,145 +35,141 @@
 
 @if (Model.Customer.Identification != null)
 {
-<hr>
-<h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información Cliente</h6>
-<div class="row ml-1 mr-1 mt-4 pt-2">
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Código de Cuenta</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Code)</p>
+    <hr>
+    <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información Cliente</h6>
+    <div class="row ml-1 mr-1 mt-4 pt-2">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Código de Cuenta / NIC</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Code)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Tipo de Identificación</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.IdentificationType.Name)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Nro. de Identificación</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Identification)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Nombre Completo</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.FirstName) @Html.DisplayFor(model => model.Customer.LastName)</p>
+            </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Tipo de Identificación</label>
-            <p class="form-control border-0 ml-2">CC</p>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Nro. de Identificación</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Identification)</p>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Nombre Completo</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.FirstName)</p>
-        </div>
-    </div>
-</div>
 
-<div class="row ml-1 mr-1 mt-1">
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Dirección</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Address)</p>
+    <div class="row ml-1 mr-1 mt-1">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Dirección</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Address)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Teléfono</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.PhoneNumber)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Móvil</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.MobileNumber)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Correo Electrónico</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Email)</p>
+            </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Teléfono</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.PhoneNumber)</p>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Móvil</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.MobileNumber)</p>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Correo Electrónico</label>
-            <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.Email)</p>
-        </div>
-    </div>
-</div>
 
-<div class="row ml-1 mr-1 mt-1 mb-0 ">
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Política de Datos</label>
-            <p class="form-control border-0 ml-2">Sí</p>
+    <div class="row ml-1 mr-1 mt-1 mb-0 ">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Política de Datos</label>
+                <p class="form-control border-0 ml-2">
+                @if (Model.Customer.PolicyData)
+                {
+                    <text>Si</text>
+                }
+                else
+                {
+                    <text>No</text>
+                }
+                </p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Sistema Generador</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.Customer.ExternalSystem.Name)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+        </div>
+        <div class="col-xl-3 col-md-6">
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="form-group">
-            <label class="small mb-1">Sistema Generador</label>
-            <p class="form-control border-0 ml-2">SAC</p>
+
+    <hr>
+    <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Personas vinculadas</h6>
+
+    <p class="ml-3 mr-3 mb-4 mt-4">No hay personas vinculadas al cliente.</p>
+
+    <div class="row ml-1 mr-1 pt-3 pb-3">
+        <div class="col-xl-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Identificación</th>
+                            <th>Nro. de Identificación</th>
+                            <th>Nombre Completo</th>
+                            <th>Email</th>
+                            <th>Relación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var person in Model.Persons)
+                        {
+                            <tr>
+                                <td>@person.IdentificationType.Name</td>
+                                <td>@person.Identification</td>
+                                <td>@person.FirstName @person.LastName</td>
+                                <td>@person.Email</td>
+                                <td>@person.Relationship.Name</td>
+                                <td><a href="~/Customer/Edit/@person.Id"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Customer/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-    </div>
-    <div class="col-xl-3 col-md-6">
-    </div>
-</div>
 
-<hr>
-<h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Personas vinculadas</h6>
-
-<p class="ml-3 mr-3 mb-4 mt-4">No hay personas vinculadas al cliente.</p>
-
-<div class="row ml-1 mr-1 pt-3 pb-3">
-    <div class="col-xl-12 col-md-12">
-        <div class="table-responsive">
-            <table class="table" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Tipo de Identificación</th>
-                        <th>Nro. de Identificación</th>
-                        <th>Nombre Completo</th>
-                        <th>Relación</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>CC</td>
-                        <td>1128450919</td>
-                        <td>Diana Marín Cordoba</td>
-                        <td>Inquilino</td>
-                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
-                    </tr>
-                    <tr>
-                        <td>CE</td>
-                        <td>98518549</td>
-                        <td>Javier López García</td>
-                        <td>Propietario</td>
-                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
-                    </tr>
-                    <tr>
-                        <td>PT</td>
-                        <td>76439834</td>
-                        <td>Raúl Acuña</td>
-                        <td>Familiar</td>
-                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
-                    </tr>
-                    <tr>
-                        <td>CC</td>
-                        <td>46523499</td>
-                        <td>Viviana Castillo</td>
-                        <td>Empleado</td>
-                        <td><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="javascript:;"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="row ml-1 mr-1 mt-4 pt-2 mb-5">
+        <div class="col-xl-3 col-md-6">
+            <a class="btn btn-secondary btn-block" href="~/Customer/Create">Adicionar persona</a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+        </div>
+        <div class="col-xl-3 col-md-6">
+        </div>
+        <div class="col-xl-3 col-md-6">
         </div>
     </div>
-</div>
-
-<div class="row ml-1 mr-1 mt-4 pt-2 mb-5">
-    <div class="col-xl-3 col-md-6">
-        <a class="btn btn-secondary btn-block" href="login.html">Adicionar persona</a>
-    </div>
-    <div class="col-xl-3 col-md-6">
-    </div>
-    <div class="col-xl-3 col-md-6">
-    </div>
-    <div class="col-xl-3 col-md-6">
-    </div>
-</div>
 }
 
 

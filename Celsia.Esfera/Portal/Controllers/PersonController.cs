@@ -128,7 +128,7 @@ namespace Portal.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                personUpdate.Person.Id = id;
                 var result = this.personBussines.EditAsync(personUpdate.Person);
 
                 return RedirectToAction(nameof(Index));
