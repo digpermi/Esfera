@@ -15,12 +15,11 @@ namespace Utilities.File
             this.csvMapping = csvMapping;
         }
 
-        public IEnumerable<TEntity> ParseCSVFile()
+        public IEnumerable<TEntity> ParseCSVFile(string ruta)
         {
             CsvParserOptions csvParserOptions = new CsvParserOptions(true, ';');
             CsvParser<TEntity> csvParser = new CsvParser<TEntity>(csvParserOptions, this.csvMapping);
-            var result = csvParser.ReadFromFile(@"C:\Users\User\Documents\doc\Andromeda.csv", Encoding.ASCII);
-
+            var result = csvParser.ReadFromFile(ruta, Encoding.ASCII);
             return result.Select(x=>x.Result);
         }
     }

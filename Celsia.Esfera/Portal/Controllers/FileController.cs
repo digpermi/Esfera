@@ -1,26 +1,25 @@
-﻿using System;
-using System.Web;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using ExcelDataReader;
-using Portal.ViewModels;
-using System.Data;
 using Entities.Models;
 using Utilities.File;
+using Bussines.Bussines;
+using Bussines;
 
 namespace Portal.Controllers
 {
     public class FileController : Controller
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IFileBussines fileBussines;
 
-        public FileController(IWebHostEnvironment hostingEnvironment)
+        public FileController(IWebHostEnvironment hostingEnvironment, EsferaContext context)
         {
             _hostingEnvironment = hostingEnvironment;
+            this.fileBussines = new FileBussines(context);
         }
 
         // GET: File
@@ -32,27 +31,21 @@ namespace Portal.Controllers
         [HttpPost]
         public ActionResult UploadFile(IFormFile file)
         {
-            if (file.FileName.EndsWith(".xls") || file.FileName.EndsWith(".xlsx"))
+            var fileName = file.FileName;
+            
+            string filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
             {
-                if (!file.FileName.EndsWith(".xls") && !file.FileName.EndsWith(".xlsx"))
+                using (var stream = System.IO.File.Create(filePath))
                 {
-                    return View();
+                    file.CopyToAsync(stream);
                 }
-                else
-                {
-                    var fileName = file.FileName;
-                    UploadRecordsToDataBase(fileName);
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                var fileName = file.FileName;
-                UploadTxt(fileName);
-                return RedirectToAction("Index");
             }
 
-            return View();
+            UploadRecordsToDataBase(filePath);
+
+            return RedirectToAction("Index");
         }
 
         // GET: File/Details/5
@@ -132,45 +125,12 @@ namespace Portal.Controllers
 
         private void UploadRecordsToDataBase(string fileName)
         {
-            var records = new List<CustomerViewModel>();
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+           List<Person> person = new List<Person>();
 
-            string resul = @"C:\Users\User\Documents\doc\Andromeda.csv";
-
-            CsvFile<Customer> csvFile = new CsvFile<Customer>(new CsvCustomerMapper());
-            List<Customer> Customers  = csvFile.ParseCSVFile().ToList();
-
-        }
-
-        public void UploadTxt(string fileName)
-        {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var records = new List<CustomerViewModel>();
-            var datos = new List<string>();
-
-            string resul = @"C:\Users\User\Documents\doc\prueba.txt";
-
-            using (StreamReader leer = new StreamReader(resul))
-            {
-                string x;
-                while ((x = leer.ReadLine()) != null)
-                {
-                    datos.Add(x);
-                }
-                Customer customerRow = new Customer
-                {
-                    FirstName = datos[0].ToString(),
-                    LastName = datos[1].ToString(),
-                    PhoneNumber = datos[2].ToString(),
-                    Address = datos[3].ToString()
-                };
-                records.Add(new CustomerViewModel
-                {
-                    Customer = customerRow
-                });
-            }
-        }
+           CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
+           person = csvFile.ParseCSVFile(fileName).ToList();
+           bool Addfile = fileBussines.AddPersonVinculed(person); 
+        } 
     }
 
 }
