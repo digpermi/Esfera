@@ -6,6 +6,9 @@ namespace Portal.ViewModels
     public class CustomerViewModel : BaseViewModel
     {
         public Customer Customer { get; set; }
+
+        public ICollection<Person> Persons { get; set; }
+
         public ICollection<ExternalSystem> ExternalSystems { get; set; }
     }
 }

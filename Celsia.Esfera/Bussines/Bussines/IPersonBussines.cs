@@ -6,6 +6,7 @@ namespace Bussines.Bussines
     public interface IPersonBussines
     {
         ICollection<Person> GetAllPersonsNoVinculed();
+
         ICollection<Person> GetAllPersonsVinculed(int customerId);
 
         Person GetPersonById(int Id);

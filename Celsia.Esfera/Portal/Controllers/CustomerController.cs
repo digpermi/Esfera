@@ -13,7 +13,11 @@ namespace Portal.Controllers
     public class CustomerController:Controller
     {
         private readonly ICustomerBussines customerBussines;
+        private readonly IPersonBussines personBussines;
         private readonly IExternalSystemBussines externalSystemBussines;
+        private readonly IIdentificationTypeBussines identificationTypeBussines;
+        private readonly IInterestBussines interestBussines;
+        private readonly IRelationshipBussines relationshipBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
 
@@ -24,10 +28,15 @@ namespace Portal.Controllers
             this.logger = logger;
             this.cache = cache;
             this.customerBussines = new CustomerBussines(context);
+            this.personBussines = new PersonBussines(context);
             this.externalSystemBussines = new ExternalSystemBussines(context);
+            this.externalSystemBussines = new ExternalSystemBussines(context);
+            this.identificationTypeBussines = new IdentificationTypeBussines(context);
+            this.interestBussines = new InterestBussines(context);
+            this.relationshipBussines = new RelationshipBussines(context);
         }
 
-        // GET: Customer/Create
+        // GET: Customer/Index
         public ActionResult Index()
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
@@ -35,24 +44,27 @@ namespace Portal.Controllers
             Customer customerInitial = new Customer();
             customerInitial.ExternalSystemId = 0;
 
-            var resul = new CustomerViewModel()
+            var result = new CustomerViewModel()
             {
                 ExternalSystems = externalSystems,
                 Customer = customerInitial
             };
-            return View(resul);
+            return View(result);
         }
 
-        // POST: Customer/Create
+        // POST: Customer/Index
         [HttpPost]
-        [ValidateAntiForgeryToken]  // GET: Customer
+        [ValidateAntiForgeryToken]
         public IActionResult Index(CustomerViewModel customerView)
+        
         {
-            var resul = new CustomerViewModel();
+            var result = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
             Customer customer = this.customerBussines.GetCustomer(customerView.Customer.Code, customerView.Customer.ExternalSystemId.Value);
+
+            ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
 
             if (customer == null)
             {
@@ -60,37 +72,55 @@ namespace Portal.Controllers
             }
             else
             {
-                resul.Customer = customer;
-                resul.ExternalSystems = externalSystems;
+                result.Customer = customer;
+                result.ExternalSystems = externalSystems;
+                result.Persons = persons;
             }
 
-            return this.View(resul);
+            return this.View(result);
         }
 
-
-
-        // GET: Customer/Details/5
-        [HttpGet("{id}")]
-        public ActionResult Details()
-        { 
-            return View();
-        }
 
         // GET: Customer/Create
         public ActionResult Create()
         {
-            return View();
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
+
+            Person personInitial = new Person();
+            personInitial.ExternalSystemId = 0;
+            personInitial.IdentificationTypeId = 0;
+            personInitial.InterestId = 0;
+            personInitial.RelationshipId = 0;
+
+
+            PersonViewModel person = new PersonViewModel()
+            {
+
+                ExternalSystems = externalSystems,
+                IdentificationTypes = identificationTypes,
+                Interests = interests,
+                Relationships = relationships,
+                Person = personInitial
+            };
+
+            return this.View(person);
         }
+
 
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PersonViewModel personCreate)
         {
             try
             {
                 // TODO: Add insert logic here
 
+                var result = this.personBussines.AddAsync(personCreate.Person);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -99,20 +129,38 @@ namespace Portal.Controllers
             }
         }
 
-        // GET: Customer/Edit/5
+        // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Person person = this.personBussines.GetPersonById(id);
+
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
+
+            PersonViewModel personEdit = new PersonViewModel()
+            {
+                Person = person,
+                ExternalSystems = externalSystems,
+                IdentificationTypes = identificationTypes,
+                Interests = interests,
+                Relationships = relationships
+            };
+
+            return View(personEdit);
         }
 
-        // POST: Customer/Edit/5
+        // POST: Person/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, PersonViewModel personUpdate)
         {
             try
             {
                 // TODO: Add update logic here
+                personUpdate.Person.Id = id;
+                var result = this.personBussines.EditAsync(personUpdate.Person);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -122,20 +170,14 @@ namespace Portal.Controllers
             }
         }
 
-        // GET: Customer/Delete/5
+        // POST: Person/Delete/5
         public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Customer/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
+
+                var result = this.personBussines.DeleteAsync(id);
 
                 return RedirectToAction(nameof(Index));
             }

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Entities.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -125,12 +128,16 @@ namespace Portal.Controllers
 
         private void UploadRecordsToDataBase(string fileName)
         {
-           List<Person> person = new List<Person>();
+            var records = new List<CustomerViewModel>();
+            string contentRootPath = _hostingEnvironment.ContentRootPath;
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
-           CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
-           person = csvFile.ParseCSVFile(fileName).ToList();
-           bool Addfile = fileBussines.AddPersonVinculed(person); 
-        } 
-    }
+            string resul = @"C:\Users\User\Documents\doc\Andromeda.csv";
+
+            CsvFile<Customer> csvFile = new CsvFile<Customer>(new CsvCustomerMapper());
+            List<Customer> Customers = csvFile.ParseCSVFile().ToList();
+
+        }
+
 
 }

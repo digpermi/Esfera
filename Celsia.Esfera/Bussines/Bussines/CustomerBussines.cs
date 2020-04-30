@@ -17,9 +17,10 @@ namespace Bussines.Bussines
         }
 
         /// <summary>
-        /// Busca el cliente con el Id
+        /// Busca el cliente con el código y sistema
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="code"></param>
+        /// <param name="system"></param>
         /// <returns></returns>
         public Customer GetCustomer(int cod, byte externalSystemId)
         {
