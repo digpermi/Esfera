@@ -30,5 +30,19 @@ namespace Bussines.Bussines
             return task.Result.FirstOrDefault();
         }
 
+
+        /// <summary>
+        /// Busca el cliente con el id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Customer GetCustomerById(int id)
+        {
+            Task<List<Customer>> task = this.repository.GetAsync(x => x.Id == id);
+            task.Wait();
+
+            return task.Result.FirstOrDefault();
+        }
+
     }
 }

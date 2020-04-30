@@ -9,20 +9,23 @@
 
 @using (Html.BeginForm("Create", "Customer", FormMethod.Post))
 {
-    <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Cliente</h6>
+    <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información del Cliente</h6>
 
     <div class="row ml-1 mr-1 mt-4">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Cliente</label>
-                @Html.DropDownListFor(model => model.Person.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
-                @Html.TextBoxFor(model => model.Person.CustomerId, new { @class = "hidden" })
+                @Html.DropDownListFor(model => model.Person.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control", @disabled = "disabled" })
+                @Html.HiddenFor(model => model.Person.ExternalSystemId)
+                @Html.HiddenFor(model => model.Person.Code)
+                @Html.HiddenFor(model => model.Person.CustomerId)
+
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Código Cuenta / NIC</label>
-                @Html.TextBoxFor(model => model.Person.Code, "{0:#.#}", new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Person.Code, "{0:#.#}", new { @class = "form-control", @disabled = "disabled" })
 
             </div>
         </div>
@@ -32,32 +35,36 @@
         </div>
     </div>
     
-    <hr>
-    <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información de la Persona</h6>
+    <hr class="mt-0">
+    <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información del Vinculado</h6>
 
     <div class="row ml-1 mr-1 mt-4 pt-2">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Tipo de Identificación</label>
+                <label class="small mb-1">Tipo de Identificación *</label>
                 @Html.DropDownListFor(model => model.Person.IdentificationTypeId, new SelectList(Model.IdentificationTypes, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.IdentificationTypeId, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Nro. de Identificación</label>
+                <label class="small mb-1">Nro. de Identificación *</label>
                 @Html.TextBoxFor(model => model.Person.Identification, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.Identification, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Nombres</label>
+                <label class="small mb-1">Nombres *</label>
                 @Html.TextBoxFor(model => model.Person.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.FirstName, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Apellidos</label>
+                <label class="small mb-1">Apellidos *</label>
                 @Html.TextBoxFor(model => model.Person.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.LastName, null, new { @class = "label label-danger" })
             </div>
         </div>
     </div>
@@ -71,20 +78,23 @@
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Móvil</label>
+                <label class="small mb-1">Móvil *</label>
                 @Html.TextBoxFor(model => model.Person.MobileNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.MobileNumber, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Relación</label>
+                <label class="small mb-1">Relación *</label>
                 @Html.DropDownListFor(model => model.Person.RelationshipId, new SelectList(Model.Relationships, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.RelationshipId, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Correo Electrónico</label>
+                <label class="small mb-1">Correo Electrónico *</label>
                 @Html.TextBoxFor(model => model.Person.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.Email, null, new { @class = "label label-danger" })
             </div>
         </div>
     </div>
@@ -92,14 +102,16 @@
     <div class="row ml-1 mr-1 mt-1 mb-5 ">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Fecha de Nacimimento</label>
-                @Html.TextBoxFor(model => model.Person.Birthdate, new { @class = "form-control" })
+                <label class="small mb-1">Fecha de Nacimimento *</label>
+                @Html.TextBoxFor(model => model.Person.Birthdate, "{0:dd/MM/yyyy}", new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.Person.Birthdate, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Interesado en</label>
+                <label class="small mb-1">Interesado en *</label>
                 @Html.DropDownListFor(model => model.Person.InterestId, new SelectList(Model.Interests, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.InterestId, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
