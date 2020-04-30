@@ -9,6 +9,8 @@ namespace Bussines.Bussines
 
         ICollection<Person> GetAllPersonsVinculed(int customerId);
 
+        void UploadVinculatedPersons(string fileName);
+
         Person GetPersonById(int Id);
 
         Person AddAsync(Person person);

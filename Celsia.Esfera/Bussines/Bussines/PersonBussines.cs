@@ -3,16 +3,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bussines.Data;
 using Entities.Models;
+using Utilities.File;
 
 namespace Bussines.Bussines
 {
     public class PersonBussines : IPersonBussines
     {
         private readonly IRepository<Person> repository;
+        private readonly ICustomerBussines customerBussines;
 
         public PersonBussines(EsferaContext context)
         {
             this.repository = new PersonRepository(context);
+            this.customerBussines = new CustomerBussines(context);
         }
 
         /// <summary>
@@ -74,6 +77,33 @@ namespace Bussines.Bussines
         {
             Task<Person> task = this.repository.DeleteAsync(Id);
             return task.Result;
+        }
+
+        public void UploadVinculatedPersons(string fileName)
+        {
+            CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
+
+            List<Person> person = csvFile.ParseCSVFile(fileName).ToList();
+
+            this.ProcessviculatedPersons(person);
+        }
+
+        private void ProcessviculatedPersons(List<Person> person)
+        {
+            foreach (Person item in person)
+            {
+                Customer customer = this.customerBussines.GetCustomerById(item.Code.Value);
+
+                if (customer != null)
+                {
+                    this.AddAsync(item);
+                }
+                else
+                {
+                    //error
+
+                }
+            }
         }
 
     }

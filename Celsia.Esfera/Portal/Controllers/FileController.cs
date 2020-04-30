@@ -1,66 +1,54 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Entities.Models;
+﻿using System.IO;
+using Bussines;
+using Bussines.Bussines;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Entities.Models;
-using Utilities.File;
-using Bussines.Bussines;
-using Bussines;
 
 namespace Portal.Controllers
 {
     public class FileController : Controller
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IFileBussines fileBussines;
+        private readonly IPersonBussines personBussines;
 
         public FileController(IWebHostEnvironment hostingEnvironment, EsferaContext context)
         {
-            _hostingEnvironment = hostingEnvironment;
-            this.fileBussines = new FileBussines(context);
+            this._hostingEnvironment = hostingEnvironment;
+            this.personBussines = new PersonBussines(context);
         }
 
         // GET: File
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         [HttpPost]
         public ActionResult UploadFile(IFormFile file)
         {
-            var fileName = file.FileName;
-            
-            string filePath = Path.GetTempFileName();
+            string tempPath = Path.GetTempFileName();
 
-            if (file.Length > 0)
+            using (FileStream stream = System.IO.File.Create(tempPath))
             {
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    file.CopyToAsync(stream);
-                }
+                file.CopyToAsync(stream);
             }
 
-            UploadRecordsToDataBase(filePath);
+            this.personBussines.UploadVinculatedPersons(tempPath);
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction("Index");
         }
 
         // GET: File/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return this.View();
         }
 
         // GET: File/Create
         public ActionResult Create()
         {
-            return View();
+            return this.View();
         }
 
         // POST: File/Create
@@ -72,18 +60,18 @@ namespace Portal.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
         // GET: File/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: File/Edit/5
@@ -95,18 +83,18 @@ namespace Portal.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
         // GET: File/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: File/Delete/5
@@ -118,26 +106,14 @@ namespace Portal.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
-
-        private void UploadRecordsToDataBase(string fileName)
-        {
-            var records = new List<CustomerViewModel>();
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-
-            string resul = @"C:\Users\User\Documents\doc\Andromeda.csv";
-
-            CsvFile<Customer> csvFile = new CsvFile<Customer>(new CsvCustomerMapper());
-            List<Customer> Customers = csvFile.ParseCSVFile().ToList();
-
-        }
+    }
 
 
 }

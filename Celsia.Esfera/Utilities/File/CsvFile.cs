@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TinyCsvParser;
@@ -19,8 +18,8 @@ namespace Utilities.File
         {
             CsvParserOptions csvParserOptions = new CsvParserOptions(true, ';');
             CsvParser<TEntity> csvParser = new CsvParser<TEntity>(csvParserOptions, this.csvMapping);
-            var result = csvParser.ReadFromFile(ruta, Encoding.ASCII);
-            return result.Select(x=>x.Result);
+            ParallelQuery<CsvMappingResult<TEntity>> result = csvParser.ReadFromFile(ruta, Encoding.ASCII);
+            return result.Select(x => x.Result);
         }
     }
 }
