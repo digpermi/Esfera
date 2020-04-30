@@ -22,9 +22,9 @@ namespace Bussines.Bussines
         /// <param name="code"></param>
         /// <param name="system"></param>
         /// <returns></returns>
-        public Customer GetCustomer(int code, byte system)
+        public Customer GetCustomer(int code, byte systemId)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Code == code && x.ExternalSystemId == system, includeProperties: "IdentificationType,ExternalSystem");
+            Task<List<Customer>> task = this.repository.GetAsync(x=>x.Code == code && x.ExternalSystemId == systemId , includeProperties: "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();

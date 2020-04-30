@@ -2025,6 +2025,7 @@ pre code {
   border: 1.5px solid #d6d6d6;
   border-radius: 0.6rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-bottom: 5px;
 }
 
 .form-checkbox {
@@ -2043,8 +2044,14 @@ pre code {
   margin-top: 15px;
 }
 
+.field-validation-error {
+  color: red;
+  margin-left: 15px;
+  font-weight: 500;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .form-control {
+    .form-control {
     transition: none;
   }
 }

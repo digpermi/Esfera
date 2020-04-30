@@ -55,14 +55,13 @@ namespace Portal.Controllers
         // POST: Customer/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(CustomerViewModel customerView)
-        
+        public IActionResult Index(int code, byte externalsystemid)
         {
             var result = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
-            Customer customer = this.customerBussines.GetCustomer(customerView.Customer.Code, customerView.Customer.ExternalSystemId.Value);
+            Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
 
             ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
 
@@ -74,7 +73,7 @@ namespace Portal.Controllers
             {
                 result.Customer = customer;
                 result.ExternalSystems = externalSystems;
-                result.Persons = persons;
+                result.Customer.Persons = persons;
             }
 
             return this.View(result);
@@ -98,7 +97,6 @@ namespace Portal.Controllers
 
             PersonViewModel person = new PersonViewModel()
             {
-
                 ExternalSystems = externalSystems,
                 IdentificationTypes = identificationTypes,
                 Interests = interests,
