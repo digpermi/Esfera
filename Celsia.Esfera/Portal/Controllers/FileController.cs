@@ -1,15 +1,11 @@
-﻿using System;
-using System.Web;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Entities.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using ExcelDataReader;
 using Portal.ViewModels;
-using System.Data;
-using Entities.Models;
 using Utilities.File;
 
 namespace Portal.Controllers
@@ -139,7 +135,7 @@ namespace Portal.Controllers
             string resul = @"C:\Users\User\Documents\doc\Andromeda.csv";
 
             CsvFile<Customer> csvFile = new CsvFile<Customer>(new CsvCustomerMapper());
-            List<Customer> Customers  = csvFile.ParseCSVFile().ToList();
+            List<Customer> Customers = csvFile.ParseCSVFile().ToList();
 
         }
 
