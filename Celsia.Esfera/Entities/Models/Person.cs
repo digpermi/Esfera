@@ -21,9 +21,11 @@ namespace Entities.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string LastName { get; set; }
 
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Teléfono inválido")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Móvil inválido")]
         public string MobileNumber { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
