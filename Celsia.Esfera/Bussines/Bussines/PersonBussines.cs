@@ -43,9 +43,20 @@ namespace Bussines.Bussines
         /// Busca persona por id
         /// </summary>
         /// <returns></returns>
-        public Person GetPersonById(int Id)
+        public Person GetPersonById(int id)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Id.Equals(Id));
+            Task<List<Person>> task = this.repository.GetAsync(x => x.Id.Equals(id));
+            return task.Result.FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Busca persona por identificacion
+        /// </summary>
+        /// <returns></returns>
+        public Person GetPersonByIdentification(int identification)
+        {
+            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification.Equals(identification));
             return task.Result.FirstOrDefault();
         }
 
@@ -93,8 +104,8 @@ namespace Bussines.Bussines
         {
             foreach (Person item in person)
             {
-                Customer customer = this.customerBussines.GetCustomerById(item.Code.Value);
-                Person ExistPeron = this.GetPersonById(Convert.ToInt32(item.Identification));
+                Customer customer = this.customerBussines.GetCustomerByCode(item.Code.Value);
+                Person ExistPeron = this.GetPersonByIdentification(Convert.ToInt32(item.Identification));
 
                 if (customer != null && ExistPeron == null)
                 {

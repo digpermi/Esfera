@@ -13,6 +13,8 @@ namespace Bussines.Bussines
 
         Person GetPersonById(int Id);
 
+        Person GetPersonByIdentification(int identificationd);
+
         Person AddAsync(Person person);
 
         Person EditAsync(Person person);

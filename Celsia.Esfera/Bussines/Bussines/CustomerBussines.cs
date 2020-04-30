@@ -30,9 +30,9 @@ namespace Bussines.Bussines
             return task.Result.FirstOrDefault();
         }
 
-        public Customer GetCustomerById(int cod)
+        public Customer GetCustomerByCode(int code)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == cod, null, "IdentificationType,ExternalSystem");
+            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code, null, "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();
