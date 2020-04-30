@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bussines.Data;
@@ -93,8 +94,9 @@ namespace Bussines.Bussines
             foreach (Person item in person)
             {
                 Customer customer = this.customerBussines.GetCustomerById(item.Code.Value);
+                Person ExistPeron = this.GetPersonById(Convert.ToInt32(item.Identification));
 
-                if (customer != null)
+                if (customer != null && ExistPeron == null)
                 {
                     this.AddAsync(item);
                 }

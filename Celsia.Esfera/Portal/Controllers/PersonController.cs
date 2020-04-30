@@ -71,7 +71,6 @@ namespace Portal.Controllers
 
             PersonViewModel person = new PersonViewModel()
             {
-
                 ExternalSystems = externalSystems,
                 IdentificationTypes = identificationTypes,
                 Interests = interests,

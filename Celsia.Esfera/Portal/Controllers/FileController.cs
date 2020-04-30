@@ -4,6 +4,7 @@ using Bussines.Bussines;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace Portal.Controllers
 {
@@ -35,10 +36,10 @@ namespace Portal.Controllers
             }
 
             this.personBussines.UploadVinculatedPersons(tempPath);
-
-            return this.RedirectToAction("Index");
+                   return this.RedirectToAction("Index");
         }
 
+       
         // GET: File/Details/5
         public ActionResult Details(int id)
         {
