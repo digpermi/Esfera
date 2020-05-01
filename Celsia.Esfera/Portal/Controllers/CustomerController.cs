@@ -139,7 +139,7 @@ namespace Portal.Controllers
                     return View(personCreate);
                 }
 
-                
+
             }
             catch
             {
@@ -199,7 +199,7 @@ namespace Portal.Controllers
 
                     return View(personUpdate);
                 }
-                
+
             }
             catch
             {

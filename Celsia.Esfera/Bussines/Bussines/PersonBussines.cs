@@ -52,8 +52,10 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonById(int id)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Id.Equals(id));
-            return task.Result.FirstOrDefault();
+            Task<Person> task = this.repository.GetAsync(id);
+            task.Wait();
+
+            return task.Result;
         }
 
 
@@ -119,9 +121,11 @@ namespace Bussines.Bussines
 
                 List<ValidationResult> validationResults = new List<ValidationResult>();
 
-                Person ExistPeron = this.GetPersonByIdentification(Convert.ToInt32(item.Identification));
+                Person actualPerson = this.GetPersonByIdentification(Convert.ToInt32(person.Identification));
+                //validar si la persona existe y mostrar el mensaje
 
-                Customer customer = this.customerBussines.GetCustomerById(person.Code);
+
+                Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
                 if (customer != null)
                 {
                     person.ExternalSystemId = customer.ExternalSystemId;
