@@ -15,13 +15,13 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Cliente</label>
-                @Html.DropDownListFor(model => model.Customer.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.DropDownList("externalsystemid", new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Código Cuenta / NIC</label>
-                @Html.TextBoxFor(model => model.Customer.Code, "{0:#.#}", new { @class = "form-control" })
+                @Html.TextBox("code", "", new { @class = "form-control" })
 
             </div>
         </div>
@@ -140,7 +140,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var person in Model.Persons)
+                        @foreach (var person in Model.Customer.Persons)
                         {
                             <tr>
                                 <td>@person.IdentificationType.Name</td>
@@ -161,7 +161,7 @@
 
     <div class="row ml-1 mr-1 mt-4 pt-2 mb-5">
         <div class="col-xl-3 col-md-6">
-            <a class="btn btn-secondary btn-block" href="~/Customer/Create">Adicionar persona</a>
+            <a class="btn btn-secondary btn-block" href="~/Customer/Create/@Model.Customer.Id">Adicionar persona</a>
         </div>
         <div class="col-xl-3 col-md-6">
         </div>

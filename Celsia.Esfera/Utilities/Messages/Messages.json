@@ -1,12 +1,17 @@
 ﻿[
   {
     "Code": 1,
-    "Text": "Message for test the application.",
+    "Text": "La persona fue adicionada con éxito.",
     "Type": 1
   },
   {
     "Code": 2,
-    "Text": "Customer query ok.",
+    "Text": "La persona fue actualizada con éxito",
+    "Type": 1
+  },
+  {
+    "Code": 3,
+    "Text": "La persona fue eliminada con éxito.",
     "Type": 1
   },
   {

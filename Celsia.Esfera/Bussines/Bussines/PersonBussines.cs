@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,9 +50,20 @@ namespace Bussines.Bussines
         /// Busca persona por id
         /// </summary>
         /// <returns></returns>
-        public Person GetPersonById(int Id)
+        public Person GetPersonById(int id)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Id.Equals(Id));
+            Task<List<Person>> task = this.repository.GetAsync(x => x.Id.Equals(id));
+            return task.Result.FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Busca persona por identificacion
+        /// </summary>
+        /// <returns></returns>
+        public Person GetPersonByIdentification(int identification)
+        {
+            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification.Equals(identification));
             return task.Result.FirstOrDefault();
         }
 
@@ -106,6 +118,8 @@ namespace Bussines.Bussines
                 ApplicationMessage errorMessage;
 
                 List<ValidationResult> validationResults = new List<ValidationResult>();
+
+                Person ExistPeron = this.GetPersonByIdentification(Convert.ToInt32(item.Identification));
 
                 Customer customer = this.customerBussines.GetCustomerById(person.Code);
                 if (customer != null)

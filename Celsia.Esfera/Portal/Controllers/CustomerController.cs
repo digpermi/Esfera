@@ -54,14 +54,13 @@ namespace Portal.Controllers
         // POST: Customer/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(CustomerViewModel customerView)
-
+        public IActionResult Index(int code, byte externalsystemid)
         {
             var result = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
-            Customer customer = this.customerBussines.GetCustomer(customerView.Customer.Code, customerView.Customer.ExternalSystemId.Value);
+            Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
 
             ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
 
@@ -73,23 +72,26 @@ namespace Portal.Controllers
             {
                 result.Customer = customer;
                 result.ExternalSystems = externalSystems;
-                result.Persons = persons;
+                result.Customer.Persons = persons;
             }
 
             return this.View(result);
         }
 
 
-        // GET: Customer/Create
-        public ActionResult Create()
+        // GET: Customer/Create/5
+        public ActionResult Create(int id)
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
             ICollection<Interest> interests = this.interestBussines.GetAllInterests();
             ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
+            Customer customer = this.customerBussines.GetCustomerById(id);
 
             Person personInitial = new Person();
-            personInitial.ExternalSystemId = 0;
+            personInitial.ExternalSystemId = customer.ExternalSystemId;
+            personInitial.Code = customer.Code;
+            personInitial.CustomerId = customer.Id;
             personInitial.IdentificationTypeId = 0;
             personInitial.InterestId = 0;
             personInitial.RelationshipId = 0;
@@ -97,7 +99,6 @@ namespace Portal.Controllers
 
             PersonViewModel person = new PersonViewModel()
             {
-
                 ExternalSystems = externalSystems,
                 IdentificationTypes = identificationTypes,
                 Interests = interests,
@@ -117,10 +118,28 @@ namespace Portal.Controllers
             try
             {
                 // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    var result = this.personBussines.AddAsync(personCreate.Person);
 
-                var result = this.personBussines.AddAsync(personCreate.Person);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+                    ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
 
-                return RedirectToAction(nameof(Index));
+                    personCreate.ExternalSystems = externalSystems;
+                    personCreate.IdentificationTypes = identificationTypes;
+                    personCreate.Interests = interests;
+                    personCreate.Relationships = relationships;
+
+                    return View(personCreate);
+                }
+
+                
             }
             catch
             {
@@ -158,10 +177,29 @@ namespace Portal.Controllers
             try
             {
                 // TODO: Add update logic here
-                personUpdate.Person.Id = id;
-                var result = this.personBussines.EditAsync(personUpdate.Person);
 
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    personUpdate.Person.Id = id;
+                    var result = this.personBussines.EditAsync(personUpdate.Person);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+                    ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
+
+                    personUpdate.ExternalSystems = externalSystems;
+                    personUpdate.IdentificationTypes = identificationTypes;
+                    personUpdate.Interests = interests;
+                    personUpdate.Relationships = relationships;
+
+                    return View(personUpdate);
+                }
+                
             }
             catch
             {
