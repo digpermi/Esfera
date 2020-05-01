@@ -202,11 +202,22 @@ namespace Portal.Controllers
                 // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {
-                    personUpdate.Person.Id = id;
-                    var result = this.personBussines.EditAsync(personUpdate.Person);
-                    personMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
-                    TempData["Message"] = JsonConvert.SerializeObject(personMessage);
-                    return RedirectToAction("Index", "Person");
+                    Person personValid = this.personBussines.GetPersonByIdentificationById(personUpdate.Person.Identification, id);
+
+                    if (personValid != null)
+                    {
+                        personMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personUpdate.Person.Identification);
+                        personUpdate.UserMesage = personMessage;
+                        return View(personUpdate);
+                    }
+                    else
+                    {
+                        personUpdate.Person.Id = id;
+                        var result = this.personBussines.EditAsync(personUpdate.Person);
+                        personMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
+                        TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                        return RedirectToAction("Index", "Person");
+                    }                    
                 }
                 else
                 {
@@ -221,6 +232,7 @@ namespace Portal.Controllers
                 return View(personUpdate);
             }
         }
+
 
         // POST: Person/Delete/5
         public ActionResult Delete(int id)
