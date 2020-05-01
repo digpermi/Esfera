@@ -13,5 +13,11 @@
     "Code": 3,
     "Text": "La persona fue eliminada con éxito.",
     "Type": 1
+  },
+  {
+    "Code": 3,
+    "Text": "La fila {0} tiene los siguientes errores: {1}",
+    "Type": 4
   }
+
 ]

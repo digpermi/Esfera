@@ -16,5 +16,15 @@
         Test = 1,
 
         CustomerqueryOk = 2,
+
+        /// <summary>
+        /// La fila {0} tiene los siguientes errores: {1}
+        /// </summary>
+        InvalidPersonRow = 3,
+
+        /// <summary>
+        /// El código {0}, no existe como cliente.
+        /// </summary>
+        PersonCustomerNotValid = 4,
     }
 }

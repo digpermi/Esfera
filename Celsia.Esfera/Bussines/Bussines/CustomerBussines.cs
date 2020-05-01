@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Bussines.Data;
 using Entities.Models;
@@ -23,20 +22,28 @@ namespace Bussines.Bussines
         /// <param name="system"></param>
         /// <returns></returns>
 
-        public Customer GetCustomer(int cod, byte externalSystemId)
+        public Customer GetCustomer(int code, byte externalSystemId)
         {
-           Task<List<Customer>> task = this.repository.GetAsync(x=>x.Code == cod && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem");
+            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();
         }
 
-        public Customer GetCustomerByCode(int code)
+        public Customer GetCustomerByCode(int? code)
         {
             Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code, null, "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            Task<Customer> task = this.repository.GetAsync(id);
+            task.Wait();
+
+            return task.Result;
         }
     }
 }

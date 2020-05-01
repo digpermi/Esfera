@@ -1,16 +1,15 @@
-﻿using Bussines;
+﻿using System.Collections.Generic;
+using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
-using System.Collections.Generic;
 using Utilities.Cache;
 
 namespace Portal.Controllers
 {
-    public class CustomerController:Controller
+    public class CustomerController : Controller
     {
         private readonly ICustomerBussines customerBussines;
         private readonly IPersonBussines personBussines;
@@ -28,7 +27,7 @@ namespace Portal.Controllers
             this.logger = logger;
             this.cache = cache;
             this.customerBussines = new CustomerBussines(context);
-            this.personBussines = new PersonBussines(context);
+            this.personBussines = new PersonBussines(context, this.cache);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
@@ -140,7 +139,7 @@ namespace Portal.Controllers
                     return View(personCreate);
                 }
 
-                
+
             }
             catch
             {
@@ -200,7 +199,7 @@ namespace Portal.Controllers
 
                     return View(personUpdate);
                 }
-                
+
             }
             catch
             {

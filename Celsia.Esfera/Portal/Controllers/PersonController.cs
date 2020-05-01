@@ -1,20 +1,15 @@
-﻿using Bussines;
+﻿using System.Collections.Generic;
+using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Utilities.Cache;
-using Utilities.Messages;
 
 namespace Portal.Controllers
 {
-    public class PersonController:Controller
+    public class PersonController : Controller
     {
         private readonly IPersonBussines personBussines;
         private readonly IExternalSystemBussines externalSystemBussines;
@@ -29,7 +24,7 @@ namespace Portal.Controllers
         {
             this.logger = logger;
             this.cache = cache;
-            this.personBussines = new PersonBussines(context);
+            this.personBussines = new PersonBussines(context, this.cache);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
             this.interestBussines = new InterestBussines(context);

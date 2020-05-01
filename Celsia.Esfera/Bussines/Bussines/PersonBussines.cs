@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Bussines.Data;
 using Entities.Models;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore.Internal;
+using Utilities.Cache;
 using Utilities.File;
+using Utilities.Messages;
 
 namespace Bussines.Bussines
 {
@@ -12,11 +17,13 @@ namespace Bussines.Bussines
     {
         private readonly IRepository<Person> repository;
         private readonly ICustomerBussines customerBussines;
+        private readonly ICacheUtility cache;
 
-        public PersonBussines(EsferaContext context)
+        public PersonBussines(EsferaContext context, ICacheUtility cache)
         {
             this.repository = new PersonRepository(context);
             this.customerBussines = new CustomerBussines(context);
+            this.cache = cache;
         }
 
         /// <summary>
@@ -45,8 +52,10 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonById(int id)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Id.Equals(id));
-            return task.Result.FirstOrDefault();
+            Task<Person> task = this.repository.GetAsync(id);
+            task.Wait();
+
+            return task.Result;
         }
 
 
@@ -91,33 +100,73 @@ namespace Bussines.Bussines
             return task.Result;
         }
 
-        public void UploadVinculatedPersons(string fileName)
+        public void UploadVinculatedPersons(string fileName, IValidator validator)
         {
             CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
 
-            List<Person> person = csvFile.ParseCSVFile(fileName).ToList();
+            List<Person> persons = csvFile.ParseCSVFile(fileName).ToList();
 
-            this.ProcessviculatedPersons(person);
+
+            List<ApplicationMessage> processMessages = this.ProcessViculatedPersons(persons);
         }
 
-        private void ProcessviculatedPersons(List<Person> person)
+        private List<ApplicationMessage> ProcessViculatedPersons(List<Person> persons)
         {
-            foreach (Person item in person)
-            {
-                Customer customer = this.customerBussines.GetCustomerByCode(item.Code.Value);
-                Person ExistPeron = this.GetPersonByIdentification(Convert.ToInt32(item.Identification));
+            List<ApplicationMessage> processMessages = new List<ApplicationMessage>();
 
-                if (customer != null && ExistPeron == null)
+            int rowCont = 1;
+            foreach (Person person in persons)
+            {
+                ApplicationMessage errorMessage;
+
+                List<ValidationResult> validationResults = new List<ValidationResult>();
+
+                Person actualPerson = this.GetPersonByIdentification(Convert.ToInt32(person.Identification));
+                //validar si la persona existe y mostrar el mensaje
+
+
+                Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
+                if (customer != null)
                 {
-                    this.AddAsync(item);
+                    person.ExternalSystemId = customer.ExternalSystemId;
+
+                    Validator.TryValidateObject(person, new System.ComponentModel.DataAnnotations.ValidationContext(person), validationResults, true);
+
+                    errorMessage = this.GetPersonErroMessage(rowCont, validationResults);
+
+                    if (errorMessage == null)
+                    {
+                        this.AddAsync(person);
+                    }
                 }
                 else
                 {
-                    //error
+                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonCustomerNotValid, person.Code);
+                }
 
+                if (errorMessage != null)
+                {
+                    processMessages.Add(errorMessage);
                 }
             }
+
+            return processMessages;
         }
 
+        private ApplicationMessage GetPersonErroMessage(int rowCont, List<ValidationResult> validationResults)
+        {
+            ApplicationMessage errorMessage = null;
+
+            if (validationResults.Any())
+            {
+                IEnumerable<string> errorMessages = from error in validationResults
+                                                    let fieldsWithErros = string.Join(',', error.MemberNames)
+                                                    select string.Format("{0}: {1}", fieldsWithErros, error.ErrorMessage);
+
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.InvalidPersonRow, rowCont, string.Join('-', errorMessages));
+            }
+
+            return errorMessage;
+        }
     }
 }
