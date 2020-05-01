@@ -24,7 +24,6 @@ namespace Portal.Controllers
         private readonly ICacheUtility cache;
         private readonly ILogger<PersonController> logger;
 
-        public PersonViewModel TestPerson { get; set; }
 
         public PersonController(EsferaContext context, ILogger<PersonController> logger, ICacheUtility cache)
         {
@@ -87,12 +86,29 @@ namespace Portal.Controllers
         public ActionResult Create(PersonViewModel personCreate)
         {
             try
-            {
+                {
                 // TODO: Add insert logic here
 
-                var result = this.personBussines.AddAsync(personCreate.Person);
+                if (ModelState.IsValid)
+                {
+                    var result = this.personBussines.AddAsync(personCreate.Person);
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+                    personCreate.ExternalSystems = externalSystems;
+                    personCreate.IdentificationTypes = identificationTypes;
+                    personCreate.Interests = interests;
+
+                    return View(personCreate);
+                }
+
+                
             }
             catch
             {
@@ -128,10 +144,26 @@ namespace Portal.Controllers
             try
             {
                 // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    personUpdate.Person.Id = id;
+                    var result = this.personBussines.EditAsync(personUpdate.Person);
 
-                var result = this.personBussines.EditAsync(personUpdate.Person);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
 
-                return RedirectToAction(nameof(Index));
+                    personUpdate.ExternalSystems = externalSystems;
+                    personUpdate.IdentificationTypes = identificationTypes;
+                    personUpdate.Interests = interests;
+
+                    return View(personUpdate);
+                }
+                
             }
             catch
             {

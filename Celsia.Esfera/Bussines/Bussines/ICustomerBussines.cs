@@ -5,6 +5,8 @@ namespace Bussines.Bussines
 {
     public interface ICustomerBussines
     {
-        Customer GetAllCustomersById(int Id);
+        Customer GetCustomer(int code, byte systemId);
+
+        Customer GetCustomerById(int id);
     }
 }
