@@ -4883,6 +4883,14 @@ a.badge-dark:focus, a.badge-dark.focus {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
+}
+
+.alert.alert-error {
+  padding: 0rem;
+  margin-bottom: 0rem;
+  border: 0;
 }
 
 .alert-heading {

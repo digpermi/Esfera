@@ -11,33 +11,43 @@
         None = 0,
 
         /// <summary>
+        /// Error del sistema
+        /// </summary>
+        GeneralError = 1,
+
+        /// <summary>
         /// Cliente no registrado
         /// </summary>
-        CustomerNotFound = 1,
+        CustomerNotFound = 2,
 
         /// <summary>
-        /// Cliente adicionado
+        /// Persona adicionada
         /// </summary>
-        CustomerAdded = 2,
+        PersonAdded = 3,
 
         /// <summary>
-        /// Cliente editado
+        /// Persona editada
         /// </summary>
-        CustomerEdited = 3,
+        PersonEdited = 4,
 
         /// <summary>
-        /// Cliente eliminado
+        /// Persona eliminada
         /// </summary>
-        CustomerDeleted = 4,
+        PersonDeleted = 5,
+
+        /// <summary>
+        /// Persona eliminada
+        /// </summary>
+        PersonExist = 6,
 
         /// <summary>
         /// La fila {0} tiene los siguientes errores: {1}
         /// </summary>
-        InvalidPersonRow = 5,
+        InvalidPersonRow = 7,
 
         /// <summary>
         /// El código {0}, no existe como cliente.
         /// </summary>
-        PersonCustomerNotValid = 6,
+        PersonCustomerNotValid = 8,
     }
 }

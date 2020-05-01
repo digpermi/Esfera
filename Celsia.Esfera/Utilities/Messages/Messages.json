@@ -1,31 +1,41 @@
 ﻿[
   {
     "Code": 1,
-    "Text": "La persona no se encuentra registrada.",
+    "Text": "Hubo un error en el sistema.",
     "Type": 4
   },
   {
     "Code": 2,
+    "Text": "El cliente no se encuentra registrado.",
+    "Type": 4
+  },
+  {
+    "Code": 3,
     "Text": "La persona fue adicionada con éxito.",
     "Type": 1
   },
   {
-    "Code": 3,
+    "Code": 4,
     "Text": "La persona fue actualizada con éxito",
     "Type": 1
   },
   {
-    "Code": 4,
+    "Code": 5,
     "Text": "La persona fue eliminada con éxito.",
     "Type": 1
   },
   {
-    "Code": 5,
+    "Code": 6,
+    "Text": "La persona con Nro. de identificación {0} ya se encuentra registrada.",
+    "Type": 4
+  },
+  {
+    "Code": 7,
     "Text": "La fila {0} tiene los siguientes errores: {1}",
     "Type": 4
   },
   {
-    "Code": 5,
+    "Code": 8,
     "Text": "El código {0}, no existe como cliente.",
     "Type": 4
   }

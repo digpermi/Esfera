@@ -62,9 +62,22 @@ namespace Bussines.Bussines
         /// Busca persona por identificacion
         /// </summary>
         /// <returns></returns>
-        public Person GetPersonByIdentification(int identification)
+        public Person GetPersonByIdentification(string identification)
         {
             Task<List<Person>> task = this.repository.GetAsync(x => x.Identification.Equals(identification));
+            task.Wait();
+            return task.Result.FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Busca persona por identificacion
+        /// </summary>
+        /// <returns></returns>
+        public Person GetPersonByIdentificationById(string identification, int id)
+        {
+            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification.Equals(identification) && x.Id != id);
+            task.Wait();
             return task.Result.FirstOrDefault();
         }
 
@@ -120,7 +133,7 @@ namespace Bussines.Bussines
 
                 List<ValidationResult> validationResults = new List<ValidationResult>();
 
-                Person actualPerson = this.GetPersonByIdentification(Convert.ToInt32(person.Identification));
+                Person actualPerson = this.GetPersonByIdentification(person.Identification);
                 //validar si la persona existe y mostrar el mensaje
 
 
