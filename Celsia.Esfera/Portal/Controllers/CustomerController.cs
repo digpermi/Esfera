@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
-using Bussines;
+﻿using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
+using System.Collections.Generic;
 using Utilities.Cache;
+using Utilities.Messages;
 
 namespace Portal.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController:Controller
     {
         private readonly ICustomerBussines customerBussines;
         private readonly IPersonBussines personBussines;
@@ -27,7 +29,7 @@ namespace Portal.Controllers
             this.logger = logger;
             this.cache = cache;
             this.customerBussines = new CustomerBussines(context);
-            this.personBussines = new PersonBussines(context, this.cache);
+            this.personBussines = new PersonBussines(context);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
@@ -40,14 +42,11 @@ namespace Portal.Controllers
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
-            Customer customerInitial = new Customer();
-            customerInitial.ExternalSystemId = 0;
-
             var result = new CustomerViewModel()
             {
-                ExternalSystems = externalSystems,
-                Customer = customerInitial
+                ExternalSystems = externalSystems
             };
+
             return View(result);
         }
 
@@ -56,26 +55,26 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int code, byte externalsystemid)
         {
-            CustomerViewModel viewModel = new CustomerViewModel();
+            var result = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-
             Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
-
-            //ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
 
             if (customer == null)
             {
-                this.NotFound();
+                ApplicationMessage customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerNotFound);
+                result.UserMesage = customerMessage;
+                result.ExternalSystems = externalSystems;
             }
             else
             {
-                viewModel.Customer = customer;
-                viewModel.ExternalSystems = externalSystems;
-                //result.Customer.Persons = persons;
+                ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
+                result.Customer = customer;
+                result.ExternalSystems = externalSystems;
+                result.Customer.Persons = persons;
             }
 
-            return this.View(viewModel);
+            return this.View(result);
         }
 
 
@@ -139,7 +138,7 @@ namespace Portal.Controllers
                     return View(personCreate);
                 }
 
-
+                
             }
             catch
             {
@@ -199,7 +198,7 @@ namespace Portal.Controllers
 
                     return View(personUpdate);
                 }
-
+                
             }
             catch
             {

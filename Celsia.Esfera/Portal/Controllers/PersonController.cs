@@ -34,6 +34,13 @@ namespace Portal.Controllers
         // GET: Person
         public IActionResult Index()
         {
+            ApplicationMessage customerMessage = new ApplicationMessage();
+
+            if (TempData["Message"].ToString() == "Added")
+            {
+                customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerAdded);
+            }
+
             ICollection<Person> persons = this.personBussines.GetAllPersonsNoVinculed();
 
             var personsList = new List<PersonViewModel>();
@@ -42,7 +49,8 @@ namespace Portal.Controllers
             {
                 var personItem = new PersonViewModel()
                 {
-                    Person = person
+                    Person = person,
+                    UserMesage = customerMessage
                 };
                 personsList.Add(personItem);
             }
@@ -86,7 +94,7 @@ namespace Portal.Controllers
                 if (ModelState.IsValid)
                 {
                     var result = this.personBussines.AddAsync(personCreate.Person);
-
+                    TempData["Message"] = "Added";
                     return RedirectToAction(nameof(Index));
                 }
                 else

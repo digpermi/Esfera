@@ -11,20 +11,23 @@
         None = 0,
 
         /// <summary>
-        /// Prueba mensajes.
+        /// Cliente no registrado
         /// </summary>
-        Test = 1,
-
-        CustomerqueryOk = 2,
+        CustomerNotFound = 1,
 
         /// <summary>
-        /// La fila {0} tiene los siguientes errores: {1}
+        /// Cliente adicionado
         /// </summary>
-        InvalidPersonRow = 3,
+        CustomerAdded = 2,
 
         /// <summary>
-        /// El código {0}, no existe como cliente.
+        /// Cliente editado
         /// </summary>
-        PersonCustomerNotValid = 4,
+        CustomerEdited = 3,
+
+        /// <summary>
+        /// Cliente eliminado
+        /// </summary>
+        CustomerDeleted = 4
     }
 }

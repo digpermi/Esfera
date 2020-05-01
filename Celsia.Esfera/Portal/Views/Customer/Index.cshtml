@@ -4,11 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using(Html.BeginForm("Index", "Customer", FormMethod.Post))
+@using (Html.BeginForm("Index", "Customer", FormMethod.Post))
 {
     <h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Consultar clientes</h3>
     <p class="ml-3 mr-3 mb-4">Esta opción permite adicionar una persona no vinculada a un cliente.</p>
     <hr>
+
+    <message user-message="@Model.UserMesage"></message>
+
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Filtrar por</h6>
 
     <div class="row ml-1 mr-1 mt-4">
@@ -33,7 +36,7 @@
     </div>
 }
 
-@if (Model.Customer.Identification != null)
+@if (Model.Customer != null)
 {
     <hr>
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información Cliente</h6>
@@ -96,14 +99,14 @@
             <div class="form-group">
                 <label class="small mb-1">Política de Datos</label>
                 <p class="form-control border-0 ml-2">
-                @if (Model.Customer.PolicyData)
-                {
-                    <text>Si</text>
-                }
-                else
-                {
-                    <text>No</text>
-                }
+                    @if (Model.Customer.PolicyData)
+                    {
+                        <text>Si</text>
+                    }
+                    else
+                    {
+                        <text>No</text>
+                    }
                 </p>
             </div>
         </div>
