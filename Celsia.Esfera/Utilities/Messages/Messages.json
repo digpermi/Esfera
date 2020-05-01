@@ -8,5 +8,11 @@
     "Code": 2,
     "Text": "Customer query ok.",
     "Type": 1
+  },
+  {
+    "Code": 3,
+    "Text": "La fila {0} tiene los siguientes errores: {1}",
+    "Type": 4
   }
+
 ]

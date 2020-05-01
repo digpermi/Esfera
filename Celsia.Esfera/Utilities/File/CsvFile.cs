@@ -8,7 +8,8 @@ namespace Utilities.File
 {
     public class CsvFile<TEntity>
     {
-        private ICsvMapping<TEntity> csvMapping;
+        private readonly ICsvMapping<TEntity> csvMapping;
+
         public CsvFile(ICsvMapping<TEntity> csvMapping)
         {
             this.csvMapping = csvMapping;
@@ -18,8 +19,9 @@ namespace Utilities.File
         {
             CsvParserOptions csvParserOptions = new CsvParserOptions(true, ';');
             CsvParser<TEntity> csvParser = new CsvParser<TEntity>(csvParserOptions, this.csvMapping);
-            ParallelQuery<CsvMappingResult<TEntity>> result = csvParser.ReadFromFile(ruta, Encoding.ASCII);
-            return result.Select(x => x.Result);
+            ParallelQuery<CsvMappingResult<TEntity>> results = csvParser.ReadFromFile(ruta, Encoding.ASCII);
+
+            return results.Select(x => x.Result);
         }
     }
 }

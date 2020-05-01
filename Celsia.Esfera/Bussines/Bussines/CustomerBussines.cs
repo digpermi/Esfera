@@ -30,7 +30,7 @@ namespace Bussines.Bussines
             return task.Result.FirstOrDefault();
         }
 
-        public Customer GetCustomerById(int cod)
+        public Customer GetCustomerById(int? cod)
         {
             Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == cod, null, "IdentificationType,ExternalSystem");
             task.Wait();
