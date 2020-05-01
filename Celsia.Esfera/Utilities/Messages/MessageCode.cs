@@ -28,6 +28,16 @@
         /// <summary>
         /// Cliente eliminado
         /// </summary>
-        CustomerDeleted = 4
+        CustomerDeleted = 4,
+
+        /// <summary>
+        /// La fila {0} tiene los siguientes errores: {1}
+        /// </summary>
+        InvalidPersonRow = 5,
+
+        /// <summary>
+        /// El código {0}, no existe como cliente.
+        /// </summary>
+        PersonCustomerNotValid = 6,
     }
 }

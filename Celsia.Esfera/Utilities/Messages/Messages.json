@@ -20,8 +20,13 @@
     "Type": 1
   },
   {
-    "Code": 3,
+    "Code": 5,
     "Text": "La fila {0} tiene los siguientes errores: {1}",
+    "Type": 4
+  },
+  {
+    "Code": 5,
+    "Text": "El código {0}, no existe como cliente.",
     "Type": 4
   }
 

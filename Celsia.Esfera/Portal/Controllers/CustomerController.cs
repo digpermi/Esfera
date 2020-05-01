@@ -42,12 +42,15 @@ namespace Portal.Controllers
         {
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
-            var result = new CustomerViewModel()
-            {
-                ExternalSystems = externalSystems
-            };
+            Customer customerInitial = new Customer();
+            customerInitial.ExternalSystemId = 0;
 
-            return View(result);
+            var viewModel = new CustomerViewModel()
+            {
+                ExternalSystems = externalSystems,
+                Customer = customerInitial
+            };
+            return View(viewModel);
         }
 
         // POST: Customer/Index
@@ -55,7 +58,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int code, byte externalsystemid)
         {
-            var result = new CustomerViewModel();
+            var viewModel = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
@@ -63,18 +66,18 @@ namespace Portal.Controllers
             if (customer == null)
             {
                 ApplicationMessage customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerNotFound);
-                result.UserMesage = customerMessage;
-                result.ExternalSystems = externalSystems;
+                viewModel.UserMesage = customerMessage;
+                viewModel.ExternalSystems = externalSystems;
             }
             else
             {
                 ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
-                result.Customer = customer;
-                result.ExternalSystems = externalSystems;
-                result.Customer.Persons = persons;
+                viewModel.Customer = customer;
+                viewModel.ExternalSystems = externalSystems;
+                viewModel.Customer.Persons = persons;
             }
 
-            return this.View(result);
+            return this.View(viewModel);
         }
 
 
