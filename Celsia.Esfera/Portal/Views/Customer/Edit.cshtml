@@ -7,6 +7,8 @@
 <p class="ml-3 mr-3 mb-4">Esta opción permite editar personas vinculadas a los clientes existentes.</p>
 <hr>
 
+<message user-message="@Model.UserMesage"></message>
+
 @using (Html.BeginForm("Edit", "Customer", FormMethod.Post))
 {
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información del Cliente</h6>
@@ -75,6 +77,7 @@
             <div class="form-group">
                 <label class="small mb-1">Teléfono</label>
                 @Html.TextBoxFor(model => model.Person.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.PhoneNumber, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
@@ -88,6 +91,7 @@
             <div class="form-group">
                 <label class="small mb-1">Relación *</label>
                 @Html.DropDownListFor(model => model.Person.RelationshipId, new SelectList(Model.Relationships, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.RelationshipId, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">

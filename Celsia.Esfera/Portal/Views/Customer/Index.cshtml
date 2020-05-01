@@ -17,14 +17,16 @@
     <div class="row ml-1 mr-1 mt-4">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Tipo de Cliente</label>
+                <label class="small mb-1">Tipo de Cliente *</label>
                 @Html.DropDownList("externalsystemid", new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Customer.ExternalSystemId, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
-                <label class="small mb-1">Código Cuenta / NIC</label>
+                <label class="small mb-1">Código Cuenta / NIC *</label>
                 @Html.TextBox("code", "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Customer.Code, null, new { @class = "label label-danger" })
 
             </div>
         </div>
