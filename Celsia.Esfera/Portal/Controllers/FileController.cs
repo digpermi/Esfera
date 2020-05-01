@@ -1,66 +1,55 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Entities.Models;
+﻿using System.IO;
+using Bussines;
+using Bussines.Bussines;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Portal.ViewModels;
-using Utilities.File;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace Portal.Controllers
 {
     public class FileController : Controller
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IPersonBussines personBussines;
 
-        public FileController(IWebHostEnvironment hostingEnvironment)
+        public FileController(IWebHostEnvironment hostingEnvironment, EsferaContext context)
         {
-            _hostingEnvironment = hostingEnvironment;
+            this._hostingEnvironment = hostingEnvironment;
+            this.personBussines = new PersonBussines(context);
         }
 
         // GET: File
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         [HttpPost]
         public ActionResult UploadFile(IFormFile file)
         {
-            if (file.FileName.EndsWith(".xls") || file.FileName.EndsWith(".xlsx"))
+            string tempPath = Path.GetTempFileName();
+
+            using (FileStream stream = System.IO.File.Create(tempPath))
             {
-                if (!file.FileName.EndsWith(".xls") && !file.FileName.EndsWith(".xlsx"))
-                {
-                    return View();
-                }
-                else
-                {
-                    var fileName = file.FileName;
-                    UploadRecordsToDataBase(fileName);
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                var fileName = file.FileName;
-                UploadTxt(fileName);
-                return RedirectToAction("Index");
+                file.CopyToAsync(stream);
             }
 
-            return View();
+            this.personBussines.UploadVinculatedPersons(tempPath);
+                   return this.RedirectToAction("Index");
         }
 
+       
         // GET: File/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return this.View();
         }
 
         // GET: File/Create
         public ActionResult Create()
         {
-            return View();
+            return this.View();
         }
 
         // POST: File/Create
@@ -72,18 +61,18 @@ namespace Portal.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
         // GET: File/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: File/Edit/5
@@ -95,18 +84,18 @@ namespace Portal.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
         // GET: File/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: File/Delete/5
@@ -118,55 +107,14 @@ namespace Portal.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
-            }
-        }
-
-        private void UploadRecordsToDataBase(string fileName)
-        {
-            var records = new List<CustomerViewModel>();
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-
-            string resul = @"C:\Users\User\Documents\doc\Andromeda.csv";
-
-            CsvFile<Customer> csvFile = new CsvFile<Customer>(new CsvCustomerMapper());
-            List<Customer> Customers = csvFile.ParseCSVFile().ToList();
-
-        }
-
-        public void UploadTxt(string fileName)
-        {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            var records = new List<CustomerViewModel>();
-            var datos = new List<string>();
-
-            string resul = @"C:\Users\User\Documents\doc\prueba.txt";
-
-            using (StreamReader leer = new StreamReader(resul))
-            {
-                string x;
-                while ((x = leer.ReadLine()) != null)
-                {
-                    datos.Add(x);
-                }
-                Customer customerRow = new Customer
-                {
-                    FirstName = datos[0].ToString(),
-                    LastName = datos[1].ToString(),
-                    PhoneNumber = datos[2].ToString(),
-                    Address = datos[3].ToString()
-                };
-                records.Add(new CustomerViewModel
-                {
-                    Customer = customerRow
-                });
+                return this.View();
             }
         }
     }
+
 
 }
