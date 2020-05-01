@@ -36,7 +36,7 @@
     </div>
 }
 
-@if (Model.Customer != null)
+@if (Model.Customer != null && Model.Customer.ExternalSystemId != 0)
 {
     <hr>
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información Cliente</h6>
@@ -125,42 +125,49 @@
     <hr>
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Personas vinculadas</h6>
 
-    <p class="ml-3 mr-3 mb-4 mt-4">No hay personas vinculadas al cliente.</p>
 
-    <div class="row ml-1 mr-1 pt-3 pb-3">
-        <div class="col-xl-12 col-md-12">
-            <div class="table-responsive">
-                <table class="table" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Tipo de Identificación</th>
-                            <th>Nro. de Identificación</th>
-                            <th>Nombre Completo</th>
-                            <th>Email</th>
-                            <th>Relación</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var person in Model.Customer.Persons)
-                        {
+    @if (Model.Customer.Persons.Count() == 0)
+    {
+        <p class="ml-3 mr-3 mb-4 mt-4">No hay personas vinculadas al cliente.</p>
+    }
+    else
+    {
+        <div class="row ml-1 mr-1 pt-3 pb-3">
+            <div class="col-xl-12 col-md-12">
+                <div class="table-responsive">
+                    <table class="table" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                             <tr>
-                                <td>@person.IdentificationType.Name</td>
-                                <td>@person.Identification</td>
-                                <td>@person.FirstName @person.LastName</td>
-                                <td>@person.Email</td>
-                                <td>@person.Relationship.Name</td>
-                                <td><a href="~/Customer/Edit/@person.Id"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Customer/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                                <th>Tipo de Identificación</th>
+                                <th>Nro. de Identificación</th>
+                                <th>Nombre Completo</th>
+                                <th>Email</th>
+                                <th>Relación</th>
+                                <th>Acciones</th>
                             </tr>
+                        </thead>
+                        <tbody>
 
-                        }
+                            @foreach (var person in Model.Customer.Persons)
+                            {
+                                <tr>
+                                    <td>@person.IdentificationType.Name</td>
+                                    <td>@person.Identification</td>
+                                    <td>@person.FirstName @person.LastName</td>
+                                    <td>@person.Email</td>
+                                    <td>@person.Relationship.Name</td>
+                                    <td><a href="~/Customer/Edit/@person.Id"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Customer/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                                </tr>
 
-                    </tbody>
-                </table>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+
+    }
 
     <div class="row ml-1 mr-1 mt-4 pt-2 mb-5">
         <div class="col-xl-3 col-md-6">

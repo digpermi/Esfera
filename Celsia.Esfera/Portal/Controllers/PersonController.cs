@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Portal.ViewModels;
 using Utilities.Cache;
+using Utilities.Messages;
 
 namespace Portal.Controllers
 {
@@ -34,52 +37,72 @@ namespace Portal.Controllers
         // GET: Person
         public IActionResult Index()
         {
-            ApplicationMessage customerMessage = new ApplicationMessage();
+            ApplicationMessage personMessage = new ApplicationMessage();
+            var viewModelList = new List<PersonViewModel>();
 
-            if (TempData["Message"].ToString() == "Added")
+            try
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerAdded);
+                if (this.TempData["Message"] is string s)
+                {
+                    personMessage = JsonConvert.DeserializeObject<ApplicationMessage>(s);
+                }
+
+                ICollection<Person> persons = this.personBussines.GetAllPersonsNoVinculed();
+
+                foreach (var person in persons)
+                {
+                    var personItem = new PersonViewModel()
+                    {
+                        Person = person,
+                        UserMesage = personMessage
+                    };
+                    viewModelList.Add(personItem);
+                }
             }
-
-            ICollection<Person> persons = this.personBussines.GetAllPersonsNoVinculed();
-
-            var personsList = new List<PersonViewModel>();
-
-            foreach (var person in persons)
+            catch
             {
+                personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
                 var personItem = new PersonViewModel()
                 {
-                    Person = person,
-                    UserMesage = customerMessage
+                    UserMesage = personMessage
                 };
-                personsList.Add(personItem);
+                viewModelList.Add(personItem);
             }
-
-            return this.View(personsList);
+            
+            return this.View(viewModelList);
         }
 
         // GET: Person/Create
         public ActionResult Create()
         {
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+            ApplicationMessage personMessage = new ApplicationMessage();
+            PersonViewModel viewModel = new PersonViewModel();
 
-            Person personInitial = new Person();
-            personInitial.ExternalSystemId = 0;
-            personInitial.IdentificationTypeId = 0;
-            personInitial.InterestId = 0;
-
-
-            PersonViewModel person = new PersonViewModel()
+            try
             {
-                ExternalSystems = externalSystems,
-                IdentificationTypes = identificationTypes,
-                Interests = interests,
-                Person = personInitial
-            };
+                ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                ICollection<Interest> interests = this.interestBussines.GetAllInterests();
 
-            return this.View(person);
+                Person personInitial = new Person(){
+                    ExternalSystemId = 0,
+                    IdentificationTypeId = 0,
+                    InterestId = 0
+                };
+
+                viewModel.ExternalSystems = externalSystems;
+                viewModel.IdentificationTypes = identificationTypes;
+                viewModel.Interests = interests;
+                viewModel.Person = personInitial;
+
+            }
+            catch
+            {
+                personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                viewModel.UserMesage = personMessage;
+            }            
+
+            return this.View(viewModel);
         }
 
         // POST: Person/Create
@@ -87,53 +110,76 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonViewModel personCreate)
         {
+            ApplicationMessage personMessage = new ApplicationMessage();
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+            personCreate.ExternalSystems = externalSystems;
+            personCreate.IdentificationTypes = identificationTypes;
+            personCreate.Interests = interests;
+
             try
-                {
+            {
                 // TODO: Add insert logic here
 
                 if (ModelState.IsValid)
                 {
-                    var result = this.personBussines.AddAsync(personCreate.Person);
-                    TempData["Message"] = "Added";
-                    return RedirectToAction(nameof(Index));
+
+                    Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
+
+                    if (person == null)
+                    {
+                        var result = this.personBussines.AddAsync(personCreate.Person);
+                        personMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
+                        TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                        return RedirectToAction("Index", "Person");
+                    }
+                    else
+                    {
+                        personMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
+                        personCreate.UserMesage = personMessage;
+                        return View(personCreate);
+                    }                   
                 }
                 else
                 {
-                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-
-                    personCreate.ExternalSystems = externalSystems;
-                    personCreate.IdentificationTypes = identificationTypes;
-                    personCreate.Interests = interests;
-
                     return View(personCreate);
                 }
-
                 
             }
             catch
             {
-                return View();
+                personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                personCreate.UserMesage = personMessage;
+                return View(personCreate);
             }
         }
 
         // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
-            Person person = this.personBussines.GetPersonById(id);
+            ApplicationMessage personMessage = new ApplicationMessage();
+            PersonViewModel personEdit = new PersonViewModel();
 
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-
-            PersonViewModel personEdit = new PersonViewModel()
+            try
             {
-                Person = person,
-                ExternalSystems = externalSystems,
-                IdentificationTypes = identificationTypes,
-                Interests = interests
-            };
+                Person person = this.personBussines.GetPersonById(id);
+
+                ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+                personEdit.Person = person;
+                personEdit.ExternalSystems = externalSystems;
+                personEdit.IdentificationTypes = identificationTypes;
+                personEdit.Interests = interests;
+            }
+            catch
+            {
+                personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                personEdit.UserMesage = personMessage;
+            }
 
             return View(personEdit);
         }
@@ -143,6 +189,14 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, PersonViewModel personUpdate)
         {
+            ApplicationMessage personMessage = new ApplicationMessage();
+            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+            personUpdate.ExternalSystems = externalSystems;
+            personUpdate.IdentificationTypes = identificationTypes;
+            personUpdate.Interests = interests;
+
             try
             {
                 // TODO: Add update logic here
@@ -150,39 +204,37 @@ namespace Portal.Controllers
                 {
                     personUpdate.Person.Id = id;
                     var result = this.personBussines.EditAsync(personUpdate.Person);
-
-                    return RedirectToAction(nameof(Index));
+                    personMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
+                    TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                    return RedirectToAction("Index", "Person");
                 }
                 else
                 {
-                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-
-                    personUpdate.ExternalSystems = externalSystems;
-                    personUpdate.IdentificationTypes = identificationTypes;
-                    personUpdate.Interests = interests;
-
                     return View(personUpdate);
                 }
                 
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                personUpdate.UserMesage = personMessage;
+                return View(personUpdate);
             }
         }
 
         // POST: Person/Delete/5
         public ActionResult Delete(int id)
         {
+            ApplicationMessage personMessage = new ApplicationMessage();
+
             try
             {
                 // TODO: Add delete logic here
 
                 var result = this.personBussines.DeleteAsync(id);
-
-                return RedirectToAction(nameof(Index));
+                personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
+                TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                return RedirectToAction("Index", "Person");
             }
             catch
             {

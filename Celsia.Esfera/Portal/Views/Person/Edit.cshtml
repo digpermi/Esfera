@@ -7,6 +7,8 @@
 <p class="ml-3 mr-3 mb-4">Esta opción permite editar una persona no vinculada a un cliente.</p>
 <hr>
 
+<message user-message="@Model.UserMesage"></message>
+
 @using (Html.BeginForm("Edit", "Person", FormMethod.Post))
 {
     <div class="row ml-1 mr-1 mt-5 pt-2">

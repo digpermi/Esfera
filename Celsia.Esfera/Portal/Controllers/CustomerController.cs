@@ -22,8 +22,6 @@ namespace Portal.Controllers
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
 
-        public CustomerViewModel TestCustomer { get; set; }
-
         public CustomerController(EsferaContext context, ILogger<CustomerController> logger, ICacheUtility cache)
         {
             this.logger = logger;
