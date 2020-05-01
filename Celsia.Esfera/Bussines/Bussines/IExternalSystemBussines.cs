@@ -7,5 +7,7 @@ namespace Bussines.Bussines
     {
         ICollection<ExternalSystem> GetAllExternalSystems();
 
+        ExternalSystem GetExternalSystemById(byte id);
+
     }
 }

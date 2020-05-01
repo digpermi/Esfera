@@ -7,5 +7,7 @@ namespace Bussines.Bussines
     {
         ICollection<Relationship> GetAllRelationships();
 
+        Relationship GetRelationshipById(byte id);
+
     }
 }
