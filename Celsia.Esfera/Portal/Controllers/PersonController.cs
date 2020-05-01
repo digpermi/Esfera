@@ -1,20 +1,15 @@
-﻿using Bussines;
+﻿using System.Collections.Generic;
+using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Utilities.Cache;
-using Utilities.Messages;
 
 namespace Portal.Controllers
 {
-    public class PersonController:Controller
+    public class PersonController : Controller
     {
         private readonly IPersonBussines personBussines;
         private readonly IExternalSystemBussines externalSystemBussines;
@@ -24,13 +19,12 @@ namespace Portal.Controllers
         private readonly ICacheUtility cache;
         private readonly ILogger<PersonController> logger;
 
-        public PersonViewModel TestPerson { get; set; }
 
         public PersonController(EsferaContext context, ILogger<PersonController> logger, ICacheUtility cache)
         {
             this.logger = logger;
             this.cache = cache;
-            this.personBussines = new PersonBussines(context);
+            this.personBussines = new PersonBussines(context, this.cache);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
             this.interestBussines = new InterestBussines(context);
@@ -71,7 +65,6 @@ namespace Portal.Controllers
 
             PersonViewModel person = new PersonViewModel()
             {
-
                 ExternalSystems = externalSystems,
                 IdentificationTypes = identificationTypes,
                 Interests = interests,
@@ -87,12 +80,29 @@ namespace Portal.Controllers
         public ActionResult Create(PersonViewModel personCreate)
         {
             try
-            {
+                {
                 // TODO: Add insert logic here
 
-                var result = this.personBussines.AddAsync(personCreate.Person);
+                if (ModelState.IsValid)
+                {
+                    var result = this.personBussines.AddAsync(personCreate.Person);
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+                    personCreate.ExternalSystems = externalSystems;
+                    personCreate.IdentificationTypes = identificationTypes;
+                    personCreate.Interests = interests;
+
+                    return View(personCreate);
+                }
+
+                
             }
             catch
             {
@@ -128,10 +138,26 @@ namespace Portal.Controllers
             try
             {
                 // TODO: Add update logic here
-                personUpdate.Person.Id = id;
-                var result = this.personBussines.EditAsync(personUpdate.Person);
+                if (ModelState.IsValid)
+                {
+                    personUpdate.Person.Id = id;
+                    var result = this.personBussines.EditAsync(personUpdate.Person);
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
+                    ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
+                    ICollection<Interest> interests = this.interestBussines.GetAllInterests();
+
+                    personUpdate.ExternalSystems = externalSystems;
+                    personUpdate.IdentificationTypes = identificationTypes;
+                    personUpdate.Interests = interests;
+
+                    return View(personUpdate);
+                }
+                
             }
             catch
             {

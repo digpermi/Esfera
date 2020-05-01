@@ -26,7 +26,7 @@
         /// </summary>
         /// <param name="cache">Injección de dependencias para usar la cache.</param>
         /// <param name="codigoMensaje">Código del mensaje que se desea obtener.</param>
-        public ApplicationMessage(ICacheUtility cache, MessageCode codigoMensaje)
+        public ApplicationMessage(ICacheUtility cache, MessageCode codigoMensaje, params object[] arguments)
         {
             try
             {
@@ -35,7 +35,9 @@
                 ApplicationMessage mensajeEncontrado = mensajes.First(mensaje => mensaje.Code == codigoMensaje);
 
                 this.Code = mensajeEncontrado.Code;
-                this.Text = mensajeEncontrado.Text;
+
+                this.Text = string.Format(mensajeEncontrado.Text, arguments);
+
                 this.Type = mensajeEncontrado.Type;
             }
             catch (Exception excepcion)

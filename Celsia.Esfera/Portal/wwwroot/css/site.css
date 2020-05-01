@@ -2025,6 +2025,7 @@ pre code {
   border: 1.5px solid #d6d6d6;
   border-radius: 0.6rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-bottom: 2px;
 }
 
 .form-checkbox {
@@ -2043,8 +2044,14 @@ pre code {
   margin-top: 15px;
 }
 
+.label.label-danger {
+  color: red;
+  font-weight: 600;
+  font-size: 13px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .form-control {
+    .form-control {
     transition: none;
   }
 }
@@ -2084,8 +2091,11 @@ pre code {
   opacity: 1;
 }
 .form-control:disabled, .form-control[readonly] {
-  background-color: #e9ecef;
+  background-color: #ffffff;
   opacity: 1;
+  border: 0px;
+  -webkit-appearance: none;
+  margin-left: 0.5rem !important;
 }
 
 select.form-control:focus::-ms-value {

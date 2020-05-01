@@ -7,8 +7,6 @@ namespace Portal.ViewModels
     {
         public Customer Customer { get; set; }
 
-        public ICollection<Person> Persons { get; set; }
-
         public ICollection<ExternalSystem> ExternalSystems { get; set; }
     }
 }
