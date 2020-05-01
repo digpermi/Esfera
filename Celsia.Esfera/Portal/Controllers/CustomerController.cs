@@ -29,7 +29,7 @@ namespace Portal.Controllers
             this.logger = logger;
             this.cache = cache;
             this.customerBussines = new CustomerBussines(context);
-            this.personBussines = new PersonBussines(context);
+            this.personBussines = new PersonBussines(context, this.cache);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
