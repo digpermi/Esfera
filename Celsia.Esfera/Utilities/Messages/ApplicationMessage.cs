@@ -12,6 +12,7 @@
     /// <summary>
     /// Define la información para los mensajes.
     /// </summary>
+    [Serializable]
     public class ApplicationMessage
     {
         /// <summary>
