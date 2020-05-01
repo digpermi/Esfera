@@ -24,7 +24,9 @@ namespace Bussines.Bussines
 
         public Customer GetCustomer(int code, byte externalSystemId)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem");
+            string IncludeProperties = "IdentificationType,ExternalSystem,Persons";
+
+            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, IncludeProperties);
             task.Wait();
 
             return task.Result.FirstOrDefault();

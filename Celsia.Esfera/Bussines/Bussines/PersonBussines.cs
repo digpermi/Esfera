@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bussines.Data;
 using Entities.Models;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore.Internal;
 using Utilities.Cache;
 using Utilities.File;
@@ -100,7 +99,7 @@ namespace Bussines.Bussines
             return task.Result;
         }
 
-        public void UploadVinculatedPersons(string fileName, IValidator validator)
+        public void UploadVinculatedPersons(string fileName)
         {
             CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
 

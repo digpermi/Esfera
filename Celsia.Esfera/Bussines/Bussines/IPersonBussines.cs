@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Entities.Models;
-using FluentValidation;
 
 namespace Bussines.Bussines
 {
@@ -10,7 +9,7 @@ namespace Bussines.Bussines
 
         ICollection<Person> GetAllPersonsVinculed(int customerId);
 
-        void UploadVinculatedPersons(string fileName, IValidator validator);
+        void UploadVinculatedPersons(string fileName);
 
         Person GetPersonById(int Id);
 

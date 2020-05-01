@@ -56,13 +56,13 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int code, byte externalsystemid)
         {
-            var result = new CustomerViewModel();
+            CustomerViewModel viewModel = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
 
             Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
 
-            ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
+            //ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
 
             if (customer == null)
             {
@@ -70,12 +70,12 @@ namespace Portal.Controllers
             }
             else
             {
-                result.Customer = customer;
-                result.ExternalSystems = externalSystems;
-                result.Customer.Persons = persons;
+                viewModel.Customer = customer;
+                viewModel.ExternalSystems = externalSystems;
+                //result.Customer.Persons = persons;
             }
 
-            return this.View(result);
+            return this.View(viewModel);
         }
 
 
