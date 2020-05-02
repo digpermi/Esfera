@@ -47,6 +47,7 @@
             <div class="form-group">
                 <label class="small mb-1">Teléfono</label>
                 @Html.TextBoxFor(model => model.Person.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Person.PhoneNumber, null, new { @class = "label label-danger" })
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
