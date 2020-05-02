@@ -1,17 +1,16 @@
-﻿using Bussines;
+﻿using System.Collections.Generic;
+using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
-using System.Collections.Generic;
 using Utilities.Cache;
 using Utilities.Messages;
 
 namespace Portal.Controllers
 {
-    public class CustomerController:Controller
+    public class CustomerController : Controller
     {
         private readonly ICustomerBussines customerBussines;
         private readonly IPersonBussines personBussines;
@@ -43,12 +42,12 @@ namespace Portal.Controllers
             Customer customerInitial = new Customer();
             customerInitial.ExternalSystemId = 0;
 
-            var viewModel = new CustomerViewModel()
+            CustomerViewModel viewModel = new CustomerViewModel()
             {
                 ExternalSystems = externalSystems,
                 Customer = customerInitial
             };
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         // POST: Customer/Index
@@ -56,7 +55,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int code, byte externalsystemid)
         {
-            var viewModel = new CustomerViewModel();
+            CustomerViewModel viewModel = new CustomerViewModel();
 
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
@@ -117,12 +116,11 @@ namespace Portal.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
-                    var result = this.personBussines.AddAsync(personCreate.Person);
+                    Person result = this.personBussines.Add(personCreate.Person);
 
-                    return RedirectToAction(nameof(Index));
+                    return this.RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -136,14 +134,14 @@ namespace Portal.Controllers
                     personCreate.Interests = interests;
                     personCreate.Relationships = relationships;
 
-                    return View(personCreate);
+                    return this.View(personCreate);
                 }
 
-                
+
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
@@ -166,7 +164,7 @@ namespace Portal.Controllers
                 Relationships = relationships
             };
 
-            return View(personEdit);
+            return this.View(personEdit);
         }
 
         // POST: Person/Edit/5
@@ -176,14 +174,12 @@ namespace Portal.Controllers
         {
             try
             {
-                // TODO: Add update logic here
-
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
                     personUpdate.Person.Id = id;
-                    var result = this.personBussines.EditAsync(personUpdate.Person);
+                    Person result = this.personBussines.Edit(personUpdate.Person);
 
-                    return RedirectToAction(nameof(Index));
+                    return this.RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -197,13 +193,13 @@ namespace Portal.Controllers
                     personUpdate.Interests = interests;
                     personUpdate.Relationships = relationships;
 
-                    return View(personUpdate);
+                    return this.View(personUpdate);
                 }
-                
+
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
@@ -212,15 +208,13 @@ namespace Portal.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                Person result = this.personBussines.Delete(id);
 
-                var result = this.personBussines.DeleteAsync(id);
-
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
     }

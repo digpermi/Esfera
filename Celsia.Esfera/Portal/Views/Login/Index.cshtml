@@ -1,4 +1,4 @@
-﻿
+﻿@model Portal.ViewModels.UserLoginViewModel
 @{
     Layout = null;
 }
@@ -13,24 +13,30 @@
 </head>
 <body>
 
-    <div class="container-fluid pl-0 pr-0">
+    <form asp-action="AutenticateUser" asp-controller="Login" method="post">
+        <div class="container-fluid pl-0 pr-0">
 
-        <div class="row ml-0 mr-0 mt-0">
-            <div class="col-xl-9 col-md-9 login-bg">
-            </div>
-            <div class="col-xl-3 col-md-3 vh-100 bg-white">
-
-                <div class="col-xl-10 col-md-10 offset-1">
-                    <img src="~/img/logo-orange.svg" class="pt-5 mt-5 mb-5" />
-
-                    <input class="form-control pt-2" type="text" placeholder="Usuario">
-                    <input class="form-control pt-2 mt-2" type="password" placeholder="Contraseña">
-                    <a class="btn btn-secondary btn-block mt-2" asp-area="" asp-controller="Home" asp-action="Index">Iniciar Sesión</a>
+            <div class="row ml-0 mr-0 mt-0">
+                <div class="col-xl-9 col-md-9 login-bg">
                 </div>
+                <div class="col-xl-3 col-md-3 vh-100 bg-white">
 
+                    <div class="col-xl-10 col-md-10 offset-1">
+                        <img src="~/img/logo-orange.svg" class="pt-5 mt-5 mb-5" />
+
+                        <input asp-for="UserName" class="form-control pt-2" type="text" placeholder="Usuario">
+                        <span asp-validation-for="UserName"></span>
+
+                        <input asp-for="Password" class="form-control pt-2 mt-2" type="password" placeholder="Contraseña">
+                        <span asp-validation-for="Password"></span>
+
+                        <input type="submit" value="Iniciar Sesión" class="btn btn-secondary btn-block mt-2" />
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

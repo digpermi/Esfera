@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Bussines.Data;
 using Entities.Models;
 
 namespace Bussines.Bussines
 {
-    public class IdentificationTypeBussines : IIdentificationTypeBussines
+    public class IdentificationTypeBussines : Repository<IdentificationType, EsferaContext>, IIdentificationTypeBussines
     {
-        private readonly IRepository<IdentificationType> repository;
-
-        public IdentificationTypeBussines(EsferaContext context)
+        public IdentificationTypeBussines(EsferaContext context) : base(context)
         {
-            this.repository = new IdentificationTypeRepository(context);
+
         }
 
         /// <summary>
@@ -20,7 +17,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public ICollection<IdentificationType> GetAllIdentificationTypes()
         {
-            Task<List<IdentificationType>> task = this.repository.GetAsync();
+            Task<List<IdentificationType>> task = this.GetAsync();
             return task.Result;
         }
 
