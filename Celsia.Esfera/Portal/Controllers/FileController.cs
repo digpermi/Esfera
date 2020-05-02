@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Security.Claims;
 using Bussines;
 using Bussines.Bussines;
 using Microsoft.AspNetCore.Hosting;
@@ -34,13 +35,14 @@ namespace Portal.Controllers
         public ActionResult UploadFile(IFormFile file)
         {
             string tempPath = Path.GetTempFileName();
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
 
             using (FileStream stream = System.IO.File.Create(tempPath))
             {
                 file.CopyToAsync(stream);
             }
 
-            List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath);
+            List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath,userName);
 
             return this.RedirectToAction("Index");
         }

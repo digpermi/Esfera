@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
@@ -18,6 +19,7 @@ namespace Portal.Controllers
         private readonly IExternalSystemBussines externalSystemBussines;
         private readonly IIdentificationTypeBussines identificationTypeBussines;
         private readonly IInterestBussines interestBussines;
+        private readonly IAuditBussines auditBussines;
 
         private readonly ICacheUtility cache;
         private readonly ILogger<PersonController> logger;
@@ -31,6 +33,7 @@ namespace Portal.Controllers
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
             this.interestBussines = new InterestBussines(context);
+            this.auditBussines = new AuditBussines(context);
         }
 
         // GET: Person
@@ -56,6 +59,7 @@ namespace Portal.Controllers
                         UserMesage = personMessage
                     };
                     viewModelList.Add(personItem);
+
                 }
             }
             catch
@@ -110,6 +114,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonViewModel personCreate)
         {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
             ApplicationMessage personMessage = new ApplicationMessage();
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
@@ -130,7 +135,7 @@ namespace Portal.Controllers
 
                     if (person == null)
                     {
-                        Person result = this.personBussines.Add(personCreate.Person);
+                        Person result = this.personBussines.Add(personCreate.Person,userName);
                         personMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
                         this.TempData["Message"] = JsonConvert.SerializeObject(personMessage);
                         return this.RedirectToAction("Index", "Person");
@@ -189,6 +194,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, PersonViewModel personUpdate)
         {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
             ApplicationMessage personMessage = new ApplicationMessage();
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
@@ -213,7 +219,7 @@ namespace Portal.Controllers
                     else
                     {
                         personUpdate.Person.Id = id;
-                        Person result = this.personBussines.Edit(personUpdate.Person);
+                        Person result = this.personBussines.Edit(personUpdate.Person,userName);
                         personMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
                         this.TempData["Message"] = JsonConvert.SerializeObject(personMessage);
                         return this.RedirectToAction("Index", "Person");
@@ -238,12 +244,13 @@ namespace Portal.Controllers
         public ActionResult Delete(int id)
         {
             ApplicationMessage personMessage = new ApplicationMessage();
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
 
             try
             {
                 // TODO: Add delete logic here
 
-                Person result = this.personBussines.Delete(id);
+                Person result = this.personBussines.Delete(id,userName);
                 personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
                 this.TempData["Message"] = JsonConvert.SerializeObject(personMessage);
                 return this.RedirectToAction("Index", "Person");
