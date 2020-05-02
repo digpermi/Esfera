@@ -68,7 +68,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonByIdentification(string identification)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification == identification);
+            Task<List<Person>> task = this.GetAsync(x => x.Identification == identification);
             task.Wait();
             return task.Result.FirstOrDefault();
         }

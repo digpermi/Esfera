@@ -23,7 +23,7 @@ namespace Bussines.Bussines
 
         public ExternalSystem GetExternalSystemById(byte id)
         {
-            Task<ExternalSystem> task = this.repository.GetAsync(id);
+            Task<ExternalSystem> task = this.GetAsync(id);
             task.Wait();
 
             return task.Result;

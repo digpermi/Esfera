@@ -190,7 +190,7 @@ namespace Portal.Controllers
 
                         if (person == null)
                         {
-                            var result = this.personBussines.AddAsync(personCreate.Person);
+                            var result = this.personBussines.Add(personCreate.Person);
                             customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
                             TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
                             return RedirectToAction("Index", "Customer");
@@ -206,7 +206,7 @@ namespace Portal.Controllers
                 else
                 {
                     return View(personCreate);
-                }                
+                }
             }
             catch
             {
@@ -283,18 +283,18 @@ namespace Portal.Controllers
                         else
                         {
                             personUpdate.Person.Id = id;
-                            var result = this.personBussines.EditAsync(personUpdate.Person);
+                            var result = this.personBussines.Edit(personUpdate.Person);
                             customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
                             TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
                             return RedirectToAction("Index", "Customer");
                         }
                     }
-                    
+
                 }
                 else
                 {
                     return View(personUpdate);
-                }                
+                }
             }
             catch
             {
@@ -313,7 +313,7 @@ namespace Portal.Controllers
             {
                 // TODO: Add delete logic here
 
-                var result = this.personBussines.DeleteAsync(id);
+                var result = this.personBussines.Delete(id);
                 personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
                 TempData["Message"] = JsonConvert.SerializeObject(personMessage);
                 return RedirectToAction("Index", "Customer");
