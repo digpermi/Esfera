@@ -13,11 +13,19 @@ namespace Bussines.Bussines
     public class PersonBussines : Repository<Person, EsferaContext>, IPersonBussines
     {
         private readonly ICustomerBussines customerBussines;
+        private readonly IExternalSystemBussines externalSystemBussines;
+        private readonly IIdentificationTypeBussines identificationTypeBussines;
+        private readonly IInterestBussines interestedBussines;
+        private readonly IRelationshipBussines relationshipBussines;
         private readonly ICacheUtility cache;
 
         public PersonBussines(EsferaContext context, ICacheUtility cache) : base(context)
         {
             this.customerBussines = new CustomerBussines(context);
+            this.externalSystemBussines = new ExternalSystemBussines(context);
+            this.identificationTypeBussines = new IdentificationTypeBussines(context);
+            this.interestedBussines = new InterestBussines(context);
+            this.relationshipBussines = new RelationshipBussines(context);
             this.cache = cache;
         }
 
@@ -60,7 +68,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonByIdentification(string identification)
         {
-            Task<List<Person>> task = this.GetAsync(x => x.Identification.Equals(identification));
+            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification == identification);
             task.Wait();
             return task.Result.FirstOrDefault();
         }
@@ -111,14 +119,15 @@ namespace Bussines.Bussines
             return task.Result;
         }
 
-        public void UploadVinculatedPersons(string fileName)
+        public List<ApplicationMessage> UploadVinculatedPersons(string fileName)
         {
             CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
 
             List<Person> persons = csvFile.ParseCSVFile(fileName).ToList();
 
-
             List<ApplicationMessage> processMessages = this.ProcessViculatedPersons(persons);
+
+            return processMessages;
         }
 
         private List<ApplicationMessage> ProcessViculatedPersons(List<Person> persons)
@@ -133,26 +142,63 @@ namespace Bussines.Bussines
                 List<ValidationResult> validationResults = new List<ValidationResult>();
 
                 Person actualPerson = this.GetPersonByIdentification(person.Identification);
-                //validar si la persona existe y mostrar el mensaje
 
-
-                Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
-                if (customer != null)
+                if (actualPerson == null)
                 {
-                    person.ExternalSystemId = customer.ExternalSystemId;
-
-                    Validator.TryValidateObject(person, new System.ComponentModel.DataAnnotations.ValidationContext(person), validationResults, true);
-
-                    errorMessage = this.GetPersonErroMessage(rowCont, validationResults);
-
-                    if (errorMessage == null)
+                    IdentificationType identificationtype = this.identificationTypeBussines.GetIdentificationTypeById(person.IdentificationTypeId);
+                    if (identificationtype != null)
                     {
-                        this.Add(person);
+                        Relationship relationship = this.relationshipBussines.GetRelationshipById(person.RelationshipId.Value);
+                        if (relationship != null)
+                        {
+                            Interest interest = this.interestedBussines.GetInterestById(person.InterestId);
+                            if (interest != null)
+                            {
+                                ExternalSystem externalsystem = this.externalSystemBussines.GetExternalSystemById(person.ExternalSystemId);
+                                if (externalsystem != null)
+                                {
+                                    Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
+                                    if (customer != null)
+                                    {
+                                        person.ExternalSystemId = customer.ExternalSystemId;
+
+                                        Validator.TryValidateObject(person, new System.ComponentModel.DataAnnotations.ValidationContext(person), validationResults, true);
+
+                                        errorMessage = this.GetPersonErroMessage(rowCont, validationResults);
+
+                                        if (errorMessage == null)
+                                        {
+                                            this.AddAsync(person);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonCustomerNotValid, person.Code);
+                                    }
+                                }
+                                else
+                                {
+                                    errorMessage = new ApplicationMessage(this.cache, MessageCode.ExternalSystemNotValid, person.ExternalSystemId);
+                                }
+                            }
+                            else
+                            {
+                                errorMessage = new ApplicationMessage(this.cache, MessageCode.InterestNotValid, person.InterestId);
+                            }
+                        }
+                        else
+                        {
+                            errorMessage = new ApplicationMessage(this.cache, MessageCode.RelationshipNotValid, person.RelationshipId);
+                        }
+                    }
+                    else
+                    {
+                        errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, person.IdentificationTypeId);
                     }
                 }
                 else
                 {
-                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonCustomerNotValid, person.Code);
+                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, person.Identification);
                 }
 
                 if (errorMessage != null)

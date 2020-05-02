@@ -7,5 +7,7 @@ namespace Bussines.Bussines
     {
         ICollection<IdentificationType> GetAllIdentificationTypes();
 
+        IdentificationType GetIdentificationTypeById(byte id);
+
     }
 }

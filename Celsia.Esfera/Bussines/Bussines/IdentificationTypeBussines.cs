@@ -21,5 +21,13 @@ namespace Bussines.Bussines
             return task.Result;
         }
 
+        public IdentificationType GetIdentificationTypeById(byte id)
+        {
+            Task<IdentificationType> task = this.repository.GetAsync(id);
+            task.Wait();
+
+            return task.Result;
+        }
+
     }
 }

@@ -20,5 +20,13 @@ namespace Bussines.Bussines
             return task.Result;
         }
 
+        public Relationship GetRelationshipById(byte id)
+        {
+            Task<Relationship> task = this.repository.GetAsync(id);
+            task.Wait();
+
+            return task.Result;
+        }
+
     }
 }

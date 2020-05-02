@@ -49,5 +49,25 @@
         /// El código {0}, no existe como cliente.
         /// </summary>
         PersonCustomerNotValid = 8,
+
+        /// <summary>
+        /// El código {0}, no existe como tipo de identificación.
+        /// </summary>
+        IdentificationTypeNotValid = 9,
+
+        /// <summary>
+        /// El código {0}, no existe como relación.
+        /// </summary>
+        RelationshipNotValid = 10,
+
+        /// <summary>
+        /// El código {0}, no existe como interés.
+        /// </summary>
+        InterestNotValid = 11,
+
+        /// <summary>
+        /// El código {0}, no existe como sistema externo.
+        /// </summary>
+        ExternalSystemNotValid = 12
     }
 }

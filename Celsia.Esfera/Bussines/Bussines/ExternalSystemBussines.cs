@@ -21,5 +21,13 @@ namespace Bussines.Bussines
             return task.Result;
         }
 
+        public ExternalSystem GetExternalSystemById(byte id)
+        {
+            Task<ExternalSystem> task = this.repository.GetAsync(id);
+            task.Wait();
+
+            return task.Result;
+        }
+
     }
 }

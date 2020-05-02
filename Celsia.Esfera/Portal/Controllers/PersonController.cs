@@ -225,7 +225,7 @@ namespace Portal.Controllers
                 }
 
             }
-            catch (Exception ex)
+            catch
             {
                 personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
                 personUpdate.UserMesage = personMessage;
