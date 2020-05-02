@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Bussines.Data;
 using Entities.Models;
 
 namespace Bussines.Bussines
 {
-    public class ExternalSystemBussines : IExternalSystemBussines
+    public class ExternalSystemBussines : Repository<ExternalSystem, EsferaContext>, IExternalSystemBussines
     {
-        private readonly IRepository<ExternalSystem> repository;
-
-        public ExternalSystemBussines(EsferaContext context)
+        public ExternalSystemBussines(EsferaContext context) : base(context)
         {
-            this.repository = new ExternalSystemRepository(context);
+
         }
 
         /// <summary>
@@ -21,13 +17,13 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public ICollection<ExternalSystem> GetAllExternalSystems()
         {
-            Task<List<ExternalSystem>> task = this.repository.GetAsync();
+            Task<List<ExternalSystem>> task = this.GetAsync();
             return task.Result;
         }
 
         public ExternalSystem GetExternalSystemById(byte id)
         {
-            Task<ExternalSystem> task = this.repository.GetAsync(id);
+            Task<ExternalSystem> task = this.GetAsync(id);
             task.Wait();
 
             return task.Result;

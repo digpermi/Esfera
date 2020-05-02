@@ -14,16 +14,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body class="sb-nav-fixed">
+    @using Microsoft.AspNetCore.Identity
+    @using Entities.Models;
+
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-orange">
         <a class="navbar-brand mr-4" href="/"><img src="~/img/logo.svg" /></a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
         <!-- Navbar Search-->
         <div class="d-none d-md-inline-block ml-auto mr-0 mr-md-3 my-2 my-md-0">
+
+            @using System.Security.Claims
+
             <div class="user-info">
-                <span>Juan David Velez Duque</span>
+                <span>@User.FindFirst(ClaimTypes.Name).Value;</span>
                 <span><strong>Administrador</strong></span>
             </div>
+
+
+
+
         </div>
         <!-- Navbar-->
         <ul class="navbar-nav ml-auto ml-md-0">
@@ -41,7 +51,7 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Clientes</div>
-                        <a class="nav-link" href="~/Customer"> 
+                        <a class="nav-link" href="~/Customer">
                             <div class="sb-nav-link-icon"><i class="fas fa-search"></i></div>
                             Consultar clientes
                         </a>

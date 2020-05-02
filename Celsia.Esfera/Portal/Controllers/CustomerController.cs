@@ -1,18 +1,17 @@
-﻿using Bussines;
+﻿using System.Collections.Generic;
+using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Portal.ViewModels;
-using System.Collections.Generic;
 using Utilities.Cache;
 using Utilities.Messages;
 
 namespace Portal.Controllers
 {
-    public class CustomerController:Controller
+    public class CustomerController : Controller
     {
         private readonly ICustomerBussines customerBussines;
         private readonly IPersonBussines personBussines;
@@ -191,7 +190,7 @@ namespace Portal.Controllers
 
                         if (person == null)
                         {
-                            var result = this.personBussines.AddAsync(personCreate.Person);
+                            var result = this.personBussines.Add(personCreate.Person);
                             customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
                             TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
                             return RedirectToAction("Index", "Customer");
@@ -207,7 +206,7 @@ namespace Portal.Controllers
                 else
                 {
                     return View(personCreate);
-                }                
+                }
             }
             catch
             {
@@ -243,7 +242,7 @@ namespace Portal.Controllers
                 personEdit.UserMesage = customerMessage;
             }
 
-            return View(personEdit);
+            return this.View(personEdit);
         }
 
         // POST: Person/Edit/5
@@ -264,9 +263,7 @@ namespace Portal.Controllers
 
             try
             {
-                // TODO: Add update logic here
-
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
                     if (personUpdate.Person.RelationshipId == null)
                     {
@@ -286,18 +283,18 @@ namespace Portal.Controllers
                         else
                         {
                             personUpdate.Person.Id = id;
-                            var result = this.personBussines.EditAsync(personUpdate.Person);
+                            var result = this.personBussines.Edit(personUpdate.Person);
                             customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
                             TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
                             return RedirectToAction("Index", "Customer");
                         }
                     }
-                    
+
                 }
                 else
                 {
                     return View(personUpdate);
-                }                
+                }
             }
             catch
             {
@@ -316,14 +313,14 @@ namespace Portal.Controllers
             {
                 // TODO: Add delete logic here
 
-                var result = this.personBussines.DeleteAsync(id);
+                var result = this.personBussines.Delete(id);
                 personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
                 TempData["Message"] = JsonConvert.SerializeObject(personMessage);
                 return RedirectToAction("Index", "Customer");
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
     }

@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bussines.Data;
 using Entities.Models;
 
 namespace Bussines.Bussines
 {
-    public class CustomerBussines : ICustomerBussines
+    public class CustomerBussines : Repository<Customer, EsferaContext>, ICustomerBussines
     {
-        private readonly IRepository<Customer> repository;
-
-        public CustomerBussines(EsferaContext context)
+        public CustomerBussines(EsferaContext context) : base(context)
         {
-            this.repository = new CustomerRepository(context);
+
         }
 
         /// <summary>
@@ -24,9 +21,7 @@ namespace Bussines.Bussines
 
         public Customer GetCustomer(int code, byte externalSystemId)
         {
-            string IncludeProperties = "IdentificationType,ExternalSystem,Persons";
-
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, IncludeProperties);
+            Task<List<Customer>> task = this.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem,Persons");
             task.Wait();
 
             return task.Result.FirstOrDefault();
@@ -34,7 +29,7 @@ namespace Bussines.Bussines
 
         public Customer GetCustomerByCode(int? code)
         {
-            Task<List<Customer>> task = this.repository.GetAsync(x => x.Code == code, null, "IdentificationType,ExternalSystem");
+            Task<List<Customer>> task = this.GetAsync(x => x.Code == code, null, "IdentificationType,ExternalSystem");
             task.Wait();
 
             return task.Result.FirstOrDefault();
@@ -42,7 +37,7 @@ namespace Bussines.Bussines
 
         public Customer GetCustomerById(int id)
         {
-            Task<Customer> task = this.repository.GetAsync(id);
+            Task<Customer> task = this.GetAsync(id);
             task.Wait();
 
             return task.Result;

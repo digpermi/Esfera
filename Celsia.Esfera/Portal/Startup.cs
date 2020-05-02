@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using Bussines;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Utilities.Cache;
+using Utilities.Configuration;
 
 namespace Portal
 {
@@ -25,6 +28,26 @@ namespace Portal
             services.AddMemoryCache();
             services.AddSingleton<ICacheUtility, CacheUtility>();
 
+            services.AddOptions();
+            services.Configure<ServiceConfig>(this.Configuration.GetSection("SecurityApiConfig"));
+
+            services.AddAuthentication("CookieAuthentication")
+                 .AddCookie("CookieAuthentication", config =>
+                 {
+                     config.Cookie.Name = "UserLoginCookie";
+                     config.LoginPath = "/Login/Index";
+                 });
+
+            services.AddAuthorization(config =>
+            {
+                AuthorizationPolicyBuilder userAuthPolicyBuilder = new AuthorizationPolicyBuilder();
+                config.DefaultPolicy = userAuthPolicyBuilder
+                                    .RequireAuthenticatedUser()
+                                    .RequireClaim(ClaimTypes.NameIdentifier)
+                                    .Build();
+            });
+
+
             services.AddDbContext<EsferaContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
         }
 
@@ -38,14 +61,13 @@ namespace Portal
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

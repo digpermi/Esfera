@@ -1,13 +1,13 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Bussines;
 using Bussines.Bussines;
-using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Portal.ViewModels;
 using Utilities.Cache;
-using Utilities.Messages;
+using Utilities.Configuration;
 
 namespace Portal.Controllers
 {
@@ -16,18 +16,21 @@ namespace Portal.Controllers
         private readonly ICustomerBussines customerBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<HomeController> logger;
-
+        private readonly ServiceConfig apiConfig;
 
         public CustomerViewModel TestCustomer { get; set; }
 
-        public HomeController(EsferaContext context, ILogger<HomeController> logger, ICacheUtility cache)
+        public HomeController(EsferaContext context, ILogger<HomeController> logger, ICacheUtility cache, IOptions<ServiceConfig> apiConfigOption)
         {
             this.logger = logger;
             this.cache = cache;
+            this.apiConfig = apiConfigOption.Value;
 
             this.customerBussines = new CustomerBussines(context);
         }
 
+        // [Authorize(Roles = "Administrador")]
+        [Authorize]
         public IActionResult Index()
         {
             return this.View();

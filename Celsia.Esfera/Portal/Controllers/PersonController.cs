@@ -18,7 +18,7 @@ namespace Portal.Controllers
         private readonly IExternalSystemBussines externalSystemBussines;
         private readonly IIdentificationTypeBussines identificationTypeBussines;
         private readonly IInterestBussines interestBussines;
-        private readonly IRelationshipBussines relationshipBussines;
+
         private readonly ICacheUtility cache;
         private readonly ILogger<PersonController> logger;
 
@@ -31,14 +31,13 @@ namespace Portal.Controllers
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
             this.interestBussines = new InterestBussines(context);
-            this.relationshipBussines = new RelationshipBussines(context);
         }
 
         // GET: Person
         public IActionResult Index()
         {
             ApplicationMessage personMessage = new ApplicationMessage();
-            var viewModelList = new List<PersonViewModel>();
+            List<PersonViewModel> viewModelList = new List<PersonViewModel>();
 
             try
             {
@@ -49,9 +48,9 @@ namespace Portal.Controllers
 
                 ICollection<Person> persons = this.personBussines.GetAllPersonsNoVinculed();
 
-                foreach (var person in persons)
+                foreach (Person person in persons)
                 {
-                    var personItem = new PersonViewModel()
+                    PersonViewModel personItem = new PersonViewModel()
                     {
                         Person = person,
                         UserMesage = personMessage
@@ -62,13 +61,13 @@ namespace Portal.Controllers
             catch
             {
                 personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                var personItem = new PersonViewModel()
+                PersonViewModel personItem = new PersonViewModel()
                 {
                     UserMesage = personMessage
                 };
                 viewModelList.Add(personItem);
             }
-            
+
             return this.View(viewModelList);
         }
 
@@ -84,7 +83,8 @@ namespace Portal.Controllers
                 ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
                 ICollection<Interest> interests = this.interestBussines.GetAllInterests();
 
-                Person personInitial = new Person(){
+                Person personInitial = new Person()
+                {
                     ExternalSystemId = 0,
                     IdentificationTypeId = 0,
                     InterestId = 0
@@ -100,7 +100,7 @@ namespace Portal.Controllers
             {
                 personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
                 viewModel.UserMesage = personMessage;
-            }            
+            }
 
             return this.View(viewModel);
         }
@@ -123,36 +123,36 @@ namespace Portal.Controllers
             {
                 // TODO: Add insert logic here
 
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
 
                     Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
 
                     if (person == null)
                     {
-                        var result = this.personBussines.AddAsync(personCreate.Person);
+                        Person result = this.personBussines.Add(personCreate.Person);
                         personMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
-                        TempData["Message"] = JsonConvert.SerializeObject(personMessage);
-                        return RedirectToAction("Index", "Person");
+                        this.TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                        return this.RedirectToAction("Index", "Person");
                     }
                     else
                     {
                         personMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
                         personCreate.UserMesage = personMessage;
-                        return View(personCreate);
-                    }                   
+                        return this.View(personCreate);
+                    }
                 }
                 else
                 {
-                    return View(personCreate);
+                    return this.View(personCreate);
                 }
-                
+
             }
             catch
             {
                 personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
                 personCreate.UserMesage = personMessage;
-                return View(personCreate);
+                return this.View(personCreate);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Portal.Controllers
                 personEdit.UserMesage = personMessage;
             }
 
-            return View(personEdit);
+            return this.View(personEdit);
         }
 
         // POST: Person/Edit/5
@@ -200,7 +200,7 @@ namespace Portal.Controllers
             try
             {
                 // TODO: Add update logic here
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
                     Person personValid = this.personBussines.GetPersonByIdentificationById(personUpdate.Person.Identification, id);
 
@@ -208,28 +208,28 @@ namespace Portal.Controllers
                     {
                         personMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personUpdate.Person.Identification);
                         personUpdate.UserMesage = personMessage;
-                        return View(personUpdate);
+                        return this.View(personUpdate);
                     }
                     else
                     {
                         personUpdate.Person.Id = id;
-                        var result = this.personBussines.EditAsync(personUpdate.Person);
+                        Person result = this.personBussines.Edit(personUpdate.Person);
                         personMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
-                        TempData["Message"] = JsonConvert.SerializeObject(personMessage);
-                        return RedirectToAction("Index", "Person");
-                    }                    
+                        this.TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                        return this.RedirectToAction("Index", "Person");
+                    }
                 }
                 else
                 {
-                    return View(personUpdate);
+                    return this.View(personUpdate);
                 }
-                
+
             }
             catch
             {
                 personMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
                 personUpdate.UserMesage = personMessage;
-                return View(personUpdate);
+                return this.View(personUpdate);
             }
         }
 
@@ -243,14 +243,14 @@ namespace Portal.Controllers
             {
                 // TODO: Add delete logic here
 
-                var result = this.personBussines.DeleteAsync(id);
+                Person result = this.personBussines.Delete(id);
                 personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
-                TempData["Message"] = JsonConvert.SerializeObject(personMessage);
-                return RedirectToAction("Index", "Person");
+                this.TempData["Message"] = JsonConvert.SerializeObject(personMessage);
+                return this.RedirectToAction("Index", "Person");
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bussines
 {
-    internal abstract class Repository<TEntity, TContext> : IRepository<TEntity> where TEntity : class where TContext : DbContext
+    public abstract class Repository<TEntity, TContext> : IRepository<TEntity> where TEntity : class where TContext : DbContext
     {
         private readonly TContext context;
 
@@ -62,7 +62,7 @@ namespace Bussines
             return await (orderBy != null ? orderBy(query).ToListAsync() : query.ToListAsync());
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> EditAsync(TEntity entity)
         {
             this.context.Entry(entity).State = EntityState.Modified;
             await this.context.SaveChangesAsync();

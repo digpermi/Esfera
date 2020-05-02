@@ -1,18 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Bussines.Data;
 using Entities.Models;
 
 namespace Bussines.Bussines
 {
-    public class RelationshipBussines : IRelationshipBussines
+    public class RelationshipBussines : Repository<Relationship, EsferaContext>, IRelationshipBussines
     {
-        private readonly IRepository<Relationship> repository;
-
-        public RelationshipBussines(EsferaContext context)
+        public RelationshipBussines(EsferaContext context) : base(context)
         {
-            this.repository = new RelationshipRepository(context);
         }
 
         /// <summary>
@@ -21,13 +16,13 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public ICollection<Relationship> GetAllRelationships()
         {
-            Task<List<Relationship>> task = this.repository.GetAsync();
+            Task<List<Relationship>> task = this.GetAsync();
             return task.Result;
         }
 
         public Relationship GetRelationshipById(byte id)
         {
-            Task<Relationship> task = this.repository.GetAsync(id);
+            Task<Relationship> task = this.GetAsync(id);
             task.Wait();
 
             return task.Result;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Bussines.Data;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore.Internal;
 using Utilities.Cache;
@@ -12,9 +10,8 @@ using Utilities.Messages;
 
 namespace Bussines.Bussines
 {
-    public class PersonBussines : IPersonBussines
+    public class PersonBussines : Repository<Person, EsferaContext>, IPersonBussines
     {
-        private readonly IRepository<Person> repository;
         private readonly ICustomerBussines customerBussines;
         private readonly IExternalSystemBussines externalSystemBussines;
         private readonly IIdentificationTypeBussines identificationTypeBussines;
@@ -22,9 +19,8 @@ namespace Bussines.Bussines
         private readonly IRelationshipBussines relationshipBussines;
         private readonly ICacheUtility cache;
 
-        public PersonBussines(EsferaContext context, ICacheUtility cache)
+        public PersonBussines(EsferaContext context, ICacheUtility cache) : base(context)
         {
-            this.repository = new PersonRepository(context);
             this.customerBussines = new CustomerBussines(context);
             this.externalSystemBussines = new ExternalSystemBussines(context);
             this.identificationTypeBussines = new IdentificationTypeBussines(context);
@@ -39,7 +35,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public ICollection<Person> GetAllPersonsNoVinculed()
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.CustomerId == null, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
+            Task<List<Person>> task = this.GetAsync(x => x.CustomerId == null, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
             return task.Result;
         }
 
@@ -49,7 +45,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public ICollection<Person> GetAllPersonsVinculed(int customerId)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.CustomerId == customerId, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
+            Task<List<Person>> task = this.GetAsync(x => x.CustomerId == customerId, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
             return task.Result;
         }
 
@@ -59,7 +55,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonById(int id)
         {
-            Task<Person> task = this.repository.GetAsync(id);
+            Task<Person> task = this.GetAsync(id);
             task.Wait();
 
             return task.Result;
@@ -72,7 +68,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonByIdentification(string identification)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification == identification);
+            Task<List<Person>> task = this.GetAsync(x => x.Identification == identification);
             task.Wait();
             return task.Result.FirstOrDefault();
         }
@@ -84,7 +80,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonByIdentificationById(string identification, int id)
         {
-            Task<List<Person>> task = this.repository.GetAsync(x => x.Identification.Equals(identification) && x.Id != id);
+            Task<List<Person>> task = this.GetAsync(x => x.Identification.Equals(identification) && x.Id != id);
             task.Wait();
             return task.Result.FirstOrDefault();
         }
@@ -94,9 +90,10 @@ namespace Bussines.Bussines
         /// Inserta una persona
         /// </summary>
         /// <returns></returns>
-        public Person AddAsync(Person person)
+        public Person Add(Person person)
         {
-            Task<Person> task = this.repository.AddAsync(person);
+            Task<Person> task = this.AddAsync(person);
+            task.Wait();
             return task.Result;
         }
 
@@ -104,9 +101,10 @@ namespace Bussines.Bussines
         /// Editar una persona
         /// </summary>
         /// <returns></returns>
-        public Person EditAsync(Person person)
+        public Person Edit(Person person)
         {
-            Task<Person> task = this.repository.UpdateAsync(person);
+            Task<Person> task = this.EditAsync(person);
+            task.Wait();
             return task.Result;
         }
 
@@ -114,9 +112,10 @@ namespace Bussines.Bussines
         /// Eliminar una persona
         /// </summary>
         /// <returns></returns>
-        public Person DeleteAsync(int Id)
+        public Person Delete(int Id)
         {
-            Task<Person> task = this.repository.DeleteAsync(Id);
+            Task<Person> task = this.DeleteAsync(Id);
+            task.Wait();
             return task.Result;
         }
 

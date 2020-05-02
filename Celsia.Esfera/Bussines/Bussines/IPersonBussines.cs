@@ -18,11 +18,11 @@ namespace Bussines.Bussines
 
         Person GetPersonByIdentificationById(string identification, int id);
 
-        Person AddAsync(Person person);
+        Person Add(Person person);
 
-        Person EditAsync(Person person);
+        Person Edit(Person person);
 
-        Person DeleteAsync(int id);
+        Person Delete(int id);
 
     }
 }
