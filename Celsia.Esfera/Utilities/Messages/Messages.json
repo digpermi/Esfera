@@ -26,7 +26,7 @@
   },
   {
     "Code": 6,
-    "Text": "La persona con Nro. de identificación {0} ya se encuentra registrada.",
+    "Text": "La fila {0} tiene los siguientes errores: La persona con Nro. de identificación {1} ya se encuentra registrada.",
     "Type": 4
   },
   {
@@ -36,28 +36,28 @@
   },
   {
     "Code": 8,
-    "Text": "El código {0}, no existe como cliente.",
+    "Text": "La fila {0} tiene los siguientes errores: El código {1}, no existe como cliente.",
     "Type": 4
   },
   {
     "Code": 9,
-    "Text": "El código {0}, no existe como tipo de identificación.",
+    "Text": "La fila {0} tiene los siguientes errores: El código {1}, no existe como tipo de identificación.",
     "Type": 4
   },
   {
     "Code": 10,
-    "Text": "El código {0}, no existe como relación.",
+    "Text": "La fila {0} tiene los siguientes errores: El código {1}, no existe como relación.",
     "Type": 4
   },
   {
     "Code": 11,
-    "Text": "El código {0}, no existe como interés.",
+    "Text": "La fila {0} tiene los siguientes errores: El código {1}, no existe como interés.",
     "Type": 4
   },
   {
     "Code": 12,
-    "Text": "El código {0}, no existe como sistema externo.",
-    "Type": 4
+    "Text": "La fila {0} fue adicionada con éxito.",
+    "Type": 1
   }
 
 ]

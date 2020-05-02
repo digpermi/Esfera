@@ -46,28 +46,28 @@
         InvalidPersonRow = 7,
 
         /// <summary>
-        /// El código {0}, no existe como cliente.
+        /// La fila {0} tiene los siguientes errores: El código {0}, no existe como cliente.
         /// </summary>
         PersonCustomerNotValid = 8,
 
         /// <summary>
-        /// El código {0}, no existe como tipo de identificación.
+        /// La fila {0} tiene los siguientes errores: El código {0}, no existe como tipo de identificación.
         /// </summary>
         IdentificationTypeNotValid = 9,
 
         /// <summary>
-        /// El código {0}, no existe como relación.
+        /// La fila {0} tiene los siguientes errores: El código {0}, no existe como relación.
         /// </summary>
         RelationshipNotValid = 10,
 
         /// <summary>
-        /// El código {0}, no existe como interés.
+        /// La fila {0} tiene los siguientes errores: El código {0}, no existe como interés.
         /// </summary>
         InterestNotValid = 11,
 
         /// <summary>
-        /// El código {0}, no existe como sistema externo.
+        /// La fila {0} fue adicionada con éxito.
         /// </summary>
-        ExternalSystemNotValid = 12
+        PersonImported = 12
     }
 }

@@ -9,7 +9,7 @@ namespace Portal.ViewModels
     {
         public List<ApplicationMessage> Messages { get; set; }
 
-        public string TotalRows { get; set; }
+        public int TotalRows { get; set; }
 
         public string File { get; set; }
 

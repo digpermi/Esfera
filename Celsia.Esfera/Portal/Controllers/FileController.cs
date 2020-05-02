@@ -5,6 +5,7 @@ using Bussines.Bussines;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Portal.ViewModels;
 using Utilities.Cache;
 using Utilities.Messages;
 
@@ -27,22 +28,36 @@ namespace Portal.Controllers
         // GET: File
         public ActionResult Index()
         {
-            return this.View();
+            FileViewModel viewModel = new FileViewModel();
+
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult UploadFile(IFormFile file)
+        public ActionResult Index(IFormFile file)
         {
-            string tempPath = Path.GetTempFileName();
+            FileViewModel viewModel = new FileViewModel();
 
-            using (FileStream stream = System.IO.File.Create(tempPath))
+            if (file == null)
             {
-                file.CopyToAsync(stream);
+                ModelState.AddModelError("File", "Campo requerido");
+            }
+            else 
+            {
+                string tempPath = Path.GetTempFileName();
+
+                using (FileStream stream = System.IO.File.Create(tempPath))
+                {
+                    file.CopyToAsync(stream);
+                }
+
+                List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath);
+
+                viewModel.Messages = processMessages;
+                viewModel.TotalRows = processMessages.Count;
             }
 
-            List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath);
-
-            return this.RedirectToAction("Index");
+            return this.View(viewModel);
         }
 
     }

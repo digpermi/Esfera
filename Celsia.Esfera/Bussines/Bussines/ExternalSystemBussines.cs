@@ -23,7 +23,7 @@ namespace Bussines.Bussines
 
         public ExternalSystem GetExternalSystemById(byte id)
         {
-            Task<ExternalSystem> task = this.GetAsync(id);
+            Task<ExternalSystem> task = this.GetAsyncByte(id);
             task.Wait();
 
             return task.Result;
