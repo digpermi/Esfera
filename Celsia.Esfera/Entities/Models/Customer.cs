@@ -20,7 +20,7 @@ namespace Entities.Models
         public string MobileNumber { get; set; }
         public string Email { get; set; }
         public bool PolicyData { get; set; }
-        public byte? ExternalSystemId { get; set; }
+        public byte ExternalSystemId { get; set; }
 
         public virtual IdentificationType IdentificationType { get; set; }
         public virtual ExternalSystem ExternalSystem { get; set; }

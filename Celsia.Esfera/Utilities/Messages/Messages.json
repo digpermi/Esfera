@@ -1,7 +1,7 @@
 ﻿[
   {
     "Code": 1,
-    "Text": "Hubo un error en el sistema.",
+    "Text": "Ocurrio un error en el sistema.",
     "Type": 4
   },
   {
@@ -37,6 +37,26 @@
   {
     "Code": 8,
     "Text": "El código {0}, no existe como cliente.",
+    "Type": 4
+  },
+  {
+    "Code": 9,
+    "Text": "El código {0}, no existe como tipo de identificación.",
+    "Type": 4
+  },
+  {
+    "Code": 10,
+    "Text": "El código {0}, no existe como relación.",
+    "Type": 4
+  },
+  {
+    "Code": 11,
+    "Text": "El código {0}, no existe como interés.",
+    "Type": 4
+  },
+  {
+    "Code": 12,
+    "Text": "El código {0}, no existe como sistema externo.",
     "Type": 4
   }
 

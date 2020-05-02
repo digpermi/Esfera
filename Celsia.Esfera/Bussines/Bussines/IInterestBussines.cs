@@ -7,5 +7,7 @@ namespace Bussines.Bussines
     {
         ICollection<Interest> GetAllInterests();
 
+        Interest GetInterestById(byte id);
+
     }
 }

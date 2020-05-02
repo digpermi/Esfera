@@ -1,4 +1,5 @@
-﻿
+﻿@model Portal.ViewModels.FileViewModel
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +16,7 @@
     <div class="col-xl-6 col-md-6">
         <div class="form-group">
             <label class="small mb-1">Formato CSV</label>
-            <input class="form-control" type="file" name="file" placeholder="Examinar">
+            <input class="form-control" type="file" name="file" placeholder="Examinar" required>
         </div>
     </div>
     <div class="col-xl-3 col-md-3">
