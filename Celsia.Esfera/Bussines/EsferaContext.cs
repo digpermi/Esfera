@@ -67,7 +67,9 @@ namespace Bussines
 
                 entity.Property(e => e.PolicyData).HasColumnName("policyData");
 
-                entity.Property(e => e.ExternalSystemId).HasColumnName("externalsystemid");
+                entity.Property(e => e.ExternalSystemId)
+                    .IsRequired()
+                    .HasColumnName("externalsystemid");
 
                 entity.HasOne(d => d.IdentificationType)
                     .WithMany(p => p.Customers)
@@ -126,10 +128,12 @@ namespace Bussines
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Birthdate)
+                    .IsRequired()
                     .HasColumnName("birthdate")
                     .HasColumnType("date");
 
                 entity.Property(e => e.MobileNumber)
+                    .IsRequired()
                     .HasColumnName("mobileNumber")
                     .HasMaxLength(50);
 
@@ -138,6 +142,7 @@ namespace Bussines
                 entity.Property(e => e.CustomerId).HasColumnName("customerId");
 
                 entity.Property(e => e.Email)
+                    .IsRequired()
                     .HasColumnName("email")
                     .HasMaxLength(100);
 
@@ -146,15 +151,21 @@ namespace Bussines
                     .HasColumnName("identification")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.IdentificationTypeId).HasColumnName("identificationTypeId");
+                entity.Property(e => e.IdentificationTypeId)
+                    .IsRequired()
+                    .HasColumnName("identificationTypeId");
 
-                entity.Property(e => e.InterestId).HasColumnName("interestId");
+                entity.Property(e => e.InterestId)
+                    .IsRequired()
+                    .HasColumnName("interestId");
 
                 entity.Property(e => e.LastName)
+                    .IsRequired()
                     .HasColumnName("lastName")
                     .HasMaxLength(200);
 
                 entity.Property(e => e.FirstName)
+                    .IsRequired()
                     .HasColumnName("firstname")
                     .HasMaxLength(200);
 
@@ -166,7 +177,9 @@ namespace Bussines
 
                 entity.Property(e => e.RelationshipId).HasColumnName("relationshipid");
 
-                entity.Property(e => e.ExternalSystemId).HasColumnName("externalsystemid");
+                entity.Property(e => e.ExternalSystemId)
+                    .IsRequired()
+                    .HasColumnName("externalsystemid");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Persons)

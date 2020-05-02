@@ -142,22 +142,20 @@ namespace Bussines.Bussines
 
                 List<ValidationResult> validationResults = new List<ValidationResult>();
 
-
-                Person actualPersonId = this.GetPersonById(1);
                 Person actualPerson = this.GetPersonByIdentification(person.Identification);
 
                 if (actualPerson == null)
                 {
-                    IdentificationType identificationtype = this.identificationTypeBussines.GetIdentificationTypeById(person.IdentificationTypeId.Value);
+                    IdentificationType identificationtype = this.identificationTypeBussines.GetIdentificationTypeById(person.IdentificationTypeId);
                     if (identificationtype != null)
                     {
                         Relationship relationship = this.relationshipBussines.GetRelationshipById(person.RelationshipId.Value);
                         if (relationship != null)
                         {
-                            Interest interest = this.interestedBussines.GetInterestById(person.InterestId.Value);
+                            Interest interest = this.interestedBussines.GetInterestById(person.InterestId);
                             if (interest != null)
                             {
-                                ExternalSystem externalsystem = this.externalSystemBussines.GetExternalSystemById(person.ExternalSystemId.Value);
+                                ExternalSystem externalsystem = this.externalSystemBussines.GetExternalSystemById(person.ExternalSystemId);
                                 if (externalsystem != null)
                                 {
                                     Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
