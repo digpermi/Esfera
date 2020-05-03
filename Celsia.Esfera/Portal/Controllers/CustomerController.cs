@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -73,17 +76,18 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int code, byte externalsystemid)
         {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
 
             ApplicationMessage customerMessage = new ApplicationMessage();
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             var viewModel = new CustomerViewModel();
             viewModel.ExternalSystems = externalSystems;
-
+            
             try
             {
                 if (externalsystemid != 0 && code != 0)
                 {
-                    Customer customer = this.customerBussines.GetCustomer(code, externalsystemid);
+                    Customer customer = this.customerBussines.GetCustomer(code, externalsystemid,userName);
 
                     if (customer == null)
                     {
@@ -166,6 +170,8 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonViewModel personCreate)
         {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
+
             ApplicationMessage customerMessage = new ApplicationMessage();
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
@@ -218,6 +224,7 @@ namespace Portal.Controllers
         // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
             ApplicationMessage customerMessage = new ApplicationMessage();
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
@@ -249,7 +256,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, PersonViewModel personUpdate)
         {
-
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
             ApplicationMessage customerMessage = new ApplicationMessage();
             ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
             ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
@@ -303,12 +310,13 @@ namespace Portal.Controllers
         public ActionResult Delete(int id)
         {
             ApplicationMessage personMessage = new ApplicationMessage();
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
 
             try
             {
                 // TODO: Add delete logic here
 
-                var result = this.personBussines.Delete(id);
+                var result = this.personBussines.Delete(id,userName);
                 personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
                 TempData["Message"] = JsonConvert.SerializeObject(personMessage);
                 return RedirectToAction("Index", "Customer");

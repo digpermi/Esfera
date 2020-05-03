@@ -10,7 +10,7 @@ namespace Bussines.Bussines
 
         ICollection<Person> GetAllPersonsVinculed(int customerId);
 
-        List<ApplicationMessage> UploadVinculatedPersons(string fileName);
+        List<ApplicationMessage> UploadVinculatedPersons(string fileName, string userName);
 
         Person GetPersonById(int Id);
 
@@ -18,11 +18,11 @@ namespace Bussines.Bussines
 
         Person GetPersonByIdentificationById(string identification, int id);
 
-        Person Add(Person person);
+        Person Add(Person person, string userName);
 
-        Person Edit(Person person);
+        Person Edit(Person person, string userName);
 
-        Person Delete(int id);
+        Person Delete(int id, string userName);
 
     }
 }

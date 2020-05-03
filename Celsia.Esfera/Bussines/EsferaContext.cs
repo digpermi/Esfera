@@ -20,6 +20,7 @@ namespace Bussines
         public virtual DbSet<Interest> Interests { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Relationship> Relationships { get; set; }
+        public virtual DbSet<Audit> Audit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -219,6 +220,28 @@ namespace Bussines
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Audit>(entity =>
+            {
+                entity.ToTable("Audit");
+                entity.HasComment("Auditoria de la aplicacion esfera");
+
+                entity.Property(e => e.id).HasColumnName("id");
+                entity.Property(e => e.dateAudit)
+                    .IsRequired()
+                    .HasColumnName("dateAudit")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.usser)
+                    .IsRequired()
+                    .HasColumnName("usser")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.operation)
+                   .IsRequired()
+                   .HasColumnName("operation")
+                   .HasMaxLength(200);
             });
 
             this.OnModelCreatingPartial(modelBuilder);

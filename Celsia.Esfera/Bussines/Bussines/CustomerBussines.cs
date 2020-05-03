@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.Models;
@@ -7,9 +8,10 @@ namespace Bussines.Bussines
 {
     public class CustomerBussines : Repository<Customer, EsferaContext>, ICustomerBussines
     {
+        private readonly IAuditBussines auditBussines;
         public CustomerBussines(EsferaContext context) : base(context)
         {
-
+            this.auditBussines = new AuditBussines(context);
         }
 
         /// <summary>
@@ -19,10 +21,19 @@ namespace Bussines.Bussines
         /// <param name="system"></param>
         /// <returns></returns>
 
-        public Customer GetCustomer(int code, byte externalSystemId)
+        public Customer GetCustomer(int code, byte externalSystemId, string userName)
         {
             Task<List<Customer>> task = this.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem,Persons");
             task.Wait();
+
+            Audit auditoria = new Audit()
+            {
+                dateAudit = DateTime.Now,
+                usser = userName,
+                operation = "Consultar Cliente"
+            };
+
+            this.auditBussines.Add(auditoria);
 
             return task.Result.FirstOrDefault();
         }

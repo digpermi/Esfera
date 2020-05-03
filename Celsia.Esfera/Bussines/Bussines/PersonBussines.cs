@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Bussines.Bussines
         private readonly IInterestBussines interestedBussines;
         private readonly IRelationshipBussines relationshipBussines;
         private readonly ICacheUtility cache;
+        private readonly IAuditBussines auditBussines;
 
         public PersonBussines(EsferaContext context, ICacheUtility cache) : base(context)
         {
@@ -27,6 +29,7 @@ namespace Bussines.Bussines
             this.interestedBussines = new InterestBussines(context);
             this.relationshipBussines = new RelationshipBussines(context);
             this.cache = cache;
+            this.auditBussines = new AuditBussines(context);
         }
 
         /// <summary>
@@ -73,7 +76,6 @@ namespace Bussines.Bussines
             return task.Result.FirstOrDefault();
         }
 
-
         /// <summary>
         /// Busca persona por identificacion
         /// </summary>
@@ -90,10 +92,18 @@ namespace Bussines.Bussines
         /// Inserta una persona
         /// </summary>
         /// <returns></returns>
-        public Person Add(Person person)
+        public Person Add(Person person, string userName)
         {
             Task<Person> task = this.AddAsync(person);
-            task.Wait();
+
+            this.auditBussines.Add(new Audit()
+            {
+                dateAudit = DateTime.Now,
+                usser = userName,
+                operation = "Adicionar persona"
+            });
+
+           
             return task.Result;
         }
 
@@ -101,10 +111,18 @@ namespace Bussines.Bussines
         /// Editar una persona
         /// </summary>
         /// <returns></returns>
-        public Person Edit(Person person)
+        public Person Edit(Person person, string userName)
         {
             Task<Person> task = this.EditAsync(person);
             task.Wait();
+
+            this.auditBussines.Add(new Audit
+            {
+                dateAudit = DateTime.Now,
+                usser = userName,
+                operation = "Editar persona"
+            });
+            
             return task.Result;
         }
 
@@ -112,18 +130,33 @@ namespace Bussines.Bussines
         /// Eliminar una persona
         /// </summary>
         /// <returns></returns>
-        public Person Delete(int Id)
+        public Person Delete(int Id, string userName)
         {
             Task<Person> task = this.DeleteAsync(Id);
             task.Wait();
+
+            this.auditBussines.Add(new Audit()
+            {
+                dateAudit = DateTime.Now,
+                usser = userName,
+                operation = "Eliminar persona"
+            });
+
             return task.Result;
         }
 
-        public List<ApplicationMessage> UploadVinculatedPersons(string fileName)
+        public List<ApplicationMessage> UploadVinculatedPersons(string fileName,string userName)
         {
             CsvFile<Person> csvFile = new CsvFile<Person>(new CsvPersonMapper());
 
             List<Person> persons = csvFile.ParseCSVFile(fileName).ToList();
+
+            this.auditBussines.Add(new Audit()
+            {
+                dateAudit = DateTime.Now,
+                usser = userName,
+                operation = "Carga masiva"
+            });
 
             List<ApplicationMessage> processMessages = this.ProcessViculatedPersons(persons);
 
