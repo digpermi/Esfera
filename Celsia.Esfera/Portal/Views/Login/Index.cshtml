@@ -13,9 +13,8 @@
 </head>
 <body>
 
-    <form asp-action="AutenticateUser" asp-controller="Login" method="post">
+    <form asp-action="Index" asp-controller="Login" method="post">
         <div class="container-fluid pl-0 pr-0">
-
             <div class="row ml-0 mr-0 mt-0">
                 <div class="col-xl-9 col-md-9 login-bg">
                 </div>
@@ -24,15 +23,18 @@
                     <div class="col-xl-10 col-md-10 offset-1">
                         <img src="~/img/logo-orange.svg" class="pt-5 mt-5 mb-5" />
 
-                        <input asp-for="UserName" class="form-control pt-2" type="text" placeholder="Usuario">
-                        <span asp-validation-for="UserName"></span>
+                        <input asp-for="UsuarioLogin.UserName" class="form-control pt-2" type="text" placeholder="Usuario">
+                        <span asp-validation-for="UsuarioLogin.UserName" class="label label-danger"></span>
 
                         <input asp-for="Password" class="form-control pt-2 mt-2" type="password" placeholder="Contraseña">
-                        <span asp-validation-for="Password"></span>
+                        <span asp-validation-for="Password" class="label label-danger"></span>
 
                         <input type="submit" value="Iniciar Sesión" class="btn btn-secondary btn-block mt-2" />
-                    </div>
 
+                    </div>
+                    <div class="col-xl-12 col-md-12 pl-4 pr-4 mt-2">
+                        <message user-message="@Model.UserMesage"></message>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 using System.IO;
 using Bussines;
 using Bussines.Bussines;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Utilities.Messages;
 
 namespace Portal.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class FileController : Controller
     {
         private readonly IWebHostEnvironment _hostingEnvironment;

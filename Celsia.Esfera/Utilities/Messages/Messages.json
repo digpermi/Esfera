@@ -63,6 +63,11 @@
     "Code": 13,
     "Text": "La fila {0} tiene los siguientes errores: La persona con Nro. de identificación {1} ya se encuentra registrada.",
     "Type": 4
+  },
+  {
+    "Code": 14,
+    "Text": "Credenciales inválidas.",
+    "Type": 4
   }
 
 ]

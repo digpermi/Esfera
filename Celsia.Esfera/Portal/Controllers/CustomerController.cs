@@ -2,6 +2,7 @@
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using Utilities.Messages;
 
 namespace Portal.Controllers
 {
+    [Authorize(Roles = "Administrador,Usuario")]
     public class CustomerController : Controller
     {
         private readonly ICustomerBussines customerBussines;
@@ -144,6 +146,7 @@ namespace Portal.Controllers
                 personInitial.IdentificationTypeId = 0;
                 personInitial.InterestId = 0;
                 personInitial.RelationshipId = 0;
+                personInitial.Birthdate = null;
 
                 viewModel.Person = personInitial;
 

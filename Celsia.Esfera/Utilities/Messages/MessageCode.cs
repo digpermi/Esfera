@@ -73,6 +73,12 @@
         /// <summary>
         /// Persona eliminada
         /// </summary>
-        PersonExistImport = 13,
+        PersonExistImport = 13
+            ,
+
+        /// <summary>
+        /// Persona eliminada
+        /// </summary>
+        InvalidLogin = 14,
     }
 }
