@@ -9,35 +9,36 @@
 
 <message user-message="@Model.UserMesage"></message>
 
-@using (Html.BeginForm("Create", "Person", FormMethod.Post))
-{
+<form asp-action="Create" asp-controller="Person" method="post">
     <div class="row ml-1 mr-1 mt-5 pt-2">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Identificación *</label>
-                @Html.DropDownListFor(model => model.Person.IdentificationTypeId, new SelectList(Model.IdentificationTypes, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.IdentificationTypeId, null, new { @class = "label label-danger" })
+                <select asp-for="Person.IdentificationTypeId" asp-items="@(new SelectList(Model.IdentificationTypes, "Id", "Name"))" class="form-control">
+                    <option value="0">- Seleccione -</option>
+                </select>
+                <span asp-validation-for="Person.IdentificationTypeId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Nro. de Identificación *</label>
-                @Html.TextBoxFor(model => model.Person.Identification, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.Identification, null, new { @class = "label label-danger" })
+                <input asp-for="Person.Identification" class="form-control" type="text">
+                <span asp-validation-for="Person.Identification" class="label label-danger" ></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Nombres *</label>
-                @Html.TextBoxFor(model => model.Person.FirstName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.FirstName, null, new { @class = "label label-danger" })
+                <input asp-for="Person.FirstName" class="form-control" type="text">
+                <span asp-validation-for="Person.FirstName" class="label label-danger" ></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Apellidos *</label>
-                @Html.TextBoxFor(model => model.Person.LastName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.LastName, null, new { @class = "label label-danger" })
+                <input asp-for="Person.LastName" class="form-control" type="text">
+                <span asp-validation-for="Person.LastName" class="label label-danger"></span>
             </div>
         </div>
     </div>
@@ -46,29 +47,29 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Teléfono</label>
-                @Html.TextBoxFor(model => model.Person.PhoneNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.PhoneNumber, null, new { @class = "label label-danger" })
+                <input asp-for="Person.PhoneNumber" class="form-control" type="text">
+                <span asp-validation-for="Person.PhoneNumber" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Móvil *</label>
-                @Html.TextBoxFor(model => model.Person.MobileNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.MobileNumber, null, new { @class = "label label-danger" })
+                <input asp-for="Person.MobileNumber" class="form-control" type="text">
+                <span asp-validation-for="Person.MobileNumber" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Correo Electrónico *</label>
-                @Html.TextBoxFor(model => model.Person.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.Email, null, new { @class = "label label-danger" })
+                <input asp-for="Person.Email" class="form-control" type="email">
+                <span asp-validation-for="Person.Email" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Fecha de Nacimimento *</label>
-                @Html.TextBoxFor(model => model.Person.Birthdate, "{0:dd/MM/yyyy}", new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.Person.Birthdate, null, new { @class = "label label-danger" })
+                <input asp-for="Person.Birthdate" class="form-control" type="date" asp-format="{0:yyyy-MM-dd}">
+                <span asp-validation-for="Person.Birthdate" class="label label-danger"></span>
             </div>
         </div>
     </div>
@@ -77,27 +78,31 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Interesado en *</label>
-                @Html.DropDownListFor(model => model.Person.InterestId, new SelectList(Model.Interests, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.InterestId, null, new { @class = "label label-danger" })
+                <select asp-for="Person.InterestId" asp-items="@(new SelectList(Model.Interests, "Id", "Name"))" class="form-control">
+                    <option value="0">- Seleccione -</option>
+                </select>
+                <span asp-validation-for="Person.InterestId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Sistema Asociado *</label>
-                @Html.DropDownListFor(model => model.Person.ExternalSystemId, new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Person.ExternalSystemId, null, new { @class = "label label-danger" })
+                <select asp-for="Person.ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control">
+                    <option value="0">- Seleccione -</option>
+                </select>
+                <span asp-validation-for="Person.ExternalSystemId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group policy">
-                @Html.CheckBoxFor(model => model.Person.PolicyData, new { @class = "form-checkbox" }) <span>Acepto política de datos</span>
-                @Html.ValidationMessageFor(model => model.Person.PolicyData, null, new { @class = "label label-danger" })
+                <input asp-for="Person.PolicyData" class="form-checkbox" type="checkbox"> <span>Acepto política de datos</span>
+                <span asp-validation-for="Person.PolicyData" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <input type="submit" class="btn btn-secondary btn-block" value="Adicionar">
         </div>
     </div>
-}
+</form>
 
 

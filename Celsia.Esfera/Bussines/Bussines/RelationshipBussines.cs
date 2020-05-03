@@ -22,7 +22,7 @@ namespace Bussines.Bussines
 
         public Relationship GetRelationshipById(byte id)
         {
-            Task<Relationship> task = this.GetAsync(id);
+            Task<Relationship> task = this.GetAsyncByte(id);
             task.Wait();
 
             return task.Result;

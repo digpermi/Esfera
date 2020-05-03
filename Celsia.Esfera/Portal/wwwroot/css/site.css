@@ -2050,6 +2050,20 @@ pre code {
   font-size: 13px;
 }
 
+.label.label-success {
+  color: green;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.divLogs p {
+  margin-bottom: 0.2rem;
+}
+
+.divLogs strong {
+    font-weight: 600 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .form-control {
     transition: none;

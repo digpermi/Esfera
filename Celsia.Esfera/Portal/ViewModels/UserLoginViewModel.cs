@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Entities.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Portal.ViewModels
 {
-    public class UserLoginViewModel
+    public class UserLoginViewModel : BaseViewModel
     {
-        [Required]
-        public string UserName { get; set; }
 
-        [Required]
+        public ApplicationUser UsuarioLogin { get; set; }
+
+        [Required(ErrorMessage = "Campo requerido")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

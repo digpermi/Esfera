@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -13,6 +14,7 @@ using Utilities.Messages;
 
 namespace Portal.Controllers
 {
+    [Authorize(Roles = "Administrador,Usuario")]
     public class PersonController : Controller
     {
         private readonly IPersonBussines personBussines;
@@ -91,7 +93,8 @@ namespace Portal.Controllers
                 {
                     ExternalSystemId = 0,
                     IdentificationTypeId = 0,
-                    InterestId = 0
+                    InterestId = 0,
+                    Birthdate = null
                 };
 
                 viewModel.ExternalSystems = externalSystems;

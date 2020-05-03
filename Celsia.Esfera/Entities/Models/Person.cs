@@ -14,6 +14,7 @@ namespace Entities.Models
         public string Identification { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [Range(1, byte.MaxValue, ErrorMessage = "Campo requerido")]
         public byte IdentificationTypeId { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
@@ -43,11 +44,12 @@ namespace Entities.Models
         [Required(ErrorMessage = "Campo requerido")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Birthdate { get; set; }
+        public DateTime? Birthdate { get; set; }
 
         public byte? RelationshipId { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [Range(1, byte.MaxValue, ErrorMessage = "Campo requerido")]
         public byte InterestId { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
@@ -56,6 +58,7 @@ namespace Entities.Models
         public int? CustomerId { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [Range(1, byte.MaxValue, ErrorMessage = "Campo requerido")]
         public byte ExternalSystemId { get; set; }
 
         public virtual Customer Customer { get; set; }

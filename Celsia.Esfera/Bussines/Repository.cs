@@ -42,6 +42,11 @@ namespace Bussines
             return await this.context.Set<TEntity>().FindAsync(id);
         }
 
+        public async Task<TEntity> GetAsyncByte(byte id)
+        {
+            return await this.context.Set<TEntity>().FindAsync(id);
+        }
+
         public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
 

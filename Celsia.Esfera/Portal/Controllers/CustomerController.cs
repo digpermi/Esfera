@@ -5,9 +5,9 @@ using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Portal.ViewModels;
 using Utilities.Cache;
@@ -15,6 +15,7 @@ using Utilities.Messages;
 
 namespace Portal.Controllers
 {
+    [Authorize(Roles = "Administrador,Usuario")]
     public class CustomerController : Controller
     {
         private readonly ICustomerBussines customerBussines;
@@ -149,6 +150,7 @@ namespace Portal.Controllers
                 personInitial.IdentificationTypeId = 0;
                 personInitial.InterestId = 0;
                 personInitial.RelationshipId = 0;
+                personInitial.Birthdate = null;
 
                 viewModel.Person = personInitial;
 
@@ -183,31 +185,27 @@ namespace Portal.Controllers
 
             try
             {
-                // TODO: Add insert logic here
-                if (ModelState.IsValid)
+                if (personCreate.Person.RelationshipId == 0)
                 {
-                    if (personCreate.Person.RelationshipId == null)
+                    ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
+                }
+                // TODO: Add insert logic here
+                if (ModelState.IsValid && personCreate.Person.RelationshipId != 0)
+                {
+                    Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
+
+                    if (person == null)
                     {
-                        ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
-                        return View(personCreate);
+                        var result = this.personBussines.Add(personCreate.Person);
+                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
+                        TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
+                        return RedirectToAction("Index", "Customer");
                     }
                     else
                     {
-                        Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
-
-                        if (person == null)
-                        {
-                            var result = this.personBussines.Add(personCreate.Person, userName);
-                            customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
-                            TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
-                            return RedirectToAction("Index", "Customer");
-                        }
-                        else
-                        {
-                            customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
-                            personCreate.UserMesage = customerMessage;
-                            return View(personCreate);
-                        }
+                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
+                        personCreate.UserMesage = customerMessage;
+                        return View(personCreate);
                     }
                 }
                 else
@@ -271,33 +269,29 @@ namespace Portal.Controllers
 
             try
             {
-                if (this.ModelState.IsValid)
+                if (personUpdate.Person.RelationshipId == 0)
                 {
-                    if (personUpdate.Person.RelationshipId == null)
+                    ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
+                }
+                // TODO: Add insert logic here
+                if (ModelState.IsValid && personUpdate.Person.RelationshipId != 0)
+                {
+                    Person personValid = this.personBussines.GetPersonByIdentificationById(personUpdate.Person.Identification, id);
+
+                    if (personValid != null)
                     {
-                        ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
+                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personUpdate.Person.Identification);
+                        personUpdate.UserMesage = customerMessage;
                         return View(personUpdate);
                     }
                     else
                     {
-                        Person personValid = this.personBussines.GetPersonByIdentificationById(personUpdate.Person.Identification, id);
-
-                        if (personValid != null)
-                        {
-                            customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personUpdate.Person.Identification);
-                            personUpdate.UserMesage = customerMessage;
-                            return View(personUpdate);
-                        }
-                        else
-                        {
-                            personUpdate.Person.Id = id;
-                            var result = this.personBussines.Edit(personUpdate.Person,userName);
-                            customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
-                            TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
-                            return RedirectToAction("Index", "Customer");
-                        }
+                        personUpdate.Person.Id = id;
+                        var result = this.personBussines.Edit(personUpdate.Person);
+                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
+                        TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
+                        return RedirectToAction("Index", "Customer");
                     }
-
                 }
                 else
                 {
