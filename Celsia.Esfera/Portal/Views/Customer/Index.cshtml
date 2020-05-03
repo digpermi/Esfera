@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Index", "Customer", FormMethod.Post))
-{
+<form asp-action="Index" asp-controller="Customer" method="post">
     <h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Consultar clientes</h3>
     <p class="ml-3 mr-3 mb-4">Esta opción permite adicionar una persona no vinculada a un cliente.</p>
     <hr>
@@ -18,15 +17,17 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Cliente *</label>
-                @Html.DropDownList("externalsystemid", new SelectList(Model.ExternalSystems, "Id", "Name"), "- Seleccione -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Customer.ExternalSystemId, null, new { @class = "label label-danger" })
+                <select name="ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control">
+                    <option value="0">- Seleccione -</option>
+                </select>
+                <span asp-validation-for="Customer.ExternalSystemId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Código Cuenta / NIC *</label>
-                @Html.TextBox("code", "", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Customer.Code, null, new { @class = "label label-danger" })
+                <input name="Code" class="form-control" type="text">
+                <span asp-validation-for="Customer.Code" class="label label-danger"></span>
 
             </div>
         </div>
@@ -36,7 +37,7 @@
         <div class="col-xl-3 col-md-6">
         </div>
     </div>
-}
+</form>
 
 @if (Model.Customer != null && Model.Customer.ExternalSystemId != 0)
 {

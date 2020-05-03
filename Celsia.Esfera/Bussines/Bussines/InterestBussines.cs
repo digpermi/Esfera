@@ -23,7 +23,7 @@ namespace Bussines.Bussines
 
         public Interest GetInterestById(byte id)
         {
-            Task<Interest> task = this.GetAsync(id);
+            Task<Interest> task = this.GetAsyncByte(id);
             task.Wait();
 
             return task.Result;

@@ -36,6 +36,7 @@ namespace Portal
                  {
                      config.Cookie.Name = "UserLoginCookie";
                      config.LoginPath = "/Login/Index";
+                     config.AccessDeniedPath = "/Login/Index";
                  });
 
             services.AddAuthorization(config =>

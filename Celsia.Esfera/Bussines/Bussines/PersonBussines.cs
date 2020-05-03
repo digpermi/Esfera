@@ -154,57 +154,52 @@ namespace Bussines.Bussines
                             Interest interest = this.interestedBussines.GetInterestById(person.InterestId);
                             if (interest != null)
                             {
-                                ExternalSystem externalsystem = this.externalSystemBussines.GetExternalSystemById(person.ExternalSystemId);
-                                if (externalsystem != null)
+                                Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
+                                if (customer != null)
                                 {
-                                    Customer customer = this.customerBussines.GetCustomerByCode(person.Code);
-                                    if (customer != null)
+                                    person.ExternalSystemId = customer.ExternalSystemId;
+
+                                    Validator.TryValidateObject(person, new System.ComponentModel.DataAnnotations.ValidationContext(person), validationResults, true);
+
+                                    errorMessage = this.GetPersonErroMessage(rowCont, validationResults);
+
+                                    if (errorMessage == null)
                                     {
-                                        person.ExternalSystemId = customer.ExternalSystemId;
-
-                                        Validator.TryValidateObject(person, new System.ComponentModel.DataAnnotations.ValidationContext(person), validationResults, true);
-
-                                        errorMessage = this.GetPersonErroMessage(rowCont, validationResults);
-
-                                        if (errorMessage == null)
-                                        {
-                                            this.AddAsync(person);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonCustomerNotValid, person.Code);
+                                        this.Add(person);
+                                        errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonImported, rowCont);
                                     }
                                 }
                                 else
                                 {
-                                    errorMessage = new ApplicationMessage(this.cache, MessageCode.ExternalSystemNotValid, person.ExternalSystemId);
+                                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonCustomerNotValid, rowCont, person.Code);
                                 }
                             }
                             else
                             {
-                                errorMessage = new ApplicationMessage(this.cache, MessageCode.InterestNotValid, person.InterestId);
+                                errorMessage = new ApplicationMessage(this.cache, MessageCode.InterestNotValid, rowCont, person.InterestId);
                             }
                         }
                         else
                         {
-                            errorMessage = new ApplicationMessage(this.cache, MessageCode.RelationshipNotValid, person.RelationshipId);
+                            errorMessage = new ApplicationMessage(this.cache, MessageCode.RelationshipNotValid, rowCont, person.RelationshipId);
                         }
                     }
                     else
                     {
-                        errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, person.IdentificationTypeId);
+                        errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, rowCont, person.IdentificationTypeId);
                     }
                 }
                 else
                 {
-                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, person.Identification);
+                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExistImport, rowCont, person.Identification);
                 }
 
                 if (errorMessage != null)
                 {
                     processMessages.Add(errorMessage);
                 }
+
+                rowCont++;
             }
 
             return processMessages;
