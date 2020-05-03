@@ -191,7 +191,7 @@ namespace Bussines.Bussines
                 }
                 else
                 {
-                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, rowCont, person.Identification);
+                    errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExistImport, rowCont, person.Identification);
                 }
 
                 if (errorMessage != null)

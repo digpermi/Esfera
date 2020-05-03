@@ -68,6 +68,11 @@
         /// <summary>
         /// La fila {0} fue adicionada con éxito.
         /// </summary>
-        PersonImported = 12
+        PersonImported = 12,
+
+        /// <summary>
+        /// Persona eliminada
+        /// </summary>
+        PersonExistImport = 13,
     }
 }
