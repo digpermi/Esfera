@@ -8,8 +8,6 @@ namespace Bussines.Bussines
     {
         ICollection<Person> GetAllPersonsNoVinculed();
 
-        ICollection<Person> GetAllPersonsVinculed(int customerId);
-
         List<ApplicationMessage> UploadVinculatedPersons(string fileName, string userName);
 
         Person GetPersonById(int Id);

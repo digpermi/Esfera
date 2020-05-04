@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Portal.ViewModels;
 using Utilities.Cache;
 using Utilities.Messages;
@@ -20,10 +17,8 @@ namespace Portal.Controllers
     {
         private readonly ICustomerBussines customerBussines;
         private readonly IPersonBussines personBussines;
-        private readonly IExternalSystemBussines externalSystemBussines;
-        private readonly IIdentificationTypeBussines identificationTypeBussines;
-        private readonly IInterestBussines interestBussines;
-        private readonly IRelationshipBussines relationshipBussines;
+        private readonly IMasterBussinesManager masterBussinesManager;
+
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
 
@@ -31,300 +26,235 @@ namespace Portal.Controllers
         {
             this.logger = logger;
             this.cache = cache;
+
             this.customerBussines = new CustomerBussines(context);
             this.personBussines = new PersonBussines(context, this.cache);
-            this.externalSystemBussines = new ExternalSystemBussines(context);
-            this.externalSystemBussines = new ExternalSystemBussines(context);
-            this.identificationTypeBussines = new IdentificationTypeBussines(context);
-            this.interestBussines = new InterestBussines(context);
-            this.relationshipBussines = new RelationshipBussines(context);
+            this.masterBussinesManager = new MasterBussinesManager(context);
         }
 
-        // GET: Customer/Index
         public ActionResult Index()
         {
-            ApplicationMessage customerMessage = new ApplicationMessage();
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            var viewModel = new CustomerViewModel();
-            viewModel.ExternalSystems = externalSystems;
+            CustomerViewModel CustomerViewModel = new CustomerViewModel();
 
             try
             {
-                if (this.TempData["Message"] is string s)
+                CustomerViewModel.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
+
+                if (this.TempData["Message"] != null)
                 {
-                    customerMessage = JsonConvert.DeserializeObject<ApplicationMessage>(s);
+                    CustomerViewModel.UserMesage = this.TempData["Message"] as ApplicationMessage;
                 }
-
-                Customer customerInitial = new Customer();
-                customerInitial.ExternalSystemId = 0;
-
-                viewModel.UserMesage = customerMessage;
-                viewModel.Customer = customerInitial;
             }
-            catch
+            catch (Exception exec)
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                viewModel.UserMesage = customerMessage;
+                CustomerViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, CustomerViewModel.UserMesage.Text);
             }
 
-            return this.View(viewModel);
+            return this.View(CustomerViewModel);
 
         }
 
-        // POST: Customer/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(int code, byte externalsystemid)
+        public IActionResult Index(CustomerViewModel customerViewModel)
         {
-            var userName = User.FindFirst(ClaimTypes.Name).Value;
-
-            ApplicationMessage customerMessage = new ApplicationMessage();
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            var viewModel = new CustomerViewModel();
-            viewModel.ExternalSystems = externalSystems;
-            
             try
             {
-                if (externalsystemid != 0 && code != 0)
-                {
-                    Customer customer = this.customerBussines.GetCustomer(code, externalsystemid,userName);
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
 
-                    if (customer == null)
+                customerViewModel.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
+
+                if (this.ModelState.IsValid)
+                {
+                    Customer customer = this.customerBussines.GetCustomer(customerViewModel.Code.Value, customerViewModel.ExternalSystemId, userName);
+
+                    if (customer != null)
                     {
-                        customerMessage = new ApplicationMessage(this.cache, MessageCode.CustomerNotFound);
-                        viewModel.UserMesage = customerMessage;
+                        customerViewModel.Customer = customer;
                     }
                     else
                     {
-                        ICollection<Person> persons = this.personBussines.GetAllPersonsVinculed(customer.Id);
-                        viewModel.Customer = customer;
-                        viewModel.Customer.Persons = persons;
-                    }
-                }
-                else
-                {
-                    if (externalsystemid == 0)
-                    {
-                        ModelState.AddModelError("Customer.ExternalSystemId", "Campo requerido");
-                    }
-                    if (code == 0)
-                    {
-                        ModelState.AddModelError("Customer.Code", "Campo requerido");
+                        customerViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.CustomerNotFound);
                     }
                 }
             }
-            catch
+            catch (Exception exec)
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                viewModel.UserMesage = customerMessage;
+                customerViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, customerViewModel.UserMesage.Text);
             }
 
-            return this.View(viewModel);
+            return this.View(customerViewModel);
 
         }
 
-
-        // GET: Customer/Create/5
         public ActionResult Create(int id)
         {
-            ApplicationMessage customerMessage = new ApplicationMessage();
-            PersonViewModel viewModel = new PersonViewModel();
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
-            viewModel.ExternalSystems = externalSystems;
-            viewModel.IdentificationTypes = identificationTypes;
-            viewModel.Interests = interests;
-            viewModel.Relationships = relationships;
+            PersonViewModel personViewModel = new PersonViewModel();
 
             try
             {
+                personViewModel.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
+                personViewModel.IdentificationTypes = this.masterBussinesManager.IdentificationTypeBussines.GetAllIdentificationTypes();
+                personViewModel.Interests = this.masterBussinesManager.InterestBussines.GetAllInterests();
+                personViewModel.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
 
                 Customer customer = this.customerBussines.GetCustomerById(id);
 
-                Person personInitial = new Person();
-                personInitial.ExternalSystemId = customer.ExternalSystemId;
-                personInitial.Code = customer.Code;
-                personInitial.CustomerId = customer.Id;
-                personInitial.IdentificationTypeId = 0;
-                personInitial.InterestId = 0;
-                personInitial.RelationshipId = 0;
-                personInitial.Birthdate = null;
-
-                viewModel.Person = personInitial;
-
+                personViewModel.Person = new Person
+                {
+                    ExternalSystemId = customer.ExternalSystemId,
+                    Code = customer.Code,
+                    CustomerId = customer.Id
+                };
             }
-            catch
+            catch (Exception exec)
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                viewModel.UserMesage = customerMessage;
+                personViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, personViewModel.UserMesage.Text);
             }
 
-            return this.View(viewModel);
+            return this.View(personViewModel);
         }
 
-
-        // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonViewModel personCreate)
         {
-            var userName = User.FindFirst(ClaimTypes.Name).Value;
-
-            ApplicationMessage customerMessage = new ApplicationMessage();
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
-
-            personCreate.ExternalSystems = externalSystems;
-            personCreate.IdentificationTypes = identificationTypes;
-            personCreate.Interests = interests;
-            personCreate.Relationships = relationships;
-
             try
             {
-                if (personCreate.Person.RelationshipId == 0)
-                {
-                    ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
-                }
-                // TODO: Add insert logic here
-                if (ModelState.IsValid && personCreate.Person.RelationshipId != 0)
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+
+                personCreate.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
+                personCreate.IdentificationTypes = this.masterBussinesManager.IdentificationTypeBussines.GetAllIdentificationTypes();
+                personCreate.Interests = this.masterBussinesManager.InterestBussines.GetAllInterests();
+                personCreate.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
+
+                if (this.ModelState.IsValid && personCreate.Person.RelationshipId != 0)
                 {
                     Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
 
                     if (person == null)
                     {
-                        var result = this.personBussines.Add(personCreate.Person);
-                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
-                        TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
-                        return RedirectToAction("Index", "Customer");
+                        Person result = this.personBussines.Add(personCreate.Person, userName);
+                        this.TempData["Message"] = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
+
+                        return this.RedirectToAction("Index", "Customer");
                     }
                     else
                     {
-                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
-                        personCreate.UserMesage = customerMessage;
-                        return View(personCreate);
+                        personCreate.UserMesage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
                     }
                 }
                 else
                 {
-                    return View(personCreate);
+                    if (personCreate.Person.RelationshipId == 0)
+                    {
+                        this.ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
+                    }
                 }
             }
-            catch
+            catch (Exception exec)
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                personCreate.UserMesage = customerMessage;
-                return View(personCreate);
+                personCreate.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, personCreate.UserMesage.Text);
             }
+
+            return this.View(personCreate);
         }
 
-        // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
-            var userName = User.FindFirst(ClaimTypes.Name).Value;
-            ApplicationMessage customerMessage = new ApplicationMessage();
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
             PersonViewModel personEdit = new PersonViewModel();
-            personEdit.ExternalSystems = externalSystems;
-            personEdit.IdentificationTypes = identificationTypes;
-            personEdit.Interests = interests;
-            personEdit.Relationships = relationships;
 
             try
             {
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+
+                personEdit.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
+                personEdit.IdentificationTypes = this.masterBussinesManager.IdentificationTypeBussines.GetAllIdentificationTypes();
+                personEdit.Interests = this.masterBussinesManager.InterestBussines.GetAllInterests();
+                personEdit.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
+
                 Person person = this.personBussines.GetPersonById(id);
 
                 personEdit.Person = person;
             }
-            catch
+            catch (Exception exec)
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                personEdit.UserMesage = customerMessage;
+                personEdit.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, personEdit.UserMesage.Text);
             }
 
             return this.View(personEdit);
         }
 
-        // POST: Person/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PersonViewModel personUpdate)
+        public ActionResult Edit(PersonViewModel personEdit)
         {
-            var userName = User.FindFirst(ClaimTypes.Name).Value;
-            ApplicationMessage customerMessage = new ApplicationMessage();
-            ICollection<ExternalSystem> externalSystems = this.externalSystemBussines.GetAllExternalSystems();
-            ICollection<IdentificationType> identificationTypes = this.identificationTypeBussines.GetAllIdentificationTypes();
-            ICollection<Interest> interests = this.interestBussines.GetAllInterests();
-            ICollection<Relationship> relationships = this.relationshipBussines.GetAllRelationships();
-            personUpdate.ExternalSystems = externalSystems;
-            personUpdate.IdentificationTypes = identificationTypes;
-            personUpdate.Interests = interests;
-            personUpdate.Relationships = relationships;
-
             try
             {
-                if (personUpdate.Person.RelationshipId == 0)
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+
+                personEdit.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
+                personEdit.IdentificationTypes = this.masterBussinesManager.IdentificationTypeBussines.GetAllIdentificationTypes();
+                personEdit.Interests = this.masterBussinesManager.InterestBussines.GetAllInterests();
+                personEdit.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
+
+
+                if (this.ModelState.IsValid && personEdit.Person.RelationshipId != 0)
                 {
-                    ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
-                }
-                // TODO: Add insert logic here
-                if (ModelState.IsValid && personUpdate.Person.RelationshipId != 0)
-                {
-                    Person personValid = this.personBussines.GetPersonByIdentificationById(personUpdate.Person.Identification, id);
+                    Person personValid = this.personBussines.GetPersonByIdentificationById(personEdit.Person.Identification, personEdit.Person.Id);
 
                     if (personValid != null)
                     {
-                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personUpdate.Person.Identification);
-                        personUpdate.UserMesage = customerMessage;
-                        return View(personUpdate);
+                        personEdit.UserMesage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personEdit.Person.Identification);
                     }
                     else
                     {
-                        personUpdate.Person.Id = id;
-                        var result = this.personBussines.Edit(personUpdate.Person);
-                        customerMessage = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
-                        TempData["Message"] = JsonConvert.SerializeObject(customerMessage);
-                        return RedirectToAction("Index", "Customer");
+                        this.personBussines.Edit(personEdit.Person, userName);
+                        this.TempData["Message"] = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
+                        return this.RedirectToAction("Index", "Customer");
                     }
                 }
                 else
                 {
-                    return View(personUpdate);
+                    if (personEdit.Person.RelationshipId == 0)
+                    {
+                        this.ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
+                    }
                 }
             }
-            catch
+            catch (Exception exec)
             {
-                customerMessage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                personUpdate.UserMesage = customerMessage;
-                return View(personUpdate);
+                personEdit.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, personEdit.UserMesage.Text);
             }
+
+            return this.View(personEdit);
         }
 
-        // POST: Person/Delete/5
         public ActionResult Delete(int id)
         {
-            ApplicationMessage personMessage = new ApplicationMessage();
-            var userName = User.FindFirst(ClaimTypes.Name).Value;
+            PersonViewModel personDelete = new PersonViewModel();
 
             try
             {
-                // TODO: Add delete logic here
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
 
-                var result = this.personBussines.Delete(id,userName);
-                personMessage = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
-                TempData["Message"] = JsonConvert.SerializeObject(personMessage);
-                return RedirectToAction("Index", "Customer");
+                this.personBussines.Delete(id, userName);
+                this.TempData["Message"] = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
+                return this.RedirectToAction("Index", "Customer");
             }
-            catch
+            catch (Exception exec)
             {
-                return this.View();
+                personDelete.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, personDelete.UserMesage.Text);
             }
+
+            return this.View(personDelete);
         }
     }
 }

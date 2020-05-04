@@ -39,13 +39,15 @@ namespace Portal.Controllers
         [HttpPost]
         public ActionResult Index(IFormFile file)
         {
+            string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+
             FileViewModel viewModel = new FileViewModel();
 
             if (file == null)
             {
                 ModelState.AddModelError("File", "Campo requerido");
             }
-            else 
+            else
             {
                 string tempPath = Path.GetTempFileName();
 
@@ -54,7 +56,7 @@ namespace Portal.Controllers
                     file.CopyToAsync(stream);
                 }
 
-                List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath);
+                List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
 
                 viewModel.Messages = processMessages;
                 viewModel.TotalRows = processMessages.Count;
