@@ -79,6 +79,7 @@ namespace Bussines.Bussines
         public Person Add(Person person, string userName)
         {
             Task<Person> task = this.AddAsync(person);
+            task.Wait();
 
             this.auditBussines.Add(new Audit()
             {
