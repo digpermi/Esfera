@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -38,34 +38,31 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(UserLoginViewModel userViewModel)
         {
-            ApplicationMessage loginMessage = new ApplicationMessage();
-
-            if (this.ModelState.IsValid)
+            try
             {
-                ApplicationUser applicationUser = this.securityBussines.Authenticate(userViewModel.UsuarioLogin.UserName, userViewModel.Password);
-                if (applicationUser != null)
+                if (this.ModelState.IsValid)
                 {
-                    ClaimsIdentity identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, applicationUser.Id));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, applicationUser.Name));
-                    identity.AddClaim(new Claim(ClaimTypes.Email, applicationUser.Email));
-                    identity.AddClaim(new Claim(ClaimTypes.WindowsAccountName, applicationUser.UserName));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, applicationUser.Roles[0].ToString()));                   
+                    ApplicationUser applicationUser = this.securityBussines.Authenticate(userViewModel.UsuarioLogin.UserName, userViewModel.Password);
+                    if (applicationUser != null)
+                    {
+                        ClaimsPrincipal userPrincipal = this.securityBussines.GetUserPrincipalClaims(applicationUser);
+                        await this.HttpContext.SignInAsync(userPrincipal);
 
-                    ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
-                    await this.HttpContext.SignInAsync(userPrincipal);
-
-                    return this.RedirectToAction(nameof(CustomerController.Index), "Customer");
+                        return this.RedirectToAction(nameof(CustomerController.Index), "Customer");
+                    }
+                    else
+                    {
+                        userViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.InvalidLogin);
+                    }
                 }
-                else
-                {
-                    loginMessage = new ApplicationMessage(this.cache, MessageCode.InvalidLogin);
-                    userViewModel.UserMesage = loginMessage;
-                }
+            }
+            catch (Exception exec)
+            {
+                userViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, userViewModel.UserMesage.Text);
             }
 
             return this.View(userViewModel);
-
         }
 
         public async Task<IActionResult> Logout()

@@ -1,6 +1,6 @@
-﻿using Entities.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using Utilities.Messages;
 
 namespace Portal.ViewModels
@@ -11,7 +11,8 @@ namespace Portal.ViewModels
 
         public int TotalRows { get; set; }
 
-        public string File { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+        public IFormFile UploadFile { get; set; }
 
     }
 }

@@ -9,6 +9,7 @@ namespace Bussines.Bussines
     public class CustomerBussines : Repository<Customer, EsferaContext>, ICustomerBussines
     {
         private readonly IAuditBussines auditBussines;
+
         public CustomerBussines(EsferaContext context) : base(context)
         {
             this.auditBussines = new AuditBussines(context);
@@ -23,7 +24,7 @@ namespace Bussines.Bussines
 
         public Customer GetCustomer(int code, byte externalSystemId, string userName)
         {
-            Task<List<Customer>> task = this.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem,Persons");
+            Task<List<Customer>> task = this.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem,Persons,Persons.Relationship,Persons.Interest,Persons.IdentificationType,Persons.ExternalSystem");
             task.Wait();
 
             Audit auditoria = new Audit()

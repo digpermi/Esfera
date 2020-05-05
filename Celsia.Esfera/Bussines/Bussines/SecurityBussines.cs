@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Bussines.ExternalServices;
 using Entities.Models;
+using Microsoft.AspNetCore.Identity;
 using Utilities.Configuration;
 
 namespace Bussines.Bussines
@@ -19,6 +21,18 @@ namespace Bussines.Bussines
             Task<ApplicationUser> task = this.externalSecurityService.AuthenticateAsync(userName, password);
             task.Wait();
             return task.Result;
+        }
+
+        public ClaimsPrincipal GetUserPrincipalClaims(ApplicationUser applicationUser)
+        {
+            ClaimsIdentity identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, applicationUser.Id));
+            identity.AddClaim(new Claim(ClaimTypes.Name, applicationUser.Name));
+            identity.AddClaim(new Claim(ClaimTypes.Email, applicationUser.Email));
+            identity.AddClaim(new Claim(ClaimTypes.WindowsAccountName, applicationUser.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Role, applicationUser.Roles[0].ToString()));
+
+            return new ClaimsPrincipal(identity);
         }
     }
 }

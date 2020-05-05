@@ -10,6 +10,8 @@
 <message user-message="@Model.UserMesage"></message>
 
 <form asp-action="Edit" asp-controller="Customer" method="post">
+    <input type="hidden" asp-for="Person.Id" />
+
     <h6 class="mt-4 text-orange font-weight-semibold ml-3 mr-3">Información del Cliente</h6>
 
     <div class="row ml-1 mr-1 mt-4">
