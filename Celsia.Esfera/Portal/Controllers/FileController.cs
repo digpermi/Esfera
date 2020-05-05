@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
 using Bussines;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
 using Utilities.Cache;
 using Utilities.Messages;
@@ -19,10 +21,12 @@ namespace Portal.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IPersonBussines personBussines;
         private readonly ICacheUtility cache;
+        private readonly ILogger<FileController> logger;
 
-        public FileController(IWebHostEnvironment hostingEnvironment, EsferaContext context, ICacheUtility cache)
+        public FileController(IWebHostEnvironment hostingEnvironment, EsferaContext context, ICacheUtility cache, ILogger<FileController> logger)
         {
             this._hostingEnvironment = hostingEnvironment;
+            this.logger = logger;
             this.cache = cache;
 
             this.personBussines = new PersonBussines(context, this.cache);
@@ -39,27 +43,35 @@ namespace Portal.Controllers
         [HttpPost]
         public ActionResult Index(IFormFile file)
         {
-            string userName = this.User.FindFirst(ClaimTypes.Name).Value;
-
             FileViewModel viewModel = new FileViewModel();
 
-            if (file == null)
+            try
             {
-                ModelState.AddModelError("File", "Campo requerido");
-            }
-            else
-            {
-                string tempPath = Path.GetTempFileName();
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
 
-                using (FileStream stream = System.IO.File.Create(tempPath))
+                if (file == null)
                 {
-                    file.CopyToAsync(stream);
+                    ModelState.AddModelError("File", "Campo requerido");
                 }
+                else
+                {
+                    string tempPath = Path.GetTempFileName();
 
-                List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
+                    using (FileStream stream = System.IO.File.Create(tempPath))
+                    {
+                        file.CopyToAsync(stream);
+                    }
 
-                viewModel.Messages = processMessages;
-                viewModel.TotalRows = processMessages.Count;
+                    List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
+
+                    viewModel.Messages = processMessages;
+                    viewModel.TotalRows = processMessages.Count;
+                }
+            }
+            catch (Exception exec)
+            {
+                viewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, viewModel.UserMesage.Text);
             }
 
             return this.View(viewModel);

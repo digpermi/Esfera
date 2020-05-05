@@ -6,6 +6,7 @@ using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Portal.ViewModels;
 using Utilities.Cache;
 using Utilities.Messages;
@@ -18,7 +19,6 @@ namespace Portal.Controllers
         private readonly ICustomerBussines customerBussines;
         private readonly IPersonBussines personBussines;
         private readonly IMasterBussinesManager masterBussinesManager;
-
         private readonly ICacheUtility cache;
         private readonly ILogger<CustomerController> logger;
 
@@ -138,7 +138,7 @@ namespace Portal.Controllers
                     if (person == null)
                     {
                         Person result = this.personBussines.Add(personCreate.Person, userName);
-                        this.TempData["Message"] = new ApplicationMessage(this.cache, MessageCode.PersonAdded);
+                        this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonAdded));
 
                         return this.RedirectToAction("Index", "Customer");
                     }
@@ -215,7 +215,7 @@ namespace Portal.Controllers
                     else
                     {
                         this.personBussines.Edit(personEdit.Person, userName);
-                        this.TempData["Message"] = new ApplicationMessage(this.cache, MessageCode.PersonEdited);
+                        this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonEdited));
                         return this.RedirectToAction("Index", "Customer");
                     }
                 }
@@ -245,7 +245,7 @@ namespace Portal.Controllers
                 string userName = this.User.FindFirst(ClaimTypes.Name).Value;
 
                 this.personBussines.Delete(id, userName);
-                this.TempData["Message"] = new ApplicationMessage(this.cache, MessageCode.PersonDeleted);
+                this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonDeleted));
                 return this.RedirectToAction("Index", "Customer");
             }
             catch (Exception exec)
