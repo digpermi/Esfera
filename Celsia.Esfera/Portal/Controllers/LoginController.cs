@@ -5,7 +5,6 @@ using Bussines;
 using Bussines.Bussines;
 using Entities.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -46,14 +45,7 @@ namespace Portal.Controllers
                     ApplicationUser applicationUser = this.securityBussines.Authenticate(userViewModel.UsuarioLogin.UserName, userViewModel.Password);
                     if (applicationUser != null)
                     {
-                        ClaimsIdentity identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
-                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, applicationUser.Id));
-                        identity.AddClaim(new Claim(ClaimTypes.Name, applicationUser.Name));
-                        identity.AddClaim(new Claim(ClaimTypes.Email, applicationUser.Email));
-                        identity.AddClaim(new Claim(ClaimTypes.WindowsAccountName, applicationUser.UserName));
-                        identity.AddClaim(new Claim(ClaimTypes.Role, applicationUser.Roles[0].ToString()));
-
-                        ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
+                        ClaimsPrincipal userPrincipal = this.securityBussines.GetUserPrincipalClaims(applicationUser);
                         await this.HttpContext.SignInAsync(userPrincipal);
 
                         return this.RedirectToAction(nameof(CustomerController.Index), "Customer");
@@ -68,10 +60,9 @@ namespace Portal.Controllers
             {
                 userViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
                 this.logger.LogError(exec, userViewModel.UserMesage.Text);
-            }            
+            }
 
             return this.View(userViewModel);
-
         }
 
         public async Task<IActionResult> Logout()

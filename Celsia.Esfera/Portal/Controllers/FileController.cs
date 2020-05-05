@@ -5,8 +5,6 @@ using System.Security.Claims;
 using Bussines;
 using Bussines.Bussines;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Portal.ViewModels;
@@ -18,14 +16,12 @@ namespace Portal.Controllers
     [Authorize(Roles = "Administrador")]
     public class FileController : Controller
     {
-        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IPersonBussines personBussines;
         private readonly ICacheUtility cache;
         private readonly ILogger<FileController> logger;
 
-        public FileController(IWebHostEnvironment hostingEnvironment, EsferaContext context, ICacheUtility cache, ILogger<FileController> logger)
+        public FileController(EsferaContext context, ICacheUtility cache, ILogger<FileController> logger)
         {
-            this._hostingEnvironment = hostingEnvironment;
             this.logger = logger;
             this.cache = cache;
 
@@ -41,43 +37,34 @@ namespace Portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(IFormFile file)
+        public ActionResult Index(FileViewModel fileViewModel)
         {
-            FileViewModel viewModel = new FileViewModel();
-
             try
             {
-                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+                if (this.ModelState.IsValid)
+                {
+                    string userName = this.User.FindFirst(ClaimTypes.Name).Value;
 
-                if (file == null)
-                {
-                    ModelState.AddModelError("File", "Campo requerido");
-                }
-                else
-                {
                     string tempPath = Path.GetTempFileName();
 
                     using (FileStream stream = System.IO.File.Create(tempPath))
                     {
-                        file.CopyToAsync(stream);
+                        fileViewModel.UploadFile.CopyToAsync(stream);
                     }
 
                     List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
 
-                    viewModel.Messages = processMessages;
-                    viewModel.TotalRows = processMessages.Count;
+                    fileViewModel.Messages = processMessages;
+                    fileViewModel.TotalRows = processMessages.Count;
                 }
             }
             catch (Exception exec)
             {
-                viewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
-                this.logger.LogError(exec, viewModel.UserMesage.Text);
+                fileViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.GeneralError);
+                this.logger.LogError(exec, fileViewModel.UserMesage.Text);
             }
 
-            return this.View(viewModel);
+            return this.View(fileViewModel);
         }
-
     }
-
-
 }
