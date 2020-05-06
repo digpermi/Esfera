@@ -23,10 +23,18 @@
 
 // Call the dataTables jQuery plugin
 $(document).ready(function () {
-    if ($('#dataTable').length>=1) {
+    if ($('#dataTable').length >= 1) {
         $('#dataTable').DataTable({
             "bLengthChange": false,
             "searching": false,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            }
+        });
+    }
+    if ($('#dataTableSearch').length >= 1) {
+        $('#dataTableSearch').DataTable({
+            "bLengthChange": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
             }

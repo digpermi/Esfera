@@ -10,6 +10,7 @@ namespace Entities.Models
         public int? Code { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Identificación inválida")]
         [MaxLength(10, ErrorMessage = "Identificación inválida")]
         public string Identification { get; set; }
 
@@ -18,10 +19,12 @@ namespace Entities.Models
         public byte IdentificationTypeId { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Nombre inválido")]
         [MaxLength(30, ErrorMessage = "Máximo 30 caracteres")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Apellido inválido")]
         [MaxLength(30, ErrorMessage = "Máximo 30 caracteres")]
         public string LastName { get; set; }
 
