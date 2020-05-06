@@ -43,19 +43,26 @@ namespace Portal.Controllers
             {
                 if (this.ModelState.IsValid)
                 {
-                    string userName = this.User.FindFirst(ClaimTypes.Name).Value;
-
-                    string tempPath = Path.GetTempFileName();
-
-                    using (FileStream stream = System.IO.File.Create(tempPath))
+                    if (fileViewModel.UploadFile.ContentType.ToLower() != "application/vnd.ms-excel")
                     {
-                        fileViewModel.UploadFile.CopyToAsync(stream);
+                        fileViewModel.UserMesage = new ApplicationMessage(this.cache, MessageCode.FileExtensionError);
                     }
+                    else
+                    {
+                        string userName = this.User.FindFirst(ClaimTypes.Name).Value;
 
-                    List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
+                        string tempPath = Path.GetTempFileName();
 
-                    fileViewModel.Messages = processMessages;
-                    fileViewModel.TotalRows = processMessages.Count;
+                        using (FileStream stream = System.IO.File.Create(tempPath))
+                        {
+                            fileViewModel.UploadFile.CopyToAsync(stream);
+                        }
+
+                        List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
+
+                        fileViewModel.Messages = processMessages;
+                        fileViewModel.TotalRows = processMessages.Count;
+                    }                    
                 }
             }
             catch (Exception exec)
