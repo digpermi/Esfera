@@ -19,12 +19,12 @@ namespace Entities.Models
         public byte IdentificationTypeId { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Nombre inválido")]
+        [RegularExpression(@"^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$", ErrorMessage = "Nombre inválido")]
         [MaxLength(30, ErrorMessage = "Máximo 30 caracteres")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Apellido inválido")]
+        [RegularExpression(@"^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$", ErrorMessage = "Apellido inválido")]
         [MaxLength(30, ErrorMessage = "Máximo 30 caracteres")]
         public string LastName { get; set; }
 
