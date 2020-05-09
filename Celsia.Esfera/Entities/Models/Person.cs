@@ -10,8 +10,9 @@ namespace Entities.Models
         public int? Code { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Identificación inválida")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Identificación inválida")]
         [MaxLength(10, ErrorMessage = "Identificación inválida")]
+        [MinLength(8, ErrorMessage = "Identificación inválida")]
         public string Identification { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
