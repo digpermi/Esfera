@@ -1,5 +1,7 @@
-﻿using Entities.Models;
+﻿using System;
+using Entities.Models;
 using TinyCsvParser.Mapping;
+using TinyCsvParser.TypeConverter;
 
 namespace Utilities.File
 {
@@ -7,7 +9,7 @@ namespace Utilities.File
     {
         public CsvPersonMapper() : base()
         {
-            //ITypeConverter<DateTime?> dateFormat = new NullableDateTimeConverter("yyyy###MM###dd");
+            ITypeConverter<DateTime?> dateFormat = new NullableDateTimeConverter("yyyy###MM###dd");
 
             this.MapProperty(0, x => x.Code);
             this.MapProperty(1, x => x.Identification);
@@ -18,7 +20,7 @@ namespace Utilities.File
             this.MapProperty(6, x => x.MobileNumber);
             this.MapProperty(7, x => x.RelationshipId);
             this.MapProperty(8, x => x.Email);
-            this.MapProperty(9, x => x.Birthdate);
+            this.MapProperty(9, x => x.Birthdate, dateFormat);
             this.MapProperty(10, x => x.InterestId);
         }
     }

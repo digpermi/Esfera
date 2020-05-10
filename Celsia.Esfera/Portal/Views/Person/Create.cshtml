@@ -1,4 +1,4 @@
-﻿@model Portal.ViewModels.PersonViewModel
+﻿@model Portal.ViewModels.PersonNoVinculatedViewModel
 @{
     ViewData["Title"] = "Adicionar persona";
 }
@@ -14,31 +14,31 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Identificación *</label>
-                <select asp-for="Person.IdentificationTypeId" asp-items="@(new SelectList(Model.IdentificationTypes, "Id", "Name"))" class="form-control">
+                <select asp-for="CurrentPerson.IdentificationTypeId" asp-items="@(new SelectList(Model.IdentificationTypes, "Id", "Name"))" class="form-control">
                     <option value="0">- Seleccione -</option>
                 </select>
-                <span asp-validation-for="Person.IdentificationTypeId" class="label label-danger"></span>
+                <span asp-validation-for="CurrentPerson.IdentificationTypeId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Nro. de Identificación *</label>
-                <input asp-for="Person.Identification" class="form-control" type="text">
-                <span asp-validation-for="Person.Identification" class="label label-danger" ></span>
+                <input asp-for="CurrentPerson.Identification" class="form-control" type="text">
+                <span asp-validation-for="CurrentPerson.Identification" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Nombres *</label>
-                <input asp-for="Person.FirstName" class="form-control" type="text">
-                <span asp-validation-for="Person.FirstName" class="label label-danger" ></span>
+                <input asp-for="CurrentPerson.FirstName" class="form-control" type="text">
+                <span asp-validation-for="CurrentPerson.FirstName" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Apellidos *</label>
-                <input asp-for="Person.LastName" class="form-control" type="text">
-                <span asp-validation-for="Person.LastName" class="label label-danger"></span>
+                <input asp-for="CurrentPerson.LastName" class="form-control" type="text">
+                <span asp-validation-for="CurrentPerson.LastName" class="label label-danger"></span>
             </div>
         </div>
     </div>
@@ -47,29 +47,29 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Teléfono</label>
-                <input asp-for="Person.PhoneNumber" class="form-control" type="text">
-                <span asp-validation-for="Person.PhoneNumber" class="label label-danger"></span>
+                <input asp-for="CurrentPerson.PhoneNumber" class="form-control" type="text">
+                <span asp-validation-for="CurrentPerson.PhoneNumber" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Móvil *</label>
-                <input asp-for="Person.MobileNumber" class="form-control" type="text">
-                <span asp-validation-for="Person.MobileNumber" class="label label-danger"></span>
+                <input asp-for="CurrentPerson.MobileNumber" class="form-control" type="text">
+                <span asp-validation-for="CurrentPerson.MobileNumber" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Correo Electrónico *</label>
-                <input asp-for="Person.Email" class="form-control" type="email">
-                <span asp-validation-for="Person.Email" class="label label-danger"></span>
+                <input asp-for="CurrentPerson.Email" class="form-control" type="email">
+                <span asp-validation-for="CurrentPerson.Email" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Fecha de Nacimimento *</label>
-                <input asp-for="Person.Birthdate" class="form-control" type="date" asp-format="{0:yyyy-MM-dd}">
-                <span asp-validation-for="Person.Birthdate" class="label label-danger"></span>
+                <input asp-for="CurrentPerson.Birthdate" class="form-control" type="date" asp-format="{0:yyyy-MM-dd}">
+                <span asp-validation-for="CurrentPerson.Birthdate" class="label label-danger"></span>
             </div>
         </div>
     </div>
@@ -78,25 +78,25 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Interesado en *</label>
-                <select asp-for="Person.InterestId" asp-items="@(new SelectList(Model.Interests, "Id", "Name"))" class="form-control">
+                <select asp-for="CurrentPerson.InterestId" asp-items="@(new SelectList(Model.Interests, "Id", "Name"))" class="form-control">
                     <option value="0">- Seleccione -</option>
                 </select>
-                <span asp-validation-for="Person.InterestId" class="label label-danger"></span>
+                <span asp-validation-for="CurrentPerson.InterestId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Sistema Asociado *</label>
-                <select asp-for="Person.ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control">
+                <select asp-for="CurrentPerson.ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control">
                     <option value="0">- Seleccione -</option>
                 </select>
-                <span asp-validation-for="Person.ExternalSystemId" class="label label-danger"></span>
+                <span asp-validation-for="CurrentPerson.ExternalSystemId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group policy">
-                <input asp-for="Person.PolicyData" class="form-checkbox" type="checkbox"> <span>Acepto política de datos</span>
-                <span asp-validation-for="Person.PolicyData" class="label label-danger"></span>
+                <input asp-for="CurrentPerson.PolicyData" class="form-checkbox" type="checkbox"> <span>Acepto política de datos</span>
+                <span asp-validation-for="CurrentPerson.PolicyData" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">

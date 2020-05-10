@@ -40,9 +40,23 @@ namespace Portal.Controllers
             {
                 CustomerViewModel.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
 
-                if (this.TempData["Message"] != null)
+                if (this.TempData["currentCustomerId"] != null)
                 {
-                    CustomerViewModel.UserMesage = this.TempData["Message"] as ApplicationMessage;
+                    int customeId = (int)this.TempData["currentCustomerId"];
+
+                    CustomerViewModel.Customer = this.customerBussines.GetCustomerById(customeId);
+
+                    if (CustomerViewModel.Customer != null)
+                    {
+                        CustomerViewModel.Code = CustomerViewModel.Customer.Code;
+                        CustomerViewModel.ExternalSystemId = CustomerViewModel.Customer.ExternalSystemId;
+                    }
+                }
+
+                if (this.TempData["personMessageCode"] != null)
+                {
+                    MessageCode messageCode = (MessageCode)this.TempData["personMessageCode"];
+                    CustomerViewModel.UserMesage = new ApplicationMessage(this.cache, messageCode);
                 }
             }
             catch (Exception exec)
@@ -147,13 +161,11 @@ namespace Portal.Controllers
                         personCreate.UserMesage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
                     }
                 }
-                else
+                else if (personCreate.Person.RelationshipId == 0)
                 {
-                    if (personCreate.Person.RelationshipId == 0)
-                    {
-                        this.ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
-                    }
+                    this.ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
                 }
+
             }
             catch (Exception exec)
             {
@@ -196,35 +208,35 @@ namespace Portal.Controllers
         {
             try
             {
-                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
-
                 personEdit.ExternalSystems = this.masterBussinesManager.ExternalSystemBussines.GetAllExternalSystems();
                 personEdit.IdentificationTypes = this.masterBussinesManager.IdentificationTypeBussines.GetAllIdentificationTypes();
                 personEdit.Interests = this.masterBussinesManager.InterestBussines.GetAllInterests();
                 personEdit.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
 
-
                 if (this.ModelState.IsValid && personEdit.Person.RelationshipId != 0)
                 {
                     Person personValid = this.personBussines.GetPersonByIdentificationById(personEdit.Person.Identification, personEdit.Person.Id);
 
-                    if (personValid != null)
+                    if (personValid == null)
                     {
-                        personEdit.UserMesage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personEdit.Person.Identification);
+                        int customerId = this.customerBussines.GetCustomerIdByPersonId(personEdit.Person.Id);
+
+                        string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+                        this.personBussines.Edit(personEdit.Person, userName);
+
+                        this.TempData["currentCustomerId"] = customerId;
+                        this.TempData["personMessageCode"] = MessageCode.PersonEdited.GetHashCode();
+
+                        return this.RedirectToAction("Index", "Customer");
                     }
                     else
                     {
-                        this.personBussines.Edit(personEdit.Person, userName);
-                        this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonEdited));
-                        return this.RedirectToAction("Index", "Customer");
+                        personEdit.UserMesage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personEdit.Person.Identification);
                     }
                 }
-                else
+                else if (personEdit.Person.RelationshipId == 0)
                 {
-                    if (personEdit.Person.RelationshipId == 0)
-                    {
-                        this.ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
-                    }
+                    this.ModelState.AddModelError("Person.RelationshipId", "Campo requerido");
                 }
             }
             catch (Exception exec)
@@ -242,10 +254,14 @@ namespace Portal.Controllers
 
             try
             {
-                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
+                int customerId = this.customerBussines.GetCustomerIdByPersonId(id);
 
+                string userName = this.User.FindFirst(ClaimTypes.Name).Value;
                 this.personBussines.Delete(id, userName);
-                this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonDeleted));
+
+                this.TempData["currentCustomerId"] = customerId;
+                this.TempData["personMessageCode"] = MessageCode.PersonDeleted.GetHashCode();
+
                 return this.RedirectToAction("Index", "Customer");
             }
             catch (Exception exec)

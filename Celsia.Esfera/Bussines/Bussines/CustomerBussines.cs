@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.Models;
@@ -27,14 +26,7 @@ namespace Bussines.Bussines
             Task<List<Customer>> task = this.GetAsync(x => x.Code == code && x.ExternalSystemId == externalSystemId, null, "IdentificationType,ExternalSystem,Persons,Persons.Relationship,Persons.Interest,Persons.IdentificationType,Persons.ExternalSystem");
             task.Wait();
 
-            Audit auditoria = new Audit()
-            {
-                dateAudit = DateTime.Now,
-                usser = userName,
-                operation = "Consultar Cliente"
-            };
-
-            this.auditBussines.Add(auditoria);
+            this.auditBussines.Add(userName, OperationAudit.QueryCustomer);
 
             return task.Result.FirstOrDefault();
         }
@@ -49,10 +41,18 @@ namespace Bussines.Bussines
 
         public Customer GetCustomerById(int id)
         {
-            Task<Customer> task = this.GetAsync(id);
+            Task<List<Customer>> task = this.GetAsync(x => x.Id == id, null, "IdentificationType,ExternalSystem,Persons,Persons.Relationship,Persons.Interest,Persons.IdentificationType,Persons.ExternalSystem");
             task.Wait();
 
-            return task.Result;
+            return task.Result.FirstOrDefault();
+        }
+
+        public int GetCustomerIdByPersonId(int personId)
+        {
+            Task<List<Customer>> task = this.GetAsync(x => x.Persons.Any(x => x.Id == personId), null, "IdentificationType,ExternalSystem,Persons,Persons.Relationship,Persons.Interest,Persons.IdentificationType,Persons.ExternalSystem");
+            task.Wait();
+
+            return task.Result.Select(x => x.Id).FirstOrDefault();
         }
     }
 }

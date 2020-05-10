@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ namespace Bussines.Bussines
         /// Busca todas las personas no vinculadas
         /// </summary>
         /// <returns></returns>
-        public ICollection<Person> GetAllPersonsNoVinculed()
+        public List<Person> GetAllPersonsNoVinculed()
         {
             Task<List<Person>> task = this.GetAsync(x => x.CustomerId == null, includeProperties: "Customer,Relationship,Interest,IdentificationType,ExternalSystem");
             task.Wait();
@@ -79,14 +78,9 @@ namespace Bussines.Bussines
         public Person Add(Person person, string userName)
         {
             Task<Person> task = this.AddAsync(person);
+            task.Wait();
 
-            this.auditBussines.Add(new Audit()
-            {
-                dateAudit = DateTime.Now,
-                usser = userName,
-                operation = "Adicionar persona"
-            });
-
+            this.auditBussines.Add(userName, OperationAudit.AddPerson);
 
             return task.Result;
         }
@@ -100,12 +94,7 @@ namespace Bussines.Bussines
             Task<Person> task = this.EditAsync(person);
             task.Wait();
 
-            this.auditBussines.Add(new Audit
-            {
-                dateAudit = DateTime.Now,
-                usser = userName,
-                operation = "Editar persona"
-            });
+            this.auditBussines.Add(userName, OperationAudit.EditPerson);
 
             return task.Result;
         }
@@ -119,12 +108,7 @@ namespace Bussines.Bussines
             Task<Person> task = this.DeleteAsync(Id);
             task.Wait();
 
-            this.auditBussines.Add(new Audit()
-            {
-                dateAudit = DateTime.Now,
-                usser = userName,
-                operation = "Eliminar persona"
-            });
+            this.auditBussines.Add(userName, OperationAudit.DeletePerson);
 
             return task.Result;
         }
@@ -135,12 +119,7 @@ namespace Bussines.Bussines
 
             List<Person> persons = csvFile.ParseCSVFile(fileName).ToList();
 
-            this.auditBussines.Add(new Audit()
-            {
-                dateAudit = DateTime.Now,
-                usser = userName,
-                operation = "Carga masiva"
-            });
+            this.auditBussines.Add(userName, OperationAudit.UploadPerson);
 
             List<ApplicationMessage> processMessages = this.ProcessViculatedPersons(persons);
 

@@ -18,6 +18,7 @@ namespace Bussines.Bussines
         public ICollection<ExternalSystem> GetAllExternalSystems()
         {
             Task<List<ExternalSystem>> task = this.GetAsync();
+            task.Wait();
             return task.Result;
         }
 

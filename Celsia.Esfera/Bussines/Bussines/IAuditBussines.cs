@@ -6,6 +6,6 @@ namespace Bussines.Bussines
 {
     public interface IAuditBussines
     {
-        Audit Add(Audit auditoria);
+        Audit Add(string userName, OperationAudit operationAudit);
     }
 }

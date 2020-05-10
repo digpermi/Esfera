@@ -18,6 +18,7 @@ namespace Bussines.Bussines
         public ICollection<Interest> GetAllInterests()
         {
             Task<List<Interest>> task = this.GetAsync();
+            task.Wait();
             return task.Result;
         }
 
