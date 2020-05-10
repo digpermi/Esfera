@@ -6,7 +6,7 @@
 
 <form asp-action="Index" asp-controller="Customer" method="post">
     <h3 class="mt-4 font-weight-semibold mb-0 ml-3 mr-3">Consultar clientes</h3>
-    <p class="ml-3 mr-3 mb-4">Esta opción permite adicionar una persona no vinculada a un cliente.</p>
+    <p class="ml-3 mr-3 mb-4">Esta opción permite consultar los clientes y personas vinculadas.</p>
     <hr>
 
     <message user-message="@Model.UserMesage"></message>
@@ -17,9 +17,18 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Cliente *</label>
-                <select name="ExternalSystemId" asp-for="ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control">
-                    <option value="0">- Seleccione -</option>
-                </select>
+                @if (Model.ExternalSystems == null)
+                {
+                    <select name="ExternalSystemId" asp-for="ExternalSystemId" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
+                else
+                {
+                    <select name="ExternalSystemId" asp-for="ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
                 <span asp-validation-for="ExternalSystemId" class="label label-danger"></span>
             </div>
         </div>
@@ -159,7 +168,7 @@
                                     <td>@person.FirstName @person.LastName</td>
                                     <td>@person.Email</td>
                                     <td>@person.Relationship.Name</td>
-                                    <td><a href="~/Customer/Edit/@person.Id"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Customer/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
+                                    <td><a href="~/Customer/Edit/@person.Id" title="Actualizar"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Customer/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')" title="Eliminar"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
                                 </tr>
 
                             }

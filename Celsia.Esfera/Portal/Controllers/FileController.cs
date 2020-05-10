@@ -55,7 +55,7 @@ namespace Portal.Controllers
                     List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
 
                     fileViewModel.Messages = processMessages;
-                    fileViewModel.TotalRows = processMessages.Count;
+                    fileViewModel.TotalRows = processMessages.Count;        
                 }
             }
             catch (Exception exec)

@@ -23,10 +23,24 @@
 
 // Call the dataTables jQuery plugin
 $(document).ready(function () {
-    if ($('#dataTable').length>=1) {
+    if ($('#dataTable').length >= 1) {
         $('#dataTable').DataTable({
+            columnDefs: [
+                { orderable: false, targets: -1 }
+            ],
             "bLengthChange": false,
             "searching": false,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            }
+        });
+    }
+    if ($('#dataTableSearch').length >= 1) {
+        $('#dataTableSearch').DataTable({
+            columnDefs: [
+                { orderable: false, targets: -1 }
+            ],
+            "bLengthChange": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
             }

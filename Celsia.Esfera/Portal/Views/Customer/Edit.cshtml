@@ -19,9 +19,18 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Cliente</label>
-                <select asp-for="Person.ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control" disabled="disabled">
-                    <option value="0">- Seleccione -</option>
-                </select>
+                @if (Model.ExternalSystems == null)
+                {
+                    <select asp-for="Person.ExternalSystemId" class="form-control" disabled="disabled">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="Person.ExternalSystemId" asp-items="@(new SelectList(Model.ExternalSystems, "Id", "Name"))" class="form-control" disabled="disabled">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
                 <input asp-for="Person.ExternalSystemId" class="form-control" type="hidden">
                 <input asp-for="Person.Code" class="form-control" type="hidden">
                 <input asp-for="Person.CustomerId" class="form-control" type="hidden">
@@ -47,9 +56,18 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Identificación *</label>
-                <select asp-for="Person.IdentificationTypeId" asp-items="@(new SelectList(Model.IdentificationTypes, "Id", "Name"))" class="form-control">
-                    <option value="0">- Seleccione -</option>
-                </select>
+                @if (Model.IdentificationTypes == null)
+                {
+                    <select asp-for="Person.IdentificationTypeId" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="Person.IdentificationTypeId" asp-items="@(new SelectList(Model.IdentificationTypes, "Id", "Name"))" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
                 <span asp-validation-for="Person.IdentificationTypeId" class="label label-danger"></span>
             </div>
         </div>
@@ -94,16 +112,25 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Relación *</label>
-                <select asp-for="Person.RelationshipId" asp-items="@(new SelectList(Model.Relationships, "Id", "Name"))" class="form-control">
-                    <option value="0">- Seleccione -</option>
-                </select>
+                @if (Model.Relationships == null)
+                {
+                    <select asp-for="Person.RelationshipId" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="Person.RelationshipId" asp-items="@(new SelectList(Model.Relationships, "Id", "Name"))" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
                 <span asp-validation-for="Person.RelationshipId" class="label label-danger"></span>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Correo Electrónico *</label>
-                <input asp-for="Person.Email" class="form-control" type="email">
+                <input asp-for="Person.Email" class="form-control" type="text">
                 <span asp-validation-for="Person.Email" class="label label-danger"></span>
             </div>
         </div>
@@ -120,9 +147,18 @@
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Interesado en</label>
-                <select asp-for="Person.InterestId" asp-items="@(new SelectList(Model.Interests, "Id", "Name"))" class="form-control">
-                    <option value="0">- Seleccione -</option>
-                </select>
+                @if (Model.Interests == null)
+                {
+                    <select asp-for="Person.InterestId" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="Person.InterestId" asp-items="@(new SelectList(Model.Interests, "Id", "Name"))" class="form-control">
+                        <option value="0">- Seleccione -</option>
+                    </select>
+                }
                 <span asp-validation-for="Person.InterestId" class="label label-danger"></span>
             </div>
         </div>

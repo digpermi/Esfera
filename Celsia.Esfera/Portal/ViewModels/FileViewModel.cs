@@ -11,7 +11,11 @@ namespace Portal.ViewModels
 
         public int TotalRows { get; set; }
 
+        //[Required(ErrorMessage = "Campo requerido")]
+        //[FileExtensions(ErrorMessage = "El archivo no es válido, solo es permitido archivos CSV.", Extensions = ".csv")]
         [Required(ErrorMessage = "Campo requerido")]
+        [RegularExpression(@"^*.csv$", ErrorMessage = "El archivo no es válido, solo es permitido archivos CSV.")]
+
         public IFormFile UploadFile { get; set; }
 
     }
