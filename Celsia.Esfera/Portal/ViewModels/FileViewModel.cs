@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Bussines.Validators;
 using Microsoft.AspNetCore.Http;
 using Utilities.Messages;
 
@@ -12,8 +13,7 @@ namespace Portal.ViewModels
         public int TotalRows { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [FileExtensions(ErrorMessage = "El archivo no es válido, solo es permitido archivos CSV.", Extensions = "csv")]
-
+        [FileValidator(Extensions = new string[] { ".csv" }, ErrorMessage = "El archivo no es válido, solo es permitido archivos CSV.")]
         public IFormFile UploadFile { get; set; }
 
     }

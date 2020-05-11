@@ -1,5 +1,6 @@
 ﻿using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bussines
 {
@@ -224,24 +225,23 @@ namespace Bussines
 
             modelBuilder.Entity<Audit>(entity =>
             {
-                entity.ToTable("Audit");
+                entity.ToTable("Audits");
                 entity.HasComment("Auditoria de la aplicacion esfera");
 
-                entity.Property(e => e.id).HasColumnName("id");
-                entity.Property(e => e.dateAudit)
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Date)
                     .IsRequired()
-                    .HasColumnName("dateAudit")
+                    .HasColumnName("Date")
                     .HasColumnType("date");
 
-                entity.Property(e => e.usser)
+                entity.Property(e => e.UserName)
                     .IsRequired()
-                    .HasColumnName("usser")
+                    .HasColumnName("userName")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.operation)
-                   .IsRequired()
-                   .HasColumnName("operation")
-                   .HasMaxLength(200);
+                entity.Property(e => e.OperationAudit).HasColumnName("operationAuditId")
+                .HasConversion(new EnumToNumberConverter<OperationAudit, byte>())
+                .IsRequired();
             });
 
             this.OnModelCreatingPartial(modelBuilder);

@@ -10,6 +10,8 @@ namespace Utilities.File
     {
         private readonly ICsvMapping<TEntity> csvMapping;
 
+        public IEnumerable<string> Errors { get; set; }
+
         public CsvFile(ICsvMapping<TEntity> csvMapping)
         {
             this.csvMapping = csvMapping;
@@ -21,7 +23,12 @@ namespace Utilities.File
             CsvParser<TEntity> csvParser = new CsvParser<TEntity>(csvParserOptions, this.csvMapping);
             ParallelQuery<CsvMappingResult<TEntity>> results = csvParser.ReadFromFile(ruta, Encoding.ASCII);
 
-            return results.Select(x => x.Result);
+            var uploadResult = (from result in results
+                                select new { Entity = result.Result, Error = result.Error.Value }).ToList();
+
+            this.Errors = uploadResult.Select(x => x.Error);
+
+            return uploadResult.Select(x => x.Entity);
         }
     }
 }

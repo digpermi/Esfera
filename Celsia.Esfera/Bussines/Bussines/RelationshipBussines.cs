@@ -17,6 +17,7 @@ namespace Bussines.Bussines
         public ICollection<Relationship> GetAllRelationships()
         {
             Task<List<Relationship>> task = this.GetAsync();
+            task.Wait();
             return task.Result;
         }
 

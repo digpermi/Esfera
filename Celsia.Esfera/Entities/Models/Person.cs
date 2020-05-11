@@ -10,8 +10,9 @@ namespace Entities.Models
         public int? Code { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Identificación inválida")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Identificación inválida")]
         [MaxLength(10, ErrorMessage = "Identificación inválida")]
+        [MinLength(8, ErrorMessage = "Identificación inválida")]
         public string Identification { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
@@ -40,7 +41,7 @@ namespace Entities.Models
         public string MobileNumber { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Email inválido")]
+        [RegularExpression(@"^([a-zA-Z0-9-ZÀ-ÿ\u00f1\u00d1_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9-ZÀ-ÿ\u00f1\u00d1\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Email inválido")]
         [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
         public string Email { get; set; }
 

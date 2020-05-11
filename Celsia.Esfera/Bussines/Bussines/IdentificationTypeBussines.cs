@@ -18,6 +18,7 @@ namespace Bussines.Bussines
         public ICollection<IdentificationType> GetAllIdentificationTypes()
         {
             Task<List<IdentificationType>> task = this.GetAsync();
+            task.Wait();
             return task.Result;
         }
 

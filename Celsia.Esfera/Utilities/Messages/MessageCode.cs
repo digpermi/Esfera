@@ -81,8 +81,8 @@
         InvalidLogin = 14,
 
         /// <summary>
-        /// Extension de archivo invalida
+        /// Se encontraron los siguientes errores al validar el archivo: {0}
         /// </summary>
-        FileExtensionError = 15
+        ExcelUploadError = 15
     }
 }

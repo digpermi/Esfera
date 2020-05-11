@@ -6,7 +6,7 @@ namespace Bussines.Bussines
 {
     public interface IPersonBussines
     {
-        ICollection<Person> GetAllPersonsNoVinculed();
+        List<Person> GetAllPersonsNoVinculed();
 
         List<ApplicationMessage> UploadVinculatedPersons(string fileName, string userName);
 

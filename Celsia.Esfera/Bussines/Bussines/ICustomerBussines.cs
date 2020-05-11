@@ -6,8 +6,10 @@ namespace Bussines.Bussines
     {
         Customer GetCustomerById(int id);
 
-        Customer GetCustomer(int cod, byte externalSystemId,string userName);
+        Customer GetCustomer(int cod, byte externalSystemId, string userName);
 
         Customer GetCustomerByCode(int? code);
+
+        int GetCustomerIdByPersonId(int personId);
     }
 }

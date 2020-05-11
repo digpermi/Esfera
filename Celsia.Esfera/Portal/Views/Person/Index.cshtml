@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Portal.ViewModels.PersonViewModel>
+﻿@model Portal.ViewModels.PersonNoVinculatedViewModel
 @{
     ViewData["Title"] = "Gestionar personas";
 }
@@ -7,7 +7,7 @@
 <p class="ml-3 mr-3 mb-4">Esta opción permite gestionar las personas no vinculadas los clientes.</p>
 <hr>
 
-<message user-message="@Model.FirstOrDefault().UserMesage"></message>
+<message user-message="@Model.UserMesage"></message>
 
 <div class="row ml-1 mr-1 mt-3 pt-2 mb-1">
     <div class="col-xl-3 col-md-6">
@@ -36,23 +36,28 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    @if (Model.FirstOrDefault().Person != null)
+                    @foreach (var person in Model.Persons)
                     {
-                        foreach (var person in Model)
-                        {
-                            <tr>
-                                <td>@person.Person.IdentificationType.Name</td>
-                                <td>@person.Person.Identification</td>
-                                <td>@person.Person.FirstName @person.Person.LastName</td>
-                                <td>@person.Person.Email</td>
-                                <td>@person.Person.Interest.Name</td>
-                                <td><a href="~/Person/Edit/@person.Person.Id" title="Actualizar"><div class="sb-nav-link-icon"><i class="fas fa-pen"></i></div></a><a href="~/Person/Delete/@person.Person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')" title="Eliminar"><div class="sb-nav-link-icon"><i class="fas fa-times"></i></div></a></td>
-                            </tr>
-
-                        }
+                        <tr>
+                            <td>@person.IdentificationType.Name</td>
+                            <td>@person.Identification</td>
+                            <td>@person.FirstName @person.LastName</td>
+                            <td>@person.Email</td>
+                            <td>@person.Interest.Name</td>
+                            <td>
+                                <a href="~/Person/Edit/@person.Id">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-pen"></i>
+                                    </div>
+                                </a>
+                                <a href="~/Person/Delete/@person.Id" onclick="return confirm('¿Estas seguro de eliminar la persona?')">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
                     }
-
                 </tbody>
             </table>
         </div>
