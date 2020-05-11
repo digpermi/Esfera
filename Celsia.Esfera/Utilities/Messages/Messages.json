@@ -69,10 +69,10 @@
     "Text": "Credenciales inválidas.",
     "Type": 4
   },
+
   {
     "Code": 15,
-    "Text": "El archivo no es válido, solo es permitido archivos CSV.",
+    "Text": "Se encontraron los siguientes errores al validar el archivo: {0}",
     "Type": 4
   }
-
 ]

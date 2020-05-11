@@ -121,40 +121,22 @@ namespace Bussines.Bussines
 
             this.auditBussines.Add(userName, OperationAudit.UploadPerson);
 
-            List<ApplicationMessage> processMessages = this.ProcessViculatedPersons(persons);
+            List<ApplicationMessage> processMessages = new List<ApplicationMessage>();
+
+            ApplicationMessage errorMessage = this.GetPersonErroMessage(csvFile.Errors.ToList());
+            if (errorMessage != null)
+            {
+                processMessages.Add(errorMessage);
+            }
+            else
+            {
+                processMessages = this.ProcessViculatedPersons(persons);
+            }
 
             return processMessages;
         }
 
-        private ApplicationMessage ValidateUploadPerson(Person person, int rowCont)
-        {
-            ApplicationMessage errorMessage = null;
 
-            IdentificationType identificationtype = this.masterBussinesManager.IdentificationTypeBussines.GetIdentificationTypeById(person.IdentificationTypeId);
-            Relationship relationship = this.masterBussinesManager.RelationshipBussines.GetRelationshipById(person.RelationshipId.Value);
-            Interest interest = this.masterBussinesManager.InterestBussines.GetInterestById(person.InterestId);
-
-            Person actualPerson = this.GetPersonByIdentification(person.Identification);
-
-            if (actualPerson != null)
-            {
-                errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExistImport, rowCont, person.Identification);
-            }
-            else if (identificationtype == null)
-            {
-                errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, rowCont, person.IdentificationTypeId);
-            }
-            else if (relationship == null)
-            {
-                errorMessage = new ApplicationMessage(this.cache, MessageCode.RelationshipNotValid, rowCont, person.RelationshipId);
-            }
-            else if (interest == null)
-            {
-                errorMessage = new ApplicationMessage(this.cache, MessageCode.InterestNotValid, rowCont, person.InterestId);
-            }
-
-            return errorMessage;
-        }
 
         private List<ApplicationMessage> ProcessViculatedPersons(List<Person> persons)
         {
@@ -195,6 +177,36 @@ namespace Bussines.Bussines
             return processMessages;
         }
 
+        private ApplicationMessage ValidateUploadPerson(Person person, int rowCont)
+        {
+            ApplicationMessage errorMessage = null;
+
+            IdentificationType identificationtype = this.masterBussinesManager.IdentificationTypeBussines.GetIdentificationTypeById(person.IdentificationTypeId);
+            Relationship relationship = this.masterBussinesManager.RelationshipBussines.GetRelationshipById(person.RelationshipId.Value);
+            Interest interest = this.masterBussinesManager.InterestBussines.GetInterestById(person.InterestId);
+
+            Person actualPerson = this.GetPersonByIdentification(person.Identification);
+
+            if (actualPerson != null)
+            {
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExistImport, rowCont, person.Identification);
+            }
+            else if (identificationtype == null)
+            {
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, rowCont, person.IdentificationTypeId);
+            }
+            else if (relationship == null)
+            {
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.RelationshipNotValid, rowCont, person.RelationshipId);
+            }
+            else if (interest == null)
+            {
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.InterestNotValid, rowCont, person.InterestId);
+            }
+
+            return errorMessage;
+        }
+
         private ApplicationMessage ValidateUploadPersonModel(Person person, int rowCont)
         {
             List<ValidationResult> validationResults = new List<ValidationResult>();
@@ -214,6 +226,18 @@ namespace Bussines.Bussines
                                                     select string.Format("{0}: {1}", fieldsWithErros, error.ErrorMessage);
 
                 errorMessage = new ApplicationMessage(this.cache, MessageCode.InvalidPersonRow, rowCont, string.Join('-', errorMessages));
+            }
+
+            return errorMessage;
+        }
+
+        private ApplicationMessage GetPersonErroMessage(List<string> errors)
+        {
+            ApplicationMessage errorMessage = null;
+
+            if (errors.Any())
+            {
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.ExcelUploadError, string.Join(',', errors));
             }
 
             return errorMessage;
