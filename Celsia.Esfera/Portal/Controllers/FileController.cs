@@ -49,7 +49,7 @@ namespace Portal.Controllers
 
                     using (FileStream stream = System.IO.File.Create(tempPath))
                     {
-                        fileViewModel.UploadFile.CopyToAsync(stream);
+                        fileViewModel.UploadFile.CopyTo(stream);
                     }
 
                     List<ApplicationMessage> processMessages = this.personBussines.UploadVinculatedPersons(tempPath, userName);
