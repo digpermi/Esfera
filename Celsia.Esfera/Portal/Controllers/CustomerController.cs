@@ -219,7 +219,7 @@ namespace Portal.Controllers
 
                     if (personValid == null)
                     {
-                        int customerId = this.customerBussines.GetCustomerIdByPersonId(personEdit.Person.Id);
+                        int customerId = personEdit.Person.CustomerId.Value;
 
                         string userName = this.User.FindFirst(ClaimTypes.Name).Value;
                         this.personBussines.Edit(personEdit.Person, userName);
