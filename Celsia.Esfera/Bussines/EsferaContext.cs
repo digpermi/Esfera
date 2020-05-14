@@ -49,7 +49,6 @@ namespace Bussines
                     .IsFixedLength();
 
                 entity.Property(e => e.Identification)
-                    .IsRequired()
                     .HasColumnName("identification")
                     .HasMaxLength(50);
 
