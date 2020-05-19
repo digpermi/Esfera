@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="CustomersIntegration"
   DTS:PackageType="5"
-  DTS:VersionBuild="74"
-  DTS:VersionGUID="{47E1E1B3-672C-4B18-BE5A-4DDF7E2F4C1C}">
+  DTS:VersionBuild="75"
+  DTS:VersionGUID="{DFE1E547-D869-4EBF-B77E-2E136D68502F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADJMeiUrMvVncr2vPGonMKtAAAAAASAAACgAAAAEAAAALA7iG4tJylIyeHBRU4OBuUYAAAAl8TDB5nMDDit7ZvVSruq821qd9z23Et+FAAAAA6Ld/E5Q46poqOJ2qDnAGZFlCbu</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAGdG/avxr5m4NQZH5gyEYjAAAAAASAAACgAAAAEAAAAGuVJhu18Qze7nI483M2sUEYAAAAxwOooj7uR/TsPSIW35b8GrEG4K6xafSaFAAAAICUVN3d23dUX+HugOOwhKvSPhl6</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -42,7 +42,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAxN6VMBenKeLgfz7wzE+OMAAAAAASAAACgAAAAEAAAALqL7pA/o8OhCCG+ujRa+c0YAAAA/H9A3BlbZPKBFD61I5cnconAaHJgvJ0HFAAAAIo+jcBZv9QQzkGKIbxMWMiG9zR/</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABbtmXwqbtkusMRJMaGdU9xAAAAAASAAACgAAAAEAAAAMRUXP1umqxXDLgq8OfDf7MYAAAAj+kUNgIZNxC9GmRdtg93bU0Nl4M76sNmFAAAAAFcXdT+k7IznBqrrqmvLBl43aSd</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -57,7 +57,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD45YilVnrYz7oIhD91a7ArAAAAAASAAACgAAAAEAAAAJcneXxJLJL3mtoGcspu6uMYAAAAusrhO+WDXmdUzu67saKOpNYqcX6t3jfqFAAAAF5MUIETq4D0R+tSYLkc/DpcdwWt</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABOF0FsTj0zl7bzgDwD+2fcAAAAAASAAACgAAAAEAAAAIS7t10e9mZ5TG8RfeZb0AMYAAAA9PTED8hwG4Cb7czPBn67Nrn4UunHTlnDFAAAAMvr/HN8B/WlulSgB/wWyVhK2AGw</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -4837,12 +4837,12 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="Conditional Split Default Output"
               startId="Package\Get external customer data\Conditional Split.Outputs[Conditional Split Default Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Data Conversion Output1]"
+              refId="Package\Get external customer data.Paths[Data Conversion Output]"
               endId="Package\Get external customer data\Add external systema id SAC.Inputs[Derived Column Input]"
               name="Data Conversion Output"
               startId="Package\Get external customer data\Sac data parce.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Data Conversion Output]"
+              refId="Package\Get external customer data.Paths[Data Conversion Output1]"
               endId="Package\Get external customer data\Add extenal system id OPEN.Inputs[Derived Column Input]"
               name="Data Conversion Output"
               startId="Package\Get external customer data\Open data parse.Outputs[Data Conversion Output]" />
@@ -4852,7 +4852,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="Derived Column Output"
               startId="Package\Get external customer data\Trim identification type.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Derived Column Output3]"
+              refId="Package\Get external customer data.Paths[Derived Column Output1]"
               endId="Package\Get external customer data\Sort by external customer code.Inputs[Sort Input]"
               name="Derived Column Output"
               startId="Package\Get external customer data\Add policy data.Outputs[Derived Column Output]" />
@@ -4862,7 +4862,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="Derived Column Output"
               startId="Package\Get external customer data\Add external systema id SAC.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Derived Column Output1]"
+              refId="Package\Get external customer data.Paths[Derived Column Output3]"
               endId="Package\Get external customer data\Union All customers.Inputs[Union All Input 2]"
               name="Derived Column Output"
               startId="Package\Get external customer data\Add extenal system id OPEN.Outputs[Derived Column Output]" />
@@ -4872,17 +4872,17 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="Insert"
               startId="Package\Get external customer data\Conditional Split.Outputs[Insert]" />
             <path
-              refId="Package\Get external customer data.Paths[Merge Join Output]"
-              endId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input]"
-              name="Merge Join Output"
-              startId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output]" />
-            <path
               refId="Package\Get external customer data.Paths[Merge Join Output1]"
               endId="Package\Get external customer data\Add policy data.Inputs[Derived Column Input]"
               name="Merge Join Output"
               startId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output]" />
             <path
-              refId="Package\Get external customer data.Paths[OLE DB Source Output2]"
+              refId="Package\Get external customer data.Paths[Merge Join Output]"
+              endId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Get external customer data.Paths[OLE DB Source Output]"
               endId="Package\Get external customer data\External identification to upper.Inputs[Character Map Input]"
               name="OLE DB Source Output"
               startId="Package\Get external customer data\Esfera external identification types select.Outputs[OLE DB Source Output]" />
@@ -4892,7 +4892,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="OLE DB Source Output"
               startId="Package\Get external customer data\Open customers select.Outputs[OLE DB Source Output]" />
             <path
-              refId="Package\Get external customer data.Paths[OLE DB Source Output]"
+              refId="Package\Get external customer data.Paths[OLE DB Source Output2]"
               endId="Package\Get external customer data\Sac data parce.Inputs[Data Conversion Input]"
               name="OLE DB Source Output"
               startId="Package\Get external customer data\Sac customers select.Outputs[OLE DB Source Output]" />
@@ -4902,7 +4902,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="OLE DB Source Output"
               startId="Package\Get external customer data\Esfera customers select.Outputs[OLE DB Source Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Sort Output3]"
+              refId="Package\Get external customer data.Paths[Sort Output]"
               endId="Package\Get external customer data\Merge Join 1.Inputs[Merge Join Left Input]"
               name="Sort Output"
               startId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output]" />
@@ -4912,12 +4912,12 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="Sort Output"
               startId="Package\Get external customer data\Sort by external identificatoin type.Outputs[Sort Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Sort Output]"
+              refId="Package\Get external customer data.Paths[Sort Output2]"
               endId="Package\Get external customer data\Merge Join.Inputs[Merge Join Left Input]"
               name="Sort Output"
               startId="Package\Get external customer data\Sort by identification type.Outputs[Sort Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Sort Output2]"
+              refId="Package\Get external customer data.Paths[Sort Output3]"
               endId="Package\Get external customer data\Merge Join 1.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\Get external customer data\Sort by customer code.Outputs[Sort Output]" />
@@ -4956,53 +4956,587 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="130,42"
-          Id="Package\Get external customer data\Merge Join"
-          TopLeft="339,601" />
+          Size="139,42"
+          Id="Package\Get external customer data\Merge Join 1"
+          TopLeft="641,744" />
         <NodeLayout
-          Size="224,42"
-          Id="Package\Get external customer data\External identification to upper"
-          TopLeft="480,368" />
+          Size="164,42"
+          Id="Package\Get external customer data\Update customers"
+          TopLeft="617,993" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\Get external customer data\Sort by identification type"
+          TopLeft="238,508" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Get external customer data\Conditional Split"
+          TopLeft="627,870" />
         <NodeLayout
           Size="177,42"
           Id="Package\Get external customer data\Sac customers select"
           TopLeft="366,9" />
         <NodeLayout
-          Size="186,42"
-          Id="Package\Get external customer data\Open customers select"
-          TopLeft="126,11" />
-        <NodeLayout
-          Size="241,42"
-          Id="Package\Get external customer data\Sort by external identificatoin type"
-          TopLeft="478,465" />
+          Size="271,42"
+          Id="Package\Get external customer data\Esfera external identification types select"
+          TopLeft="458.5,273.5" />
         <NodeLayout
           Size="157,42"
           Id="Package\Get external customer data\Open data parse"
           TopLeft="142,88" />
         <NodeLayout
-          Size="172,42"
-          Id="Package\Get external customer data\Union All customers"
-          TopLeft="237,273" />
-        <NodeLayout
-          Size="149,42"
-          Id="Package\Get external customer data\Sac data parce"
-          TopLeft="380,86" />
-        <NodeLayout
-          Size="271,42"
-          Id="Package\Get external customer data\Esfera external identification types select"
-          TopLeft="458.5,273.5" />
-        <NodeLayout
-          Size="184,42"
-          Id="Package\Get external customer data\Identification to upper"
-          TopLeft="234,347" />
+          Size="185,42"
+          Id="Package\Get external customer data\Sort by customer code"
+          TopLeft="626,649" />
         <NodeLayout
           Size="188,42"
           Id="Package\Get external customer data\Trim identification type"
           TopLeft="244,424" />
         <NodeLayout
-          Size="200,42"
-          Id="Package\Get external customer data\Sort by identification type"
-          TopLeft="238,508" />
+          Size="151,42"
+          Id="Package\Get external customer data\Add policy data"
+          TopLeft="329,672" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Get external customer data\Open customers select"
+          TopLeft="126,11" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\Get external customer data\Identification to upper"
+          TopLeft="234,347" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\Get external customer data\Merge Join"
+          TopLeft="339,601" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Get external customer data\OLE DB Destination"
+          TopLeft="320,867" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Get external customer data\Sac data parce"
+          TopLeft="380,86" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Get external customer data\Union All customers"
+          TopLeft="237,273" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Get external customer data\Add external systema id SAC"
+          TopLeft="342,171" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Get external customer data\External identification to upper"
+          TopLeft="480,368" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Get external customer data\Esfera customers select"
+          TopLeft="646,544" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\Get external customer data\Add extenal system id OPEN"
+          TopLeft="116,171" />
+        <NodeLayout
+          Size="241,42"
+          Id="Package\Get external customer data\Sort by external identificatoin type"
+          TopLeft="478,465" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\Get external customer data\Sort by external customer code"
+          TopLeft="298,745" />
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Union All Output 1]"
+          TopLeft="324.5,315">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32"
+              Start="0,0"
+              End="0,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Sort Output3]"
+          TopLeft="718.5,691">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8,53"
+              Start="0,0"
+              End="-8,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.5"
+                    Point2="0,26.5"
+                    Point3="-4,26.5" />
+                  <mssgle:LineSegment
+                    End="-4,26.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,26.5"
+                    Point2="-8,26.5"
+                    Point3="-8,30.5" />
+                  <mssgle:LineSegment
+                    End="-8,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Sort Output2]"
+          TopLeft="338,550">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45.6666666666667,51"
+              Start="0,0"
+              End="45.6666666666667,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.2279635258359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.2279635258359"
+                    Point2="0,30.2279635258359"
+                    Point3="4,30.2279635258359" />
+                  <mssgle:LineSegment
+                    End="41.6666666666667,30.2279635258359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41.6666666666667,30.2279635258359"
+                    Point2="45.6666666666667,30.2279635258359"
+                    Point3="45.6666666666667,34.2279635258359" />
+                  <mssgle:LineSegment
+                    End="45.6666666666667,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Sort Output1]"
+          TopLeft="598.5,507">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-174.166666666667,94"
+              Start="0,0"
+              End="-174.166666666667,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.7142857142857" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.7142857142857"
+                    Point2="0,55.7142857142857"
+                    Point3="-4,55.7142857142857" />
+                  <mssgle:LineSegment
+                    End="-170.166666666667,55.7142857142857" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-170.166666666667,55.7142857142857"
+                    Point2="-174.166666666667,55.7142857142857"
+                    Point3="-174.166666666667,59.7142857142857" />
+                  <mssgle:LineSegment
+                    End="-174.166666666667,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Sort Output]"
+          TopLeft="524,765.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117,0"
+              Start="0,0"
+              End="109.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="109.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[OLE DB Source Output3]"
+          TopLeft="741,586">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-22.5,63"
+              Start="0,0"
+              End="-22.5,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.5"
+                    Point2="0,31.5"
+                    Point3="-4,31.5" />
+                  <mssgle:LineSegment
+                    End="-18.5,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,31.5"
+                    Point2="-22.5,31.5"
+                    Point3="-22.5,35.5" />
+                  <mssgle:LineSegment
+                    End="-22.5,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[OLE DB Source Output2]"
+          TopLeft="454.5,51">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[OLE DB Source Output1]"
+          TopLeft="219.75,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[OLE DB Source Output]"
+          TopLeft="593,315.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.5"
+              Start="0,0"
+              End="0,45">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Merge Join Output1]"
+          TopLeft="404.25,643">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29"
+              Start="0,0"
+              End="0,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Merge Join Output]"
+          TopLeft="707.5,786">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,84"
+              Start="0,0"
+              End="0,76.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Insert]"
+          TopLeft="627,889.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-136,0"
+              Start="0,0"
+              End="-128.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-128.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-78.00298828125,5,27.5059765625,9.40234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Derived Column Output3]"
+          TopLeft="222,213">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73.6666666666667,60"
+              Start="0,0"
+              End="73.6666666666667,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.668202764977" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.668202764977"
+                    Point2="0,35.668202764977"
+                    Point3="4,35.668202764977" />
+                  <mssgle:LineSegment
+                    End="69.6666666666667,35.668202764977" />
+                  <mssgle:CubicBezierSegment
+                    Point1="69.6666666666667,35.668202764977"
+                    Point2="73.6666666666667,35.668202764977"
+                    Point3="73.6666666666667,39.668202764977" />
+                  <mssgle:LineSegment
+                    End="73.6666666666667,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Derived Column Output2]"
+          TopLeft="449,213">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-98.6666666666667,60"
+              Start="0,0"
+              End="-98.6666666666667,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.668202764977" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.668202764977"
+                    Point2="0,35.668202764977"
+                    Point3="-4,35.668202764977" />
+                  <mssgle:LineSegment
+                    End="-94.6666666666667,35.668202764977" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-94.6666666666667,35.668202764977"
+                    Point2="-98.6666666666667,35.668202764977"
+                    Point3="-98.6666666666667,39.668202764977" />
+                  <mssgle:LineSegment
+                    End="-98.6666666666667,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Derived Column Output1]"
+          TopLeft="407.75,714">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Derived Column Output]"
+          TopLeft="338,466">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Data Conversion Output1]"
+          TopLeft="221.25,130">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Data Conversion Output]"
+          TopLeft="451.75,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Conditional Split Default Output]"
+          TopLeft="701.75,912">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,81"
+              Start="0,0"
+              End="0,73.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,73.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-70.61390625,30.9208984375,141.2278125,11.658203125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Get external customer data.Paths[Character Map Output1]"
           TopLeft="326,389">
@@ -5057,566 +5591,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Union All Output 1]"
-          TopLeft="324.5,315">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,32"
-              Start="0,0"
-              End="0,24.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,24.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Sort Output1]"
-          TopLeft="598.5,507">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-174.166666666667,94"
-              Start="0,0"
-              End="-174.166666666667,86.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,51.7142857142857" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,51.7142857142857"
-                    Point2="0,55.7142857142857"
-                    Point3="-4,55.7142857142857" />
-                  <mssgle:LineSegment
-                    End="-170.166666666667,55.7142857142857" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-170.166666666667,55.7142857142857"
-                    Point2="-174.166666666667,55.7142857142857"
-                    Point3="-174.166666666667,59.7142857142857" />
-                  <mssgle:LineSegment
-                    End="-174.166666666667,86.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Sort Output]"
-          TopLeft="338,550">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="45.6666666666667,51"
-              Start="0,0"
-              End="45.6666666666667,43.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.2279635258359" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,26.2279635258359"
-                    Point2="0,30.2279635258359"
-                    Point3="4,30.2279635258359" />
-                  <mssgle:LineSegment
-                    End="41.6666666666667,30.2279635258359" />
-                  <mssgle:CubicBezierSegment
-                    Point1="41.6666666666667,30.2279635258359"
-                    Point2="45.6666666666667,30.2279635258359"
-                    Point3="45.6666666666667,34.2279635258359" />
-                  <mssgle:LineSegment
-                    End="45.6666666666667,43.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[OLE DB Source Output2]"
-          TopLeft="593,315.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,52.5"
-              Start="0,0"
-              End="0,45">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,45" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[OLE DB Source Output1]"
-          TopLeft="219.75,53">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35"
-              Start="0,0"
-              End="0,27.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[OLE DB Source Output]"
-          TopLeft="454.5,51">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35"
-              Start="0,0"
-              End="0,27.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Derived Column Output]"
-          TopLeft="338,466">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,42"
-              Start="0,0"
-              End="0,34.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,34.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="190,42"
-          Id="Package\Get external customer data\Esfera customers select"
-          TopLeft="646,544" />
-        <NodeLayout
-          Size="185,42"
-          Id="Package\Get external customer data\Sort by customer code"
-          TopLeft="626,649" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[OLE DB Source Output3]"
-          TopLeft="741,586">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-22.5,63"
-              Start="0,0"
-              End="-22.5,55.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,27.5"
-                    Point2="0,31.5"
-                    Point3="-4,31.5" />
-                  <mssgle:LineSegment
-                    End="-18.5,31.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-18.5,31.5"
-                    Point2="-22.5,31.5"
-                    Point3="-22.5,35.5" />
-                  <mssgle:LineSegment
-                    End="-22.5,55.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Get external customer data\Merge Join 1"
-          TopLeft="641,744" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Sort Output2]"
-          TopLeft="718.5,691">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-8,53"
-              Start="0,0"
-              End="-8,45.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.5"
-                    Point2="0,26.5"
-                    Point3="-4,26.5" />
-                  <mssgle:LineSegment
-                    End="-4,26.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4,26.5"
-                    Point2="-8,26.5"
-                    Point3="-8,30.5" />
-                  <mssgle:LineSegment
-                    End="-8,45.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="226,42"
-          Id="Package\Get external customer data\Sort by external customer code"
-          TopLeft="298,745" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Sort Output3]"
-          TopLeft="524,765.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="117,0"
-              Start="0,0"
-              End="109.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="109.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="155,42"
-          Id="Package\Get external customer data\Conditional Split"
-          TopLeft="627,870" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Merge Join Output]"
-          TopLeft="707.5,786">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,84"
-              Start="0,0"
-              End="0,76.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-8,30.25,16,16"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="164,42"
-          Id="Package\Get external customer data\Update customers"
-          TopLeft="614,1004" />
-        <NodeLayout
-          Size="212,42"
-          Id="Package\Get external customer data\Add extenal system id OPEN"
-          TopLeft="116,171" />
-        <NodeLayout
-          Size="214,42"
-          Id="Package\Get external customer data\Add external systema id SAC"
-          TopLeft="342,171" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Data Conversion Output]"
-          TopLeft="221.25,130">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41"
-              Start="0,0"
-              End="0,33.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Derived Column Output1]"
-          TopLeft="222,213">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="73.6666666666667,60"
-              Start="0,0"
-              End="73.6666666666667,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.668202764977" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.668202764977"
-                    Point2="0,35.668202764977"
-                    Point3="4,35.668202764977" />
-                  <mssgle:LineSegment
-                    End="69.6666666666667,35.668202764977" />
-                  <mssgle:CubicBezierSegment
-                    Point1="69.6666666666667,35.668202764977"
-                    Point2="73.6666666666667,35.668202764977"
-                    Point3="73.6666666666667,39.668202764977" />
-                  <mssgle:LineSegment
-                    End="73.6666666666667,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Data Conversion Output1]"
-          TopLeft="451.75,128">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,43"
-              Start="0,0"
-              End="0,35.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Derived Column Output2]"
-          TopLeft="449,213">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-98.6666666666667,60"
-              Start="0,0"
-              End="-98.6666666666667,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.668202764977" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.668202764977"
-                    Point2="0,35.668202764977"
-                    Point3="-4,35.668202764977" />
-                  <mssgle:LineSegment
-                    End="-94.6666666666667,35.668202764977" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-94.6666666666667,35.668202764977"
-                    Point2="-98.6666666666667,35.668202764977"
-                    Point3="-98.6666666666667,39.668202764977" />
-                  <mssgle:LineSegment
-                    End="-98.6666666666667,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="151,42"
-          Id="Package\Get external customer data\Add policy data"
-          TopLeft="329,672" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Merge Join Output1]"
-          TopLeft="404.25,643">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,29"
-              Start="0,0"
-              End="0,21.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,21.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Derived Column Output3]"
-          TopLeft="407.75,714">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,31"
-              Start="0,0"
-              End="0,23.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,23.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Conditional Split Default Output]"
-          TopLeft="729,912">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-33,92"
-              Start="0,0"
-              End="-33,84.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.3639846743295" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,33.3639846743295"
-                    Point2="0,37.3639846743295"
-                    Point3="-4,37.3639846743295" />
-                  <mssgle:LineSegment
-                    End="-29,37.3639846743295" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-29,37.3639846743295"
-                    Point2="-33,37.3639846743295"
-                    Point3="-33,41.3639846743295" />
-                  <mssgle:LineSegment
-                    End="-33,84.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-87.11390625,42.3639846743295,141.2278125,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="171,42"
-          Id="Package\Get external customer data\OLE DB Destination"
-          TopLeft="317,926" />
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Insert]"
-          TopLeft="627,891">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-139,56"
-              Start="0,0"
-              End="-131.5,56">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-65.5,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-65.5,0"
-                    Point2="-69.5,0"
-                    Point3="-69.5,4" />
-                  <mssgle:LineSegment
-                    End="-69.5,52" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-69.5,52"
-                    Point2="-69.5,56"
-                    Point3="-73.5,56" />
-                  <mssgle:LineSegment
-                    End="-131.5,56" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-83.25298828125,-15.40234375,27.5059765625,9.40234375"
-              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

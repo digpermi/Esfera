@@ -151,7 +151,9 @@ namespace Portal.Controllers
 
                     if (person == null)
                     {
-                        Person result = this.personBussines.Add(personCreate.Person, userName);
+                        this.personBussines.Add(personCreate.Person, userName);
+
+                        this.TempData["currentCustomerId"] = personCreate.Person.CustomerId;
                         this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonAdded));
 
                         return this.RedirectToAction("Index", "Customer");
