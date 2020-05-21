@@ -149,19 +149,12 @@ namespace Portal.Controllers
                 {
                     Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
 
-                    if (person == null)
-                    {
-                        this.personBussines.Add(personCreate.Person, userName);
+                    this.personBussines.Add(personCreate.Person, userName);
 
-                        this.TempData["currentCustomerId"] = personCreate.Person.CustomerId;
-                        this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonAdded));
+                    this.TempData["currentCustomerId"] = personCreate.Person.CustomerId;
+                    this.TempData["Message"] = JsonConvert.SerializeObject(new ApplicationMessage(this.cache, MessageCode.PersonAdded));
 
-                        return this.RedirectToAction("Index", "Customer");
-                    }
-                    else
-                    {
-                        personCreate.UserMesage = new ApplicationMessage(this.cache, MessageCode.PersonExist, personCreate.Person.Identification);
-                    }
+                    return this.RedirectToAction("Index", "Customer");
                 }
                 else if (personCreate.Person.RelationshipId == 0)
                 {

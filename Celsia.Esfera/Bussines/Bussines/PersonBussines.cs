@@ -185,13 +185,7 @@ namespace Bussines.Bussines
             Relationship relationship = this.masterBussinesManager.RelationshipBussines.GetRelationshipById(person.RelationshipId.Value);
             Interest interest = this.masterBussinesManager.InterestBussines.GetInterestById(person.InterestId);
 
-            Person actualPerson = this.GetPersonByIdentification(person.Identification);
-
-            if (actualPerson != null)
-            {
-                errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExistImport, rowCont, person.Identification);
-            }
-            else if (identificationtype == null)
+            if (identificationtype == null)
             {
                 errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, rowCont, person.IdentificationTypeId);
             }
