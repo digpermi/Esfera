@@ -153,7 +153,7 @@ namespace Bussines.Bussines
                     if (customer != null)
                     {
                         person.ExternalSystemId = customer.ExternalSystemId;
-
+                        person.CustomerId = customer.Id;
                         errorMessage = this.ValidateUploadPersonModel(person, rowCont);
 
                         if (errorMessage == null)
