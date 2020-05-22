@@ -75,7 +75,6 @@ namespace Bussines
                 entity.HasOne(d => d.IdentificationType)
                     .WithMany(p => p.Customers)
                     .HasForeignKey(d => d.IdentificationTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Customers_IdentificationTypes");
 
                 entity.HasOne(d => d.ExternalSystem)
