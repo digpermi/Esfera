@@ -72,6 +72,17 @@ namespace Bussines.Bussines
         }
 
         /// <summary>
+        /// Busca persona por identificacion
+        /// </summary>
+        /// <returns></returns>
+        public Person GetPersonByIdentificationByCode(string identification, int code)
+        {
+            Task<List<Person>> task = this.GetAsync(x => x.Identification.Equals(identification) && x.Code == code);
+            task.Wait();
+            return task.Result.FirstOrDefault();
+        }
+
+        /// <summary>
         /// Inserta una persona
         /// </summary>
         /// <returns></returns>
@@ -155,8 +166,10 @@ namespace Bussines.Bussines
                         person.ExternalSystemId = customer.ExternalSystemId;
                         person.CustomerId = customer.Id;
                         errorMessage = this.ValidateUploadPersonModel(person, rowCont);
+                     
+                       
 
-                        if (errorMessage == null)
+                       if (errorMessage == null)
                         {
                             this.AddAsync(person);
                             errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonImported, rowCont);
@@ -185,7 +198,13 @@ namespace Bussines.Bussines
             Relationship relationship = this.masterBussinesManager.RelationshipBussines.GetRelationshipById(person.RelationshipId.Value);
             Interest interest = this.masterBussinesManager.InterestBussines.GetInterestById(person.InterestId);
 
-            if (identificationtype == null)
+            Person actualPerson = this.GetPersonByIdentificationByCode(person.Identification, person.Code.Value);
+
+            if (actualPerson != null)
+            {
+                errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonExistImport, rowCont, person.Identification);
+            }
+            else if (identificationtype == null)
             {
                 errorMessage = new ApplicationMessage(this.cache, MessageCode.IdentificationTypeNotValid, rowCont, person.IdentificationTypeId);
             }
