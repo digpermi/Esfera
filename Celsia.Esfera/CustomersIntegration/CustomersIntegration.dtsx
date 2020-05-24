@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="CustomersIntegration"
   DTS:PackageType="5"
-  DTS:VersionBuild="75"
-  DTS:VersionGUID="{DFE1E547-D869-4EBF-B77E-2E136D68502F}">
+  DTS:VersionBuild="78"
+  DTS:VersionGUID="{880D3CCD-A668-4D77-AD75-609EB0A4B8FC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAGdG/avxr5m4NQZH5gyEYjAAAAAASAAACgAAAAEAAAAGuVJhu18Qze7nI483M2sUEYAAAAxwOooj7uR/TsPSIW35b8GrEG4K6xafSaFAAAAICUVN3d23dUX+HugOOwhKvSPhl6</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAI1QRCJ00VkQXlJ4BU+PmiAAAAAASAAACgAAAAEAAAALz5gV8LEZNiHrOYWFQEs7IYAAAAU61sS5sKDv89ukGODACb3tNsbAFbYOw7FAAAAMHOUKJqFoZhgWOmA+MLTuJ1wIh2</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -42,7 +42,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABbtmXwqbtkusMRJMaGdU9xAAAAAASAAACgAAAAEAAAAMRUXP1umqxXDLgq8OfDf7MYAAAAj+kUNgIZNxC9GmRdtg93bU0Nl4M76sNmFAAAAAFcXdT+k7IznBqrrqmvLBl43aSd</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAzOEBKCp5+UUcc6vHNEvZoAAAAAASAAACgAAAAEAAAANrLIL16tTOi+K+rWiVMHv8YAAAA9YBLubo38k6q7N0k3gJuexXY+oOa1VKnFAAAACWUtrEZzYrL0OpXei8G3SDjsN9w</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -57,7 +57,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABOF0FsTj0zl7bzgDwD+2fcAAAAAASAAACgAAAAEAAAAIS7t10e9mZ5TG8RfeZb0AMYAAAA9PTED8hwG4Cb7czPBn67Nrn4UunHTlnDFAAAAMvr/HN8B/WlulSgB/wWyVhK2AGw</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAHeyFTNka0PscE71oioDAWAAAAAASAAACgAAAAEAAAAHmjfuppFqt9fv+jCl0ODJsYAAAAfJr97XptMCg5MIiZQGsRgQj8XPhueCMVFAAAAHALQLChqkYCN/GslzC+qVlZe4mm</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -317,6 +317,11 @@
                       cachedDataType="i4"
                       cachedName="id"
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input].Columns[updateDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="updateDate"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -347,6 +352,34 @@
                       dataType="System.Int32"
                       description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
                       name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Get external customer data\Conditional Split.Outputs[Update]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Update"
+                  synchronousInputId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]}) ==  FALSE  &amp;&amp; [MONTH](#{Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]}) == [MONTH]([GETDATE]()) &amp;&amp; [YEAR](#{Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]}) == [YEAR]([GETDATE]())</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(updateDate) ==  FALSE  &amp;&amp; MONTH(updateDate) == MONTH(GETDATE()) &amp;&amp; YEAR(updateDate) == YEAR(GETDATE())</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
                   </properties>
                   <externalMetadataColumns />
                 </output>
@@ -4832,11 +4865,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               name="Character Map Output"
               startId="Package\Get external customer data\Identification to upper.Outputs[Character Map Output]" />
             <path
-              refId="Package\Get external customer data.Paths[Conditional Split Default Output]"
-              endId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input]"
-              name="Conditional Split Default Output"
-              startId="Package\Get external customer data\Conditional Split.Outputs[Conditional Split Default Output]" />
-            <path
               refId="Package\Get external customer data.Paths[Data Conversion Output]"
               endId="Package\Get external customer data\Add external systema id SAC.Inputs[Derived Column Input]"
               name="Data Conversion Output"
@@ -4873,14 +4901,14 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               startId="Package\Get external customer data\Conditional Split.Outputs[Insert]" />
             <path
               refId="Package\Get external customer data.Paths[Merge Join Output1]"
-              endId="Package\Get external customer data\Add policy data.Inputs[Derived Column Input]"
-              name="Merge Join Output"
-              startId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output]" />
-            <path
-              refId="Package\Get external customer data.Paths[Merge Join Output]"
               endId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input]"
               name="Merge Join Output"
               startId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Get external customer data.Paths[Merge Join Output]"
+              endId="Package\Get external customer data\Add policy data.Inputs[Derived Column Input]"
+              name="Merge Join Output"
+              startId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output]" />
             <path
               refId="Package\Get external customer data.Paths[OLE DB Source Output]"
               endId="Package\Get external customer data\External identification to upper.Inputs[Character Map Input]"
@@ -4926,6 +4954,11 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               endId="Package\Get external customer data\Identification to upper.Inputs[Character Map Input]"
               name="Union All Output 1"
               startId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1]" />
+            <path
+              refId="Package\Get external customer data.Paths[Update]"
+              endId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input]"
+              name="Update"
+              startId="Package\Get external customer data\Conditional Split.Outputs[Update]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -4970,7 +5003,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
         <NodeLayout
           Size="155,42"
           Id="Package\Get external customer data\Conditional Split"
-          TopLeft="627,870" />
+          TopLeft="627,869" />
         <NodeLayout
           Size="177,42"
           Id="Package\Get external customer data\Sac customers select"
@@ -5291,6 +5324,28 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Get external customer data.Paths[Merge Join Output1]"
+          TopLeft="707.5,786">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,83"
+              Start="0,0"
+              End="0,75.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Merge Join Output]"
           TopLeft="404.25,643">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -5312,30 +5367,8 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Get external customer data.Paths[Merge Join Output]"
-          TopLeft="707.5,786">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,84"
-              Start="0,0"
-              End="0,76.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Get external customer data.Paths[Insert]"
-          TopLeft="627,889.5">
+          TopLeft="627,889">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5353,7 +5386,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-78.00298828125,5,27.5059765625,9.40234375"
+              BoundingBox="-86.7300390625,5,44.960078125,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -5514,30 +5547,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Get external customer data.Paths[Conditional Split Default Output]"
-          TopLeft="701.75,912">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,81"
-              Start="0,0"
-              End="0,73.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,73.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-70.61390625,30.9208984375,141.2278125,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Get external customer data.Paths[Character Map Output1]"
           TopLeft="326,389">
           <EdgeLayout.Curve>
@@ -5591,6 +5600,30 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Update]"
+          TopLeft="701.75,911">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,82"
+              Start="0,0"
+              End="0,74.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-25.105,29.25,50.21,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
