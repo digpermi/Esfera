@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.Models;
@@ -53,6 +54,18 @@ namespace Bussines.Bussines
             task.Wait();
 
             return task.Result.Select(x => x.Id).FirstOrDefault();
+        }
+
+        public void EditSystemUdateDate(int? custormerId)
+        {
+            Customer customer = (custormerId.HasValue) ? this.GetCustomerById(custormerId.Value) : null;
+            if (customer != null)
+            {
+                customer.SystemUpdateDate = DateTime.Now;
+
+                Task<Customer> task = this.EditAsync(customer);
+                task.Wait();
+            }
         }
     }
 }

@@ -66,6 +66,15 @@ namespace Bussines
                     .HasColumnName("phoneNumber")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.SystemUpdateDate)
+                    .IsRequired()
+                    .HasColumnName("systemUpdateDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ExtenalUpdateDate)
+                    .HasColumnName("extenalUpdateDate")
+                    .HasColumnType("datetime");
+
                 entity.Property(e => e.PolicyData).HasColumnName("policyData");
 
                 entity.Property(e => e.ExternalSystemId)
@@ -126,6 +135,16 @@ namespace Bussines
             {
                 entity.ToTable("Persons");
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreationDate)
+                    .IsRequired()
+                    .HasColumnName("creationDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.UpdateDate)
+                    .IsRequired()
+                    .HasColumnName("updateDate")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Birthdate)
                     .IsRequired()

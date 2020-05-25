@@ -63,6 +63,12 @@ namespace Portal.Controllers
                 personNoVinculatedViewModel.IdentificationTypes = this.masterBussinesManager.IdentificationTypeBussines.GetAllIdentificationTypes();
                 personNoVinculatedViewModel.Interests = this.masterBussinesManager.InterestBussines.GetAllInterests();
                 personNoVinculatedViewModel.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
+
+                personNoVinculatedViewModel.CurrentPerson = new Person
+                {
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                };
             }
             catch (Exception exec)
             {

@@ -11,5 +11,7 @@ namespace Bussines.Bussines
         Customer GetCustomerByCode(int? code);
 
         int GetCustomerIdByPersonId(int personId);
+
+        void EditSystemUdateDate(int? custormerId);
     }
 }

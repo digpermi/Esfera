@@ -65,6 +65,16 @@ namespace Entities.Models
         [Range(1, byte.MaxValue, ErrorMessage = "Campo requerido")]
         public byte ExternalSystemId { get; set; }
 
+        [Required(ErrorMessage = "Campo requerido")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss tt}", ApplyFormatInEditMode = true)]
+        public DateTime UpdateDate { get; set; }
+
+        [Required(ErrorMessage = "Campo requerido")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss tt}", ApplyFormatInEditMode = true)]
+        public DateTime CreationDate { get; set; }
+
         public virtual Customer Customer { get; set; }
         public virtual IdentificationType IdentificationType { get; set; }
         public virtual Interest Interest { get; set; }

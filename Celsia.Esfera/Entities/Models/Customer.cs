@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
@@ -21,6 +23,12 @@ namespace Entities.Models
         public string Email { get; set; }
         public bool PolicyData { get; set; }
         public byte ExternalSystemId { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss tt}")]
+        public DateTime SystemUpdateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss tt}")]
+        public DateTime? ExtenalUpdateDate { get; set; }
 
         public virtual IdentificationType IdentificationType { get; set; }
         public virtual ExternalSystem ExternalSystem { get; set; }

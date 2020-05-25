@@ -120,7 +120,9 @@ namespace Portal.Controllers
                 {
                     ExternalSystemId = customer.ExternalSystemId,
                     Code = customer.Code,
-                    CustomerId = customer.Id
+                    CustomerId = customer.Id,
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
                 };
             }
             catch (Exception exec)
@@ -147,8 +149,6 @@ namespace Portal.Controllers
 
                 if (this.ModelState.IsValid && personCreate.Person.RelationshipId != 0)
                 {
-                    Person person = this.personBussines.GetPersonByIdentification(personCreate.Person.Identification);
-
                     this.personBussines.Add(personCreate.Person, userName);
 
                     this.TempData["currentCustomerId"] = personCreate.Person.CustomerId;

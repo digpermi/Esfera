@@ -10,7 +10,24 @@
 <message user-message="@Model.UserMesage"></message>
 
 <form asp-action="Create" asp-controller="Person" method="post">
+    <input type="hidden" asp-for="CurrentPerson.CreationDate" />
+    <input type="hidden" asp-for="CurrentPerson.UpdateDate" />
     <div class="row ml-1 mr-1 mt-5 pt-2">
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Fecha de Creación</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.CurrentPerson.CreationDate)</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="form-group">
+                <label class="small mb-1">Fecha de Actualización</label>
+                <p class="form-control border-0 ml-2">@Html.DisplayFor(model => model.CurrentPerson.UpdateDate)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row ml-1 mr-1">
         <div class="col-xl-3 col-md-6">
             <div class="form-group">
                 <label class="small mb-1">Tipo de Identificación *</label>

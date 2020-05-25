@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="CustomersIntegration"
   DTS:PackageType="5"
-  DTS:VersionBuild="78"
-  DTS:VersionGUID="{880D3CCD-A668-4D77-AD75-609EB0A4B8FC}">
+  DTS:VersionBuild="81"
+  DTS:VersionGUID="{EBE60434-59E0-479F-ABFF-D863B44E1454}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAI1QRCJ00VkQXlJ4BU+PmiAAAAAASAAACgAAAAEAAAALz5gV8LEZNiHrOYWFQEs7IYAAAAU61sS5sKDv89ukGODACb3tNsbAFbYOw7FAAAAMHOUKJqFoZhgWOmA+MLTuJ1wIh2</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABzm9/eL6diKr18KPtlwFm2AAAAAASAAACgAAAAEAAAAD7k6xTMPuJXlH53HrIpTmkYAAAAHWSIHTvNPSr0ytkM75fPyOg6homHiql3FAAAAD3+sonIPMzPJ3/u3sajWmfvpaaH</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -42,7 +42,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAzOEBKCp5+UUcc6vHNEvZoAAAAAASAAACgAAAAEAAAANrLIL16tTOi+K+rWiVMHv8YAAAA9YBLubo38k6q7N0k3gJuexXY+oOa1VKnFAAAACWUtrEZzYrL0OpXei8G3SDjsN9w</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABNMz9hZbrtTWs05Id4snikAAAAAASAAACgAAAAEAAAAGOCu4xVFB4EUc7Zw607SYcYAAAAhgGxoca2IN4CmEplEbBhcLo7wYGjFLGzFAAAAEdzhGeAaTYhbaAsNd0bmUP90+Y+</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -57,7 +57,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAHeyFTNka0PscE71oioDAWAAAAAASAAACgAAAAEAAAAHmjfuppFqt9fv+jCl0ODJsYAAAAfJr97XptMCg5MIiZQGsRgQj8XPhueCMVFAAAAHALQLChqkYCN/GslzC+qVlZe4mm</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA4tgHV7eshkmYnt6Tq6E9BgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACQoVKyFK7VDANs7UqdPe+PAAAAAASAAACgAAAAEAAAAPM8nqWg02NKBX2UrFmvxhgYAAAAra1uufznls0EZ1Sr7RiyExFlfA0SoaZrFAAAAN0SiPiLzSI9cYAUTp6Z9CbvvsXK</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -271,6 +271,28 @@
                           name="FriendlyExpression">(DT_BOOL)1</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\Get external customer data\Add policy data.Outputs[Derived Column Output].Columns[systemUpdateDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Get external customer data\Add policy data.Outputs[Derived Column Output].Columns[systemUpdateDate]"
+                      name="systemUpdateDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_DBDATE)[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_DBDATE)GETDATE()</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -319,7 +341,7 @@
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[id]" />
                     <inputColumn
                       refId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
+                      cachedDataType="date"
                       cachedName="updateDate"
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]" />
                   </inputColumns>
@@ -847,7 +869,7 @@
                       lineageId="Package\Get external customer data\Sort by identification type.Outputs[Sort Output].Columns[identificationType]" />
                     <inputColumn
                       refId="Package\Get external customer data\Merge Join.Inputs[Merge Join Left Input].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
+                      cachedDataType="date"
                       cachedName="updateDate"
                       lineageId="Package\Get external customer data\Sort by identification type.Outputs[Sort Output].Columns[updateDate]" />
                     <inputColumn
@@ -963,7 +985,7 @@
                     </outputColumn>
                     <outputColumn
                       refId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output].Columns[updateDate]"
-                      dataType="dbTimeStamp"
+                      dataType="date"
                       lineageId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output].Columns[updateDate]"
                       name="updateDate">
                       <properties>
@@ -1170,7 +1192,7 @@
                       lineageId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[identificactionTypeId]" />
                     <inputColumn
                       refId="Package\Get external customer data\Merge Join 1.Inputs[Merge Join Left Input].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
+                      cachedDataType="date"
                       cachedName="updateDate"
                       lineageId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[updateDate]" />
                     <inputColumn
@@ -1231,6 +1253,11 @@
                       cachedDataType="bool"
                       cachedName="policyData"
                       lineageId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[policyData]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\Merge Join 1.Inputs[Merge Join Left Input].Columns[systemUpdateDate]"
+                      cachedDataType="dbDate"
+                      cachedName="systemUpdateDate"
+                      lineageId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[systemUpdateDate]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1317,7 +1344,7 @@
                     </outputColumn>
                     <outputColumn
                       refId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]"
-                      dataType="dbTimeStamp"
+                      dataType="date"
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]"
                       name="updateDate">
                       <properties>
@@ -1464,6 +1491,19 @@
                           dataType="System.Int32"
                           description="The input column associated with this output column"
                           name="InputColumnID">#{Package\Get external customer data\Merge Join 1.Inputs[Merge Join Left Input].Columns[policyData]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[systemUpdateDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[systemUpdateDate]"
+                      name="systemUpdateDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Get external customer data\Merge Join 1.Inputs[Merge Join Left Input].Columns[systemUpdateDate]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -1617,6 +1657,18 @@
                       cachedName="fisrtName"
                       externalMetadataColumnId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[firstName]"
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[fisrtName]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[updateDate]"
+                      cachedDataType="date"
+                      cachedName="updateDate"
+                      externalMetadataColumnId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[extenalUpdateDate]"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[systemUpdateDate]"
+                      cachedDataType="dbDate"
+                      cachedName="systemUpdateDate"
+                      externalMetadataColumnId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[systemUpdateDate]"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[systemUpdateDate]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1675,6 +1727,14 @@
                       refId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[externalSystemId]"
                       dataType="ui1"
                       name="externalSystemId" />
+                    <externalMetadataColumn
+                      refId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[systemUpdateDate]"
+                      dataType="dbTimeStamp"
+                      name="systemUpdateDate" />
+                    <externalMetadataColumn
+                      refId="Package\Get external customer data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[extenalUpdateDate]"
+                      dataType="dbTimeStamp"
+                      name="extenalUpdateDate" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2276,7 +2336,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     </outputColumn>
                     <outputColumn
                       refId="Package\Get external customer data\Open data parse.Outputs[Data Conversion Output].Columns[updateDate]"
-                      dataType="dbTimeStamp"
+                      dataType="date"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       lineageId="Package\Get external customer data\Open data parse.Outputs[Data Conversion Output].Columns[updateDate]"
@@ -2992,7 +3052,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     </outputColumn>
                     <outputColumn
                       refId="Package\Get external customer data\Sac data parce.Outputs[Data Conversion Output].Columns[updateDate]"
-                      dataType="dbTimeStamp"
+                      dataType="date"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       lineageId="Package\Get external customer data\Sac data parce.Outputs[Data Conversion Output].Columns[updateDate]"
@@ -3193,7 +3253,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     </inputColumn>
                     <inputColumn
                       refId="Package\Get external customer data\Sort by external customer code.Inputs[Sort Input].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
+                      cachedDataType="date"
                       cachedName="updateDate"
                       lineageId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output].Columns[updateDate]">
                       <properties>
@@ -3392,6 +3452,22 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                           name="NewSortKeyPosition">0</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\Get external customer data\Sort by external customer code.Inputs[Sort Input].Columns[systemUpdateDate]"
+                      cachedDataType="dbDate"
+                      cachedName="systemUpdateDate"
+                      lineageId="Package\Get external customer data\Add policy data.Outputs[Derived Column Output].Columns[systemUpdateDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -3432,7 +3508,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     </outputColumn>
                     <outputColumn
                       refId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[updateDate]"
-                      dataType="dbTimeStamp"
+                      dataType="date"
                       lineageId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[updateDate]"
                       name="updateDate">
                       <properties>
@@ -3595,6 +3671,19 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                           name="SortColumnId">#{Package\Get external customer data\Add policy data.Outputs[Derived Column Output].Columns[policyData]}</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[systemUpdateDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Get external customer data\Sort by external customer code.Outputs[Sort Output].Columns[systemUpdateDate]"
+                      name="systemUpdateDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Get external customer data\Add policy data.Outputs[Derived Column Output].Columns[systemUpdateDate]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -3726,7 +3815,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                   <inputColumns>
                     <inputColumn
                       refId="Package\Get external customer data\Sort by identification type.Inputs[Sort Input].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
+                      cachedDataType="date"
                       cachedName="updateDate"
                       lineageId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]">
                       <properties>
@@ -3920,7 +4009,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                   <outputColumns>
                     <outputColumn
                       refId="Package\Get external customer data\Sort by identification type.Outputs[Sort Output].Columns[updateDate]"
-                      dataType="dbTimeStamp"
+                      dataType="date"
                       lineageId="Package\Get external customer data\Sort by identification type.Outputs[Sort Output].Columns[updateDate]"
                       name="updateDate">
                       <properties>
@@ -4164,19 +4253,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                   name="Union All Input 2">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 2].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="updateDate"
-                      lineageId="Package\Get external customer data\Open data parse.Outputs[Data Conversion Output].Columns[updateDate]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
                       refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 2].Columns[code]"
                       cachedDataType="i4"
                       cachedName="code"
@@ -4300,19 +4376,11 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                           name="OutputColumnLineageID">#{Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[externalSystemId]}</property>
                       </properties>
                     </inputColumn>
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-                <input
-                  refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 1]"
-                  hasSideEffects="true"
-                  name="Union All Input 1">
-                  <inputColumns>
                     <inputColumn
-                      refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 1].Columns[updateDate]"
-                      cachedDataType="dbTimeStamp"
+                      refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 2].Columns[updateDate]"
+                      cachedDataType="date"
                       cachedName="updateDate"
-                      lineageId="Package\Get external customer data\Sac data parce.Outputs[Data Conversion Output].Columns[updateDate]">
+                      lineageId="Package\Get external customer data\Open data parse.Outputs[Data Conversion Output].Columns[updateDate]">
                       <properties>
                         <property
                           containsID="true"
@@ -4321,6 +4389,14 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                           name="OutputColumnLineageID">#{Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]}</property>
                       </properties>
                     </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 1]"
+                  hasSideEffects="true"
+                  name="Union All Input 1">
+                  <inputColumns>
                     <inputColumn
                       refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 1].Columns[code]"
                       cachedDataType="i4"
@@ -4459,6 +4535,19 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                           name="OutputColumnLineageID">#{Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[externalSystemId]}</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\Get external customer data\Union All customers.Inputs[Union All Input 1].Columns[updateDate]"
+                      cachedDataType="date"
+                      cachedName="updateDate"
+                      lineageId="Package\Get external customer data\Sac data parce.Outputs[Data Conversion Output].Columns[updateDate]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]}</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -4475,11 +4564,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                   refId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1]"
                   name="Union All Output 1">
                   <outputColumns>
-                    <outputColumn
-                      refId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]"
-                      dataType="dbTimeStamp"
-                      lineageId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]"
-                      name="updateDate" />
                     <outputColumn
                       refId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[code]"
                       dataType="i4"
@@ -4538,6 +4622,11 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                       dataType="ui1"
                       lineageId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[externalSystemId]"
                       name="externalSystemId" />
+                    <outputColumn
+                      refId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]"
+                      dataType="date"
+                      lineageId="Package\Get external customer data\Union All customers.Outputs[Union All Output 1].Columns[updateDate]"
+                      name="updateDate" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -4573,6 +4662,8 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
       ,[email] = ?
       ,[policyData] = ?
       ,[externalSystemId] = ?
+      ,[extenalUpdateDate] = ?
+      ,[systemUpdateDate] = ?
  WHERE id=?</property>
                 <property
                   dataType="System.Int32"
@@ -4664,17 +4755,29 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                       externalMetadataColumnId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_10]"
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[externalsystemId]" />
                     <inputColumn
-                      refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].Columns[id]"
-                      cachedDataType="i4"
-                      cachedName="id"
-                      externalMetadataColumnId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_11]"
-                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[id]" />
-                    <inputColumn
                       refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].Columns[policyData]"
                       cachedDataType="bool"
                       cachedName="policyData"
                       externalMetadataColumnId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_9]"
                       lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[policyData]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      externalMetadataColumnId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_13]"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].Columns[systemUpdateDate]"
+                      cachedDataType="dbDate"
+                      cachedName="systemUpdateDate"
+                      externalMetadataColumnId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_12]"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[systemUpdateDate]" />
+                    <inputColumn
+                      refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].Columns[updateDate]"
+                      cachedDataType="date"
+                      cachedName="updateDate"
+                      externalMetadataColumnId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_11]"
+                      lineageId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output].Columns[updateDate]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -4808,8 +4911,30 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     </externalMetadataColumn>
                     <externalMetadataColumn
                       refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_11]"
-                      dataType="i4"
+                      dataType="dbTimeStamp"
                       name="Param_11">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_12]"
+                      dataType="dbTimeStamp"
+                      name="Param_12">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Get external customer data\Update customers.Inputs[OLE DB Command Input].ExternalColumns[Param_13]"
+                      dataType="i4"
+                      name="Param_13">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -4901,14 +5026,14 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
               startId="Package\Get external customer data\Conditional Split.Outputs[Insert]" />
             <path
               refId="Package\Get external customer data.Paths[Merge Join Output1]"
-              endId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input]"
-              name="Merge Join Output"
-              startId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output]" />
-            <path
-              refId="Package\Get external customer data.Paths[Merge Join Output]"
               endId="Package\Get external customer data\Add policy data.Inputs[Derived Column Input]"
               name="Merge Join Output"
               startId="Package\Get external customer data\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Get external customer data.Paths[Merge Join Output]"
+              endId="Package\Get external customer data\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\Get external customer data\Merge Join 1.Outputs[Merge Join Output]" />
             <path
               refId="Package\Get external customer data.Paths[OLE DB Source Output]"
               endId="Package\Get external customer data\External identification to upper.Inputs[Character Map Input]"
@@ -4989,41 +5114,29 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="139,42"
-          Id="Package\Get external customer data\Merge Join 1"
-          TopLeft="641,744" />
-        <NodeLayout
-          Size="164,42"
-          Id="Package\Get external customer data\Update customers"
-          TopLeft="617,993" />
-        <NodeLayout
-          Size="200,42"
-          Id="Package\Get external customer data\Sort by identification type"
-          TopLeft="238,508" />
-        <NodeLayout
-          Size="155,42"
-          Id="Package\Get external customer data\Conditional Split"
-          TopLeft="627,869" />
+          Size="157,42"
+          Id="Package\Get external customer data\Open data parse"
+          TopLeft="142,88" />
         <NodeLayout
           Size="177,42"
           Id="Package\Get external customer data\Sac customers select"
           TopLeft="366,9" />
         <NodeLayout
+          Size="130,42"
+          Id="Package\Get external customer data\Merge Join"
+          TopLeft="339,601" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Get external customer data\Conditional Split"
+          TopLeft="627,869" />
+        <NodeLayout
           Size="271,42"
           Id="Package\Get external customer data\Esfera external identification types select"
           TopLeft="458.5,273.5" />
         <NodeLayout
-          Size="157,42"
-          Id="Package\Get external customer data\Open data parse"
-          TopLeft="142,88" />
-        <NodeLayout
           Size="185,42"
           Id="Package\Get external customer data\Sort by customer code"
           TopLeft="626,649" />
-        <NodeLayout
-          Size="188,42"
-          Id="Package\Get external customer data\Trim identification type"
-          TopLeft="244,424" />
         <NodeLayout
           Size="151,42"
           Id="Package\Get external customer data\Add policy data"
@@ -5037,13 +5150,13 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           Id="Package\Get external customer data\Identification to upper"
           TopLeft="234,347" />
         <NodeLayout
-          Size="130,42"
-          Id="Package\Get external customer data\Merge Join"
-          TopLeft="339,601" />
+          Size="200,42"
+          Id="Package\Get external customer data\Sort by identification type"
+          TopLeft="238,508" />
         <NodeLayout
           Size="171,42"
           Id="Package\Get external customer data\OLE DB Destination"
-          TopLeft="320,867" />
+          TopLeft="319,867" />
         <NodeLayout
           Size="149,42"
           Id="Package\Get external customer data\Sac data parce"
@@ -5051,23 +5164,23 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
         <NodeLayout
           Size="172,42"
           Id="Package\Get external customer data\Union All customers"
-          TopLeft="237,273" />
-        <NodeLayout
-          Size="214,42"
-          Id="Package\Get external customer data\Add external systema id SAC"
-          TopLeft="342,171" />
+          TopLeft="238,273" />
         <NodeLayout
           Size="224,42"
           Id="Package\Get external customer data\External identification to upper"
           TopLeft="480,368" />
         <NodeLayout
+          Size="214,42"
+          Id="Package\Get external customer data\Add external systema id SAC"
+          TopLeft="342,171" />
+        <NodeLayout
           Size="190,42"
           Id="Package\Get external customer data\Esfera customers select"
           TopLeft="646,544" />
         <NodeLayout
-          Size="212,42"
-          Id="Package\Get external customer data\Add extenal system id OPEN"
-          TopLeft="116,171" />
+          Size="188,42"
+          Id="Package\Get external customer data\Trim identification type"
+          TopLeft="244,424" />
         <NodeLayout
           Size="241,42"
           Id="Package\Get external customer data\Sort by external identificatoin type"
@@ -5075,10 +5188,46 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
         <NodeLayout
           Size="226,42"
           Id="Package\Get external customer data\Sort by external customer code"
-          TopLeft="298,745" />
+          TopLeft="298,746" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Get external customer data\Merge Join 1"
+          TopLeft="641,744" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\Get external customer data\Add extenal system id OPEN"
+          TopLeft="116,171" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Get external customer data\Update customers"
+          TopLeft="617,993" />
+        <EdgeLayout
+          Id="Package\Get external customer data.Paths[Update]"
+          TopLeft="701.75,911">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,82"
+              Start="0,0"
+              End="0,74.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-25.105,29.25,50.21,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Get external customer data.Paths[Union All Output 1]"
-          TopLeft="324.5,315">
+          TopLeft="325,315">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5202,7 +5351,7 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Get external customer data.Paths[Sort Output]"
-          TopLeft="524,765.5">
+          TopLeft="524,766">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5324,28 +5473,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Get external customer data.Paths[Merge Join Output1]"
-          TopLeft="707.5,786">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,83"
-              Start="0,0"
-              End="0,75.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,75.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Merge Join Output]"
           TopLeft="404.25,643">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -5367,26 +5494,48 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\Get external customer data.Paths[Merge Join Output]"
+          TopLeft="707.5,786">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,83"
+              Start="0,0"
+              End="0,75.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\Get external customer data.Paths[Insert]"
           TopLeft="627,889">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-136,0"
+              EndConnector="-137,0"
               Start="0,0"
-              End="-128.5,0">
+              End="-129.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-128.5,0" />
+                    End="-129.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-86.7300390625,5,44.960078125,16"
+              BoundingBox="-87.2300390625,5,44.960078125,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -5396,9 +5545,9 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="73.6666666666667,60"
+              EndConnector="74.6666666666667,60"
               Start="0,0"
-              End="73.6666666666667,52.5">
+              End="74.6666666666667,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -5409,13 +5558,13 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     Point2="0,35.668202764977"
                     Point3="4,35.668202764977" />
                   <mssgle:LineSegment
-                    End="69.6666666666667,35.668202764977" />
+                    End="70.6666666666667,35.668202764977" />
                   <mssgle:CubicBezierSegment
-                    Point1="69.6666666666667,35.668202764977"
-                    Point2="73.6666666666667,35.668202764977"
-                    Point3="73.6666666666667,39.668202764977" />
+                    Point1="70.6666666666667,35.668202764977"
+                    Point2="74.6666666666667,35.668202764977"
+                    Point3="74.6666666666667,39.668202764977" />
                   <mssgle:LineSegment
-                    End="73.6666666666667,52.5" />
+                    End="74.6666666666667,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5430,9 +5579,9 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-98.6666666666667,60"
+              EndConnector="-97.6666666666667,60"
               Start="0,0"
-              End="-98.6666666666667,52.5">
+              End="-97.6666666666667,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -5443,13 +5592,13 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
                     Point2="0,35.668202764977"
                     Point3="-4,35.668202764977" />
                   <mssgle:LineSegment
-                    End="-94.6666666666667,35.668202764977" />
+                    End="-93.6666666666667,35.668202764977" />
                   <mssgle:CubicBezierSegment
-                    Point1="-94.6666666666667,35.668202764977"
-                    Point2="-98.6666666666667,35.668202764977"
-                    Point3="-98.6666666666667,39.668202764977" />
+                    Point1="-93.6666666666667,35.668202764977"
+                    Point2="-97.6666666666667,35.668202764977"
+                    Point3="-97.6666666666667,39.668202764977" />
                   <mssgle:LineSegment
-                    End="-98.6666666666667,52.5" />
+                    End="-97.6666666666667,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5464,14 +5613,14 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,31"
+              EndConnector="0,32"
               Start="0,0"
-              End="0,23.5">
+              End="0,24.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,23.5" />
+                    End="0,24.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5600,30 +5749,6 @@ TP2.DESC_TIPO,CL.COD_CLI, TP3.TIP_SERV,EST.DESC_EST,CL.DOC_ID,CL.F_ALTA, CL.F_AC
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Get external customer data.Paths[Update]"
-          TopLeft="701.75,911">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,82"
-              Start="0,0"
-              End="0,74.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,74.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-25.105,29.25,50.21,16"
-              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

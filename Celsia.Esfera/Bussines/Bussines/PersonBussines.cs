@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,10 +89,14 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person Add(Person person, string userName)
         {
+            person.CreationDate = DateTime.Now;
+            person.UpdateDate = DateTime.Now;
+
             Task<Person> task = this.AddAsync(person);
             task.Wait();
 
             this.auditBussines.Add(userName, OperationAudit.AddPerson);
+            this.customerBussines.EditSystemUdateDate(person.CustomerId);
 
             return task.Result;
         }
@@ -102,10 +107,13 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person Edit(Person person, string userName)
         {
+            person.UpdateDate = DateTime.Now;
+
             Task<Person> task = this.EditAsync(person);
             task.Wait();
 
             this.auditBussines.Add(userName, OperationAudit.EditPerson);
+            this.customerBussines.EditSystemUdateDate(person.CustomerId);
 
             return task.Result;
         }
@@ -165,11 +173,12 @@ namespace Bussines.Bussines
                     {
                         person.ExternalSystemId = customer.ExternalSystemId;
                         person.CustomerId = customer.Id;
-                        errorMessage = this.ValidateUploadPersonModel(person, rowCont);
-                     
-                       
+                        person.CreationDate = DateTime.Now;
+                        person.UpdateDate = DateTime.Now;
 
-                       if (errorMessage == null)
+                        errorMessage = this.ValidateUploadPersonModel(person, rowCont);
+
+                        if (errorMessage == null)
                         {
                             this.AddAsync(person);
                             errorMessage = new ApplicationMessage(this.cache, MessageCode.PersonImported, rowCont);
