@@ -173,6 +173,7 @@ namespace Bussines.Bussines
                     {
                         person.ExternalSystemId = customer.ExternalSystemId;
                         person.CustomerId = customer.Id;
+                        person.PolicyData = true;
                         person.CreationDate = DateTime.Now;
                         person.UpdateDate = DateTime.Now;
 

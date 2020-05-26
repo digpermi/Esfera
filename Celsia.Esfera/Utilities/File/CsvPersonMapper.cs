@@ -14,8 +14,8 @@ namespace Utilities.File
             this.MapProperty(0, x => x.Code);
             this.MapProperty(1, x => x.Identification);
             this.MapProperty(2, x => x.IdentificationTypeId);
-            this.MapProperty(3, x => x.LastName);
-            this.MapProperty(4, x => x.FirstName);
+            this.MapProperty(3, x => x.FirstName);
+            this.MapProperty(4, x => x.LastName);
             this.MapProperty(5, x => x.PhoneNumber);
             this.MapProperty(6, x => x.MobileNumber);
             this.MapProperty(7, x => x.RelationshipId);
