@@ -185,7 +185,7 @@ namespace Portal.Controllers
                 personEdit.Relationships = this.masterBussinesManager.RelationshipBussines.GetAllRelationships();
 
                 Person person = this.personBussines.GetPersonById(id);
-
+                this.TempData["currentCustomerId"] = person.CustomerId;
                 personEdit.Person = person;
             }
             catch (Exception exec)
