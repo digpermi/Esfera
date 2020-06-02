@@ -45,7 +45,7 @@ namespace Entities.Models
         [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Campo requerido")]
+        
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? Birthdate { get; set; }

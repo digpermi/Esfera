@@ -147,7 +147,6 @@ namespace Bussines
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.Birthdate)
-                    .IsRequired()
                     .HasColumnName("birthdate")
                     .HasColumnType("date");
 

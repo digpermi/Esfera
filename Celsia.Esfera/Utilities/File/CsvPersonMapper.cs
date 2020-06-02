@@ -9,7 +9,7 @@ namespace Utilities.File
     {
         public CsvPersonMapper() : base()
         {
-            ITypeConverter<DateTime?> dateFormat = new NullableDateTimeConverter(@"yyyy/MM/dd");
+            ITypeConverter<DateTime?> dateFormat = new NullableDateTimeConverter(@"dd/MM/yyyy");
 
             this.MapProperty(0, x => x.Code);
             this.MapProperty(1, x => x.Identification);
