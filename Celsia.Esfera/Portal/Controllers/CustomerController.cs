@@ -212,7 +212,7 @@ namespace Portal.Controllers
                 {
                     Person personValid = this.personBussines.GetPersonByIdentificationById(personEdit.Person.Identification, personEdit.Person.Id);
 
-                    if (personValid != null)
+                    if (personValid == null)
                     {
                         int customerId = personEdit.Person.CustomerId.Value;
 

@@ -67,7 +67,7 @@ namespace Bussines.Bussines
         /// <returns></returns>
         public Person GetPersonByIdentificationById(string identification, int id)
         {
-            Task<List<Person>> task = this.GetAsync(x => x.Identification.Equals(identification) && x.Id != id);
+            Task<List<Person>> task = this.GetAsync(x => x.Identification == identification && x.Id != id);
             task.Wait();
             return task.Result.FirstOrDefault();
         }
